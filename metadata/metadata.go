@@ -20,7 +20,7 @@ func GetMetadataFromCtx(ctx context.Context, key any) any {
 }
 
 // GetMetadata 上下文取值
-func GetMetadata[T any](ctx context.Context, key string) (T, bool) {
+func GetMetadata[T any](ctx context.Context, key any) (T, bool) {
 	val := ctx.Value(key)
 	if val == nil {
 		var zero T
