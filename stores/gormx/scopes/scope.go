@@ -12,6 +12,17 @@ func Equal(field string, value any) func(db *gorm.DB) *gorm.DB {
 	}
 }
 
+// Equal2 根据条件判断是否启用等于查询
+func Equal2(field string, value any, apply bool) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if apply {
+			return db.Where(field+" = ?", value)
+		}
+
+		return db
+	}
+}
+
 // NotEqual 不等于
 func NotEqual(field string, value any) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
