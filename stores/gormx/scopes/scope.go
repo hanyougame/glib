@@ -92,3 +92,17 @@ func NotBetween[T comparable](field string, start, end T) func(db *gorm.DB) *gor
 		return db.Where(field+" NOT BETWEEN ? AND ?", start, end)
 	}
 }
+
+// Select 筛选字段
+func Select(fields ...string) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		return db.Select(fields)
+	}
+}
+
+// JsonArrayContains 包含
+func JsonArrayContains(field string, value any) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		return db.Where(field+" @> ?", value)
+	}
+}
