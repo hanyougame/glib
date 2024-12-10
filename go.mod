@@ -1,6 +1,6 @@
 module github.com/hanyougame/glib
 
-go 1.23.3
+go 1.23
 
 require (
 	github.com/bsm/redislock v0.9.4
