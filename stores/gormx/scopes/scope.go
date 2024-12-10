@@ -86,6 +86,22 @@ func Between[T comparable](field string, start, end T) func(db *gorm.DB) *gorm.D
 	}
 }
 
+// Between2 范围查询 scope:[true:true]=>[start,end] scope:[false:true]=>[-∞,end] scope:[true:false]=>[start,+∞]
+func Between2[T any](field string, start, end T, startScope, endScope bool) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		switch {
+		case startScope && endScope:
+			return db.Where(field+" BETWEEN ? AND ?", start, end)
+		case !startScope && endScope:
+			return db.Where(field+" <= ?", endScope)
+		case startScope && !endScope:
+			return db.Where(field+" >= ?", start)
+		}
+
+		return db
+	}
+}
+
 // NotBetween not between查询
 func NotBetween[T comparable](field string, start, end T) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
