@@ -5,14 +5,19 @@ import (
 )
 
 // Paginate 分页
-func Paginate[T any](pagination *Pagination[T]) func(db *gorm.DB) *gorm.DB {
+func Paginate(pagination *Pagination) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-		var totalRows int64
-		db.Session(&gorm.Session{}).Model(db.Statement.Model).Count(&totalRows)
-		pagination.Total = totalRows
-		if totalRows == 0 {
+		if pagination == nil {
 			return db
 		}
+
+		var (
+			tx        = db.Session(&gorm.Session{})
+			totalRows int64
+		)
+
+		tx.Model(db.Statement.Model).Count(&totalRows)
+		pagination.Total = totalRows
 		return db.Offset(pagination.Offset()).Limit(pagination.Limit())
 	}
 }
