@@ -2,7 +2,10 @@ package scopes
 
 import (
 	"fmt"
+	"github.com/zeromicro/go-zero/core/jsonx"
+	"github.com/zeromicro/go-zero/core/stringx"
 	"gorm.io/gorm"
+	"strings"
 )
 
 // Equal 等于
@@ -33,6 +36,10 @@ func NotEqual(field string, value any) func(db *gorm.DB) *gorm.DB {
 // Like 模糊查询
 func Like(field string, value any) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
+		if s, ok := value.(string); ok && stringx.HasEmpty(s) {
+			return db
+		}
+
 		return db.Where(field+" LIKE ?", fmt.Sprintf("%%%v%%", value))
 	}
 }
@@ -40,6 +47,14 @@ func Like(field string, value any) func(db *gorm.DB) *gorm.DB {
 // In in查询
 func In[T comparable](field string, value []T) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
+		if value == nil || len(value) == 0 {
+			return db
+		}
+
+		if len(value) == 1 {
+			return db.Where(field+" = ?", value[0])
+		}
+
 		return db.Where(field+" IN ?", value)
 	}
 }
@@ -47,6 +62,14 @@ func In[T comparable](field string, value []T) func(db *gorm.DB) *gorm.DB {
 // NotIn not in查询
 func NotIn[T comparable](field string, value []T) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
+		if value == nil || len(value) == 0 {
+			return db
+		}
+
+		if len(value) == 1 {
+			return db.Where(field+"  != ?", value[0])
+		}
+
 		return db.Where(field+" NOT IN ?", value)
 	}
 }
@@ -120,5 +143,31 @@ func Select(fields ...string) func(db *gorm.DB) *gorm.DB {
 func JsonArrayContains(field string, value any) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Where(field+" @> ?", value)
+	}
+}
+
+// JsonArrayOr json数组or查询
+func JsonArrayOr[T any](field string, values ...T) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if len(values) == 0 {
+			return db
+		}
+
+		var (
+			conditions []string
+			args       []interface{}
+		)
+
+		for _, value := range values {
+			jsonValue, err := jsonx.Marshal(value)
+			if err != nil {
+				return db
+			}
+			conditions = append(conditions, fmt.Sprintf("%s @> ?", field))
+			args = append(args, jsonValue)
+		}
+
+		orCondition := strings.Join(conditions, " OR ")
+		return db.Where(orCondition, args...)
 	}
 }
