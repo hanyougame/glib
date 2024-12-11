@@ -2,6 +2,7 @@ package metadata
 
 import (
 	"context"
+	"github.com/spf13/cast"
 )
 
 const (
@@ -38,18 +39,10 @@ func GetMetadata[T any](ctx context.Context, key any) (T, bool) {
 
 // GetUidFromCtx 从上下文中获取uid
 func GetUidFromCtx(ctx context.Context) int {
-	uid, ok := GetMetadata[int](ctx, CtxJWTUserId)
-	if !ok {
-		return 0
-	}
-	return uid
+	return cast.ToInt(ctx.Value(CtxJWTUserId))
 }
 
 // GetUsernameFromCtx 从上下文中获取username
 func GetUsernameFromCtx(ctx context.Context) string {
-	username, ok := GetMetadata[string](ctx, CtxJWTUsername)
-	if !ok {
-		return ""
-	}
-	return username
+	return cast.ToString(ctx.Value(CtxJWTUsername))
 }
