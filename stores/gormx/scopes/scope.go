@@ -116,7 +116,7 @@ func Between2[T any](field string, start, end T, startScope, endScope bool) func
 		case startScope && endScope:
 			return db.Where(field+" BETWEEN ? AND ?", start, end)
 		case !startScope && endScope:
-			return db.Where(field+" <= ?", endScope)
+			return db.Where(field+" <= ?", end)
 		case startScope && !endScope:
 			return db.Where(field+" >= ?", start)
 		}
