@@ -6,6 +6,7 @@ type Pagination struct {
 	PageSize int   `json:"page_size"`
 	Total    int64 `json:"total"`
 	Rows     any   `json:"rows"`
+	Extend   any   `json:"extend,omitempty"`
 }
 
 func (p *Pagination) Offset() int {
