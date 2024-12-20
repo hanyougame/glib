@@ -23,9 +23,13 @@ func TestPostgresEngine(t *testing.T) {
 	t.Log("result", result)
 }
 
-type Users struct {
+type User struct {
 	Name string
 	Age  int
+}
+
+func (u *User) TableName() string {
+	return "users"
 }
 
 func TestClickHouseEngine(t *testing.T) {
@@ -39,7 +43,7 @@ func TestClickHouseEngine(t *testing.T) {
 
 	//db.AutoMigrate(&User{})
 	//db.Create(&User{Name: "Tom", Age: 18})
-	var user Users
+	var user User
 	//db.First(&user)
 	//t.Log(jsonx.MarshalToString(user))
 	//t.Log(db)
