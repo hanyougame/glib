@@ -33,34 +33,31 @@ func (u *User) TableName() string {
 }
 
 func TestClickHouseEngine(t *testing.T) {
-	dsn := "clickhouse://127.0.0.1:9000/default?dial_timeout=10s&read_timeout=20s"
-	//db, err := gorm.Open(clickhouse.Open(dsn), &gorm.Config{
-	//	Logger: logger.Default.LogMode(logger.Info),
-	//})
-	//if err != nil {
-	//	panic(err)
-	//}
-
-	//db.AutoMigrate(&User{})
-	//db.Create(&User{Name: "Tom", Age: 18})
-	var user User
-	//db.First(&user)
-	//t.Log(jsonx.MarshalToString(user))
-	//t.Log(db)
+	dsn := "clickhouse://:948Q3x7K@192.168.6.218:9000/default?dial_timeout=10s&read_timeout=20s"
 	c := config.Config{
-		Mode: config.ClickHouse,
-		DSN:  dsn,
+		Mode:  config.ClickHouse,
+		DSN:   dsn,
+		Debug: true,
 	}
 
 	Must(c)
-	//t.Log(Engine.ClickHouse.AutoMigrate(&User{}).Error())
-	//Engine.ClickHouse.Create(&User{Name: "Jerry", Age: 15})
-	err := Engine.ClickHouse.First(&user, "name=?", "Tom").Error
+
+	var users = []User{
+		{Name: "小明", Age: 15},
+		{Name: "小红", Age: 16},
+		{Name: "小王", Age: 17},
+	}
+	err := Engine.ClickHouse.Create(&users).Error
 	if err != nil {
 		t.Error(err)
 	}
 
-	t.Log(jsonx.MarshalToString(user))
+	var list []User
+	err = Engine.ClickHouse.Find(&list).Error
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(jsonx.MarshalToString(list))
 }
 
 //

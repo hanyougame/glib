@@ -13,14 +13,9 @@ import (
 )
 
 func NewEngine(c config.Config, dialector gorm.Dialector, opt ...gorm.Option) (*gorm.DB, error) {
-	var preparestmt bool
-	if c.Mode != config.ClickHouse { // clickhouse 不支持预编译
-		preparestmt = true
-	}
-
 	cfg := &gorm.Config{
-		PrepareStmt:            preparestmt,
-		SkipDefaultTransaction: true,
+		PrepareStmt:            c.PrepareStmt,
+		SkipDefaultTransaction: c.SkipDefaultTransaction,
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
