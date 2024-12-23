@@ -8,6 +8,7 @@ import (
 const (
 	CtxJWTUserId   = "uid"
 	CtxJWTUsername = "username"
+	CtxIp          = "ip"
 )
 
 // WithMetadata 上下文数据
@@ -45,4 +46,9 @@ func GetUidFromCtx(ctx context.Context) int {
 // GetUsernameFromCtx 从上下文中获取username
 func GetUsernameFromCtx(ctx context.Context) string {
 	return cast.ToString(ctx.Value(CtxJWTUsername))
+}
+
+// GetIpFromCtx 从上下文中获取ip
+func GetIpFromCtx(ctx context.Context) string {
+	return cast.ToString(ctx.Value(CtxIp))
 }
