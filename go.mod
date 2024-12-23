@@ -10,6 +10,7 @@ require (
 	github.com/prometheus/common v0.61.0
 	github.com/redis/go-redis/v9 v9.7.0
 	github.com/sony/sonyflake v1.2.0
+	github.com/spf13/cast v1.3.0
 	github.com/zeromicro/go-zero v1.7.4
 	go.opentelemetry.io/otel v1.24.0
 	go.opentelemetry.io/otel/trace v1.24.0
