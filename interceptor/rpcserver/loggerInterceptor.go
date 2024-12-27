@@ -2,8 +2,8 @@ package rpcserver
 
 import (
 	"context"
-	errors2 "github.com/hanyougame/glib/errors"
 	"github.com/zeromicro/go-zero/core/logx"
+	errors2 "github.com/zeromicro/x/errors"
 
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
@@ -15,10 +15,10 @@ func LoggerInterceptor(ctx context.Context, req interface{}, info *grpc.UnarySer
 	resp, err = handler(ctx, req)
 	if err != nil {
 		causeErr := errors.Cause(err) // err类型
-		var e *errors2.CodeError
+		var e *errors2.CodeMsg
 		logx.WithContext(ctx).Errorf("【RPC-SRV-ERR】 %+v", err)
 		if errors.As(causeErr, &e) { //自定义错误类型
-			err = status.Error(codes.Code(e.ErrCode()), e.ErrMsg())
+			err = status.Error(codes.Code(e.Code), e.Msg)
 		}
 	}
 
