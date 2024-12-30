@@ -1,4 +1,4 @@
-package filex
+package filesx
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	config2 "github.com/hanyougame/glib/stores/filesx/config"
 	"io"
 	"os"
 	"path/filepath"
@@ -20,7 +21,7 @@ type s3Storage struct {
 	cdnDomain string // CDN域名（可选）
 }
 
-func newS3Storage(sc StorageConfig) (Storage, error) {
+func newS3Storage(sc config2.StorageConfig) (Storage, error) {
 	if sc.AccessKey == "" || sc.SecretKey == "" {
 		return nil, fmt.Errorf("s3 credentials are required")
 	}
@@ -48,25 +49,23 @@ func newS3Storage(sc StorageConfig) (Storage, error) {
 		cdnDomain: sc.CdnDomain,
 	}, nil
 }
-func (s *s3Storage) Upload(ctx context.Context, file io.Reader, path string) (string, error) {
+
+func (s *s3Storage) Upload(ctx context.Context, file io.Reader, path, contentType string) (string, error) {
+	// 执行文件上传
 	_, err := s.client.PutObject(ctx, &s3.PutObjectInput{
-		Bucket: aws.String(s.bucket),
-		Key:    aws.String(path),
-		Body:   file,
+		Bucket:      aws.String(s.bucket),
+		Key:         aws.String(path),
+		Body:        file,
+		ContentType: aws.String(contentType),
 	})
 	if err != nil {
 		return "", fmt.Errorf("failed to upload file to S3: %w", err)
 	}
 
-	// Construct the URL based on whether a CDN domain is provided
-	var url string
 	if s.cdnDomain != "" {
-		url = fmt.Sprintf("https://%s/%s", s.cdnDomain, path)
-	} else {
-		url = fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", s.bucket, s.region, path)
+		return fmt.Sprintf("https://%s/%s", s.cdnDomain, path), nil
 	}
-
-	return url, nil
+	return fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", s.bucket, s.region, path), nil
 }
 
 func (s *s3Storage) Delete(ctx context.Context, path string) error {
@@ -85,7 +84,7 @@ type localStorage struct {
 	cdnDomain string // CDN域名（可选）
 }
 
-func newLocalStorage(config StorageConfig) (Storage, error) {
+func newLocalStorage(config config2.StorageConfig) (Storage, error) {
 	if config.Bucket == "" {
 		return nil, fmt.Errorf("local storage path is required")
 	}
@@ -101,17 +100,17 @@ func newLocalStorage(config StorageConfig) (Storage, error) {
 	}, nil
 }
 
-func (l *localStorage) Upload(ctx context.Context, file io.Reader, path string) (string, error) {
-	// Create full path including base path
+func (l *localStorage) Upload(ctx context.Context, file io.Reader, path, contentType string) (string, error) {
+	// 创建完整的路径，包括基础路径和日期路径
 	fullPath := filepath.Join(l.basePath, path)
 	dir := filepath.Dir(fullPath)
 
-	// Ensure the directory exists
+	// 确保目录存在
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return "", fmt.Errorf("failed to create directory: %w", err)
 	}
 
-	// Write the file to disk
+	// 写入文件到磁盘
 	f, err := os.Create(fullPath)
 	if err != nil {
 		return "", fmt.Errorf("failed to create file: %w", err)
@@ -122,7 +121,6 @@ func (l *localStorage) Upload(ctx context.Context, file io.Reader, path string) 
 		return "", fmt.Errorf("failed to write file: %w", err)
 	}
 
-	// Construct the URL based on whether a CDN domain is provided
 	var url string
 	if l.cdnDomain != "" {
 		url = fmt.Sprintf("https://%s/%s", l.cdnDomain, path)
