@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log"
 	"mime/multipart"
 	"path/filepath"
 	"strings"
@@ -73,7 +74,6 @@ func New(config Config) (*Uploader, error) {
 		config: config,
 	}
 
-	// 根据配置初始化存储
 	var err error
 	u.once.Do(func() {
 		switch config.Storage.Type {
@@ -83,6 +83,9 @@ func New(config Config) (*Uploader, error) {
 			u.storage, err = newLocalStorage(config.Storage)
 		default:
 			err = fmt.Errorf("unsupported storage type: %s", config.Storage.Type)
+		}
+		if err != nil {
+			log.Printf("Error initializing storage: %v", err)
 		}
 	})
 
@@ -95,6 +98,9 @@ func New(config Config) (*Uploader, error) {
 
 // Upload 上传文件
 func (u *Uploader) Upload(ctx context.Context, file *multipart.FileHeader) (*FileInfo, error) {
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Minute) // 设置超时时间
+	defer cancel()
+
 	// 验证文件
 	if err := u.validateFile(file); err != nil {
 		return nil, err
@@ -158,9 +164,11 @@ func (u *Uploader) generateFileName(originalName string) string {
 
 // generatePath 生成存储路径
 func (u *Uploader) generatePath(filename string) string {
+	// 清理输入路径中的特殊字符，避免目录遍历攻击
+	safeFilename := strings.ReplaceAll(filepath.Base(filename), "..", "_")
 	return filepath.Join(
 		u.config.Upload.BasePath,
 		time.Now().Format("2006/01/02"),
-		filename,
+		safeFilename,
 	)
 }
