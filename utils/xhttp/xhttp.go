@@ -2,7 +2,6 @@ package xhttp
 
 import (
 	"context"
-	"github.com/hanyougame/glib/utils/xerr"
 	"github.com/zeromicro/go-zero/core/trace"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"github.com/zeromicro/x/errors"
@@ -56,7 +55,7 @@ func wrapBaseResponse(v any) BaseResponse[any] {
 		resp.Code = int(data.Code())
 		resp.Message = data.Message()
 	case error:
-		resp.Code = int(xerr.ServerError)
+		resp.Code = 500
 		resp.Message = data.Error()
 	default:
 		resp.Code = BusinessCodeOK
