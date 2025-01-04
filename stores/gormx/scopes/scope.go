@@ -2,6 +2,7 @@ package scopes
 
 import (
 	"fmt"
+	"github.com/hanyougame/glib/utils"
 	"github.com/zeromicro/go-zero/core/jsonx"
 	"github.com/zeromicro/go-zero/core/stringx"
 	"gorm.io/gorm"
@@ -169,5 +170,15 @@ func JsonArrayOr[T any](field string, values ...T) func(db *gorm.DB) *gorm.DB {
 
 		orCondition := strings.Join(conditions, " OR ")
 		return db.Where(orCondition, args...)
+	}
+}
+
+func OrderBy(field, order string) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if field == "" {
+			return db
+		}
+		order = utils.Ternary(order != "", order, "asc")
+		return db.Order(field + " " + order)
 	}
 }
