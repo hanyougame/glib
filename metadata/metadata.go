@@ -24,6 +24,8 @@ const (
 	CtxDeviceType = "device_type"
 	// CtxBrowserFingerprint 浏览器指纹
 	CtxBrowserFingerprint = "browser_fingerprint"
+	// CtxCurrencyCode 币种code
+	CtxCurrencyCode = "currency_code"
 )
 
 const (
@@ -63,6 +65,11 @@ func GetUidFromCtx(ctx context.Context) int {
 // GetUsernameFromCtx 从上下文中获取username
 func GetUsernameFromCtx(ctx context.Context) string {
 	return cast.ToString(ctx.Value(CtxJWTUsername))
+}
+
+// GetCurrencyCodeFromCtx 从上下文中获取currency_code
+func GetCurrencyCodeFromCtx(ctx context.Context) string {
+	return cast.ToString(ctx.Value(CtxCurrencyCode))
 }
 
 // GetIpFromCtx 从上下文中获取ip
