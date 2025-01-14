@@ -4,23 +4,56 @@ import (
 	"errors"
 	"fmt"
 	"github.com/sony/sonyflake"
+	"math/rand"
 	"net"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 )
 
-var flake *sonyflake.Sonyflake
+var (
+	flake      *sonyflake.Sonyflake
+	randSource rand.Source
+)
 
 func init() {
 	flake = sonyflake.NewSonyflake(sonyflake.Settings{
 		MachineID: getMachineID,
 	})
+	// 使用当前时间戳初始化随机源
+	randSource = rand.NewSource(time.Now().UnixNano())
 }
 
 // GenId 生成一个唯一的雪花ID
 func GenId() (id uint64, err error) {
 	id, err = flake.NextID()
 	return
+}
+
+func GenUserID() (id uint64, err error) {
+	// 生成一个雪花ID
+	if id, err = flake.NextID(); err != nil {
+		return 0, fmt.Errorf("failed to generate snowflake ID: %v", err)
+	}
+
+	// 获取当前时间戳的纳秒部分，用于增加随机性
+	timestamp := time.Now().UnixNano()
+
+	// 创建一个新的随机数生成器，避免使用 rand.Seed
+	randGen := rand.New(randSource)
+	random := randGen.Intn(1000) // 生成0-999之间的随机数
+
+	// 结合雪花ID、时间戳和随机数生成ID
+	combined := fmt.Sprintf("%d%d%d", id, timestamp%1000000000, random)
+
+	// 取组合字符串的最后10位数字作为最终的ID
+	finalID, err := strconv.ParseUint(combined[len(combined)-10:], 10, 64)
+	if err != nil {
+		return 0, fmt.Errorf("failed to generate 10-digit ID: %v", err)
+	}
+
+	return finalID, nil
 }
 
 // 获取机器 ID 基于 Docker 环境
