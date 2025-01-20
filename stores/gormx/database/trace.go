@@ -9,25 +9,25 @@ import (
 
 func registerTraceHook(tx *gorm.DB) {
 	tx.Callback().Create().Before("gorm:created").Register("trace:create", func(db *gorm.DB) {
-		traceSql("gorm:create", tx)
+		traceSql("gorm:create", db)
 	})
 	tx.Callback().Create().After("gorm:saved").Register("trace:save", func(db *gorm.DB) {
-		traceSql("gorm:save", tx)
+		traceSql("gorm:save", db)
 	})
 	tx.Callback().Query().After("gorm:queried").Register("trace:query", func(db *gorm.DB) {
-		traceSql("gorm:query", tx)
+		traceSql("gorm:query", db)
 	})
 	tx.Callback().Delete().After("gorm:deleted").Register("trace:delete", func(db *gorm.DB) {
-		traceSql("gorm:delete", tx)
+		traceSql("gorm:delete", db)
 	})
 	tx.Callback().Update().After("gorm:updated").Register("trace:update", func(db *gorm.DB) {
-		traceSql("gorm:update", tx)
+		traceSql("gorm:update", db)
 	})
 	tx.Callback().Raw().After("*").Register("trace:raw", func(db *gorm.DB) {
-		traceSql("gorm:raw", tx)
+		traceSql("gorm:raw", db)
 	})
 	tx.Callback().Row().After("*").Register("trace:row", func(db *gorm.DB) {
-		traceSql("gorm:row", tx)
+		traceSql("gorm:row", db)
 	})
 }
 
