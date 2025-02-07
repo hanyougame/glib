@@ -2,6 +2,7 @@ package metadata
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/spf13/cast"
 	"net"
@@ -59,7 +60,27 @@ func GetMetadata[T any](ctx context.Context, key any) (T, bool) {
 
 // GetUidFromCtx 从上下文中获取uid
 func GetUidFromCtx(ctx context.Context) int64 {
-	return cast.ToInt64(ctx.Value(CtxJWTUserId))
+	// 获取值
+	val := ctx.Value(CtxJWTUserId)
+	if val == nil {
+		// 如果为空，可以根据需要返回默认值
+		return 0
+	}
+
+	// 如果值是 json.Number 类型
+	if num, ok := val.(json.Number); ok {
+		// 转换为 int64
+		uid, err := num.Int64()
+		if err != nil {
+			// 如果转换失败，可以选择处理错误（如返回 0 或日志记录）
+			fmt.Println("Error converting json.Number to int64:", err)
+			return 0
+		}
+		return uid
+	}
+
+	// 如果值不是 json.Number 类型，直接转换
+	return cast.ToInt64(val)
 }
 
 // GetUsernameFromCtx 从上下文中获取username
