@@ -16,7 +16,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.7.0
 	github.com/sony/sonyflake v1.2.0
-	github.com/spf13/cast v1.3.0
+	github.com/spf13/cast v1.7.1
 	github.com/zeromicro/go-zero v1.7.4
 	github.com/zeromicro/x v0.0.0-20240408115609-8224c482b07e
 	go.opentelemetry.io/otel v1.24.0
