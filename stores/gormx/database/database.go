@@ -87,10 +87,21 @@ func newRWDBEngine(c config.Config, engine *gorm.DB) (*gorm.DB, error) {
 	}
 
 	resolver := dbresolver.Register(dbresolver.Config{
-		Sources:  sources,
-		Replicas: replicas,
-		Policy:   dbresolver.RandomPolicy{},
+		Sources:           sources,
+		Replicas:          replicas,
+		Policy:            dbresolver.RandomPolicy{},
+		TraceResolverMode: c.Trace,
 	})
+
+	if c.MaxIdleConn > 0 {
+		resolver.SetMaxIdleConns(c.MaxIdleConn)
+	}
+	if c.MaxOpenConn > 0 {
+		resolver.SetMaxOpenConns(c.MaxOpenConn)
+	}
+	if c.MaxLifetime > 0 {
+		resolver.SetConnMaxLifetime(time.Duration(c.MaxLifetime) * time.Minute)
+	}
 
 	if err := engine.Use(resolver); err != nil {
 		return nil, fmt.Errorf("failed to use resolver: %v", err)
