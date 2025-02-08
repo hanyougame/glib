@@ -96,12 +96,11 @@ func (j *JWT) getJwtToken(secretKey string, iat, seconds int64, payload jwt.MapC
 	return token2.SignedString([]byte(secretKey))
 }
 
-func (j *JWT) ParseToken(r *http.Request) (claims jwt.MapClaims, err error) {
+func (j *JWT) ParseToken(r *http.Request) (uid any, claims jwt.MapClaims, err error) {
 	var (
 		tok    *jwt.Token
 		parser = token.NewTokenParser()
 		ok     bool
-		uid    any
 	)
 
 	if tok, err = parser.ParseToken(r, j.secret, j.secret); err != nil {
