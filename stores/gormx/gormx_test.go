@@ -3,6 +3,7 @@ package gormx
 import (
 	"github.com/hanyougame/glib/stores/gormx/config"
 	"github.com/zeromicro/go-zero/core/jsonx"
+	"gorm.io/plugin/dbresolver"
 	"testing"
 )
 
@@ -93,3 +94,26 @@ func TestClickHouseEngine(t *testing.T) {
 //			paginate.Paginate(page),
 //		)
 //}
+
+func TestWriteRead(t *testing.T) {
+	dsn := "host=192.168.6.218 user=postgresql password=bingtangMySQL dbname=k1-dev port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+
+	dsn2 := "host=192.168.6.218 user=postgresql password=bingtangMySQL dbname=k1-dev port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	c := config.Config{
+		Mode:       config.Postgres,
+		Trace:      true,
+		DSN:        dsn,
+		Debug:      true,
+		Separation: true,
+		Sources:    []string{dsn},
+		Replicas:   []string{dsn2},
+	}
+
+	Must(c)
+	result := map[string]interface{}{}
+	err := Engine.Postgres.Clauses(dbresolver.Write).Table("roles").Model(&Model{}).FirstOrInit(&result).Error
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log("result", result)
+}

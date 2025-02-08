@@ -11,6 +11,7 @@ require (
 	github.com/dtm-labs/rockscache v0.1.1
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/go-resty/resty/v2 v2.16.5
+	github.com/golang-jwt/jwt/v4 v4.5.1
 	github.com/google/uuid v1.6.0
 	github.com/jinzhu/copier v0.4.0
 	github.com/pkg/errors v0.9.1
