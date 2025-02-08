@@ -144,3 +144,11 @@ func (j *JWT) ParseToken(r *http.Request) (uid any, claims jwt.MapClaims, err er
 func (j *JWT) generateCacheKey(uid any) string {
 	return fmt.Sprintf(cacheJwtInfoKey, utils.Ternary(j.scene == "", j.secret, j.scene), uid)
 }
+
+// DelCacheToken 删除缓存的token
+func (j *JWT) DelCacheToken(ctx context.Context, uid any) (err error) {
+	if j.sso && j.rdb != nil {
+		err = j.rdb.Del(ctx, j.generateCacheKey(uid)).Err()
+	}
+	return
+}
