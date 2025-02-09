@@ -9,4 +9,5 @@ type Config struct {
 	Username   string   `json:"username,optional"`
 	Password   string   `json:"password,optional"`
 	DB         int      `json:"db,default=0"`
+	IsCluster  bool     `json:"is_cluster,optional"`
 }

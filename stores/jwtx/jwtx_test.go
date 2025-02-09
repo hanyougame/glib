@@ -28,7 +28,7 @@ func TestGenToken(t *testing.T) {
 func TestParseToken(t *testing.T) {
 	token := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZ2UiOjEsImV4cCI6MTczOTAwMTk5OCwiaWF0IjoxNzM5MDAxOTkzLCJuYW1lIjoiMSIsInVpZCI6MX0.on-Ie0zcFwTYTnUq5BspTYbdT9BY9N4cZW0fHwA0M9E"
 
-	data, err := j.ParseToken(&http.Request{
+	_, data, err := j.ParseToken(&http.Request{
 		Header: http.Header{"Authorization": []string{"Bearer " + token}},
 	})
 	t.Log(err)
