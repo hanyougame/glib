@@ -86,7 +86,7 @@ func getMessageSelector(config ConsumerConfig) consumer.MessageSelector {
 	// 使用辅助函数确保配置项的默认值
 	config.MessageSelector.Type = utils.Ternary(config.MessageSelector.Type == "", "TAG", config.MessageSelector.Type)
 	config.MessageSelector.Expression = utils.Ternary(config.MessageSelector.Expression == "", "*", config.MessageSelector.Expression)
-
+	return consumer.MessageSelector{}
 	return consumer.MessageSelector{
 		Type:       consumer.ExpressionType(config.MessageSelector.Type),
 		Expression: config.MessageSelector.Expression,
