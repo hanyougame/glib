@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/consumer"
+	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/google/uuid"
 	"github.com/hanyougame/glib/utils"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -94,7 +95,7 @@ func getMessageSelector(config ConsumerConfig) consumer.MessageSelector {
 
 // getOptions 获取消费者设置
 func getOptions(config ConsumerConfig) []consumer.Option {
-	return []consumer.Option{
+	list := []consumer.Option{
 		consumer.WithGroupName(config.GroupName),
 		consumer.WithNameServer(config.NameServers),
 		consumer.WithInstance(fmt.Sprintf("%s_%s", config.InstanceName, uuid.NewString())),
@@ -105,4 +106,11 @@ func getOptions(config ConsumerConfig) []consumer.Option {
 		consumer.WithRetry(config.RetryNum),
 		consumer.WithConsumeTimeout(time.Duration(config.ConsumeTimeout) * time.Second),
 	}
+	if config.AccessKey != "" && config.SecretKey != "" {
+		list = append(list, consumer.WithCredentials(primitive.Credentials{
+			AccessKey: config.AccessKey,
+			SecretKey: config.SecretKey,
+		}))
+	}
+	return list
 }

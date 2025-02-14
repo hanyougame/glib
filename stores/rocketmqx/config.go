@@ -28,7 +28,9 @@ type ConsumerConfig struct {
 		Expression string `json:"expression,default=*"`
 		Type       string `json:"type,default=TAG"`
 	} `json:"message_selector,omitempty"` // 客户端标识符 要保证每个消费者组中的唯一
-	ConsumeTimeout int64 `json:"consume_timeout,default=60"`
+	ConsumeTimeout int64  `json:"consume_timeout,default=60"`
+	SecretKey      string `json:"secret_key,optional"`
+	AccessKey      string `json:"access_key,optional"`
 }
 
 // MessageHandler 消息处理函数类型
