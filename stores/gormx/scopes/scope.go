@@ -45,6 +45,17 @@ func Like(field string, value any) func(db *gorm.DB) *gorm.DB {
 	}
 }
 
+// ILike 模糊查询
+func ILike(field string, value any) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if s, ok := value.(string); ok && stringx.HasEmpty(s) {
+			return db
+		}
+
+		return db.Where(field+" ILIKE ?", fmt.Sprintf("%%%v%%", value))
+	}
+}
+
 // In in查询
 func In[T comparable](field string, value []T) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
