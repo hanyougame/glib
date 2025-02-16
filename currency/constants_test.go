@@ -6,6 +6,6 @@ import (
 )
 
 func TestCurrencyUnit_ConvertTo(t *testing.T) {
-	var c Unit = 12345678
-	fmt.Println(c.ConvertYuan())
+	var c int64 = 12345678
+	fmt.Println(WeiToYuan(c))
 }
