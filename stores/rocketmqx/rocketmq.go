@@ -5,7 +5,7 @@ import (
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
-	"github.com/google/uuid"
+	"github.com/hanyougame/glib/utils"
 	"github.com/zeromicro/go-zero/core/logx"
 	"sync"
 	"time"
@@ -24,7 +24,11 @@ func NewConsumer(config ConsumerConfig, topic string, messageSelector consumer.M
 			AccessKey: config.AccessKey,
 		}),
 		// 设置从起始位置开始消费
-		consumer.WithConsumeFromWhere(consumer.ConsumeFromFirstOffset),
+		consumer.WithConsumeFromWhere(consumer.ConsumeFromWhere(config.ConsumeFromWhere)),
+		consumer.WithConsumeGoroutineNums(config.GoroutineNums),
+		consumer.WithRetry(config.RetryNum),
+		consumer.WithConsumeTimeout(time.Duration(config.ConsumeTimeout)*time.Second),
+		consumer.WithPullBatchSize(int32(utils.Ternary(config.PullBatchSize > 32, 32, config.PullBatchSize))),
 		// 设置消费模式（默认集群模式）
 		consumer.WithConsumerModel(consumer.Clustering),
 	)
@@ -96,34 +100,10 @@ func StartConsumer(nameServers []string, consumers []ConsumerConfig, handlers ma
 // getMessageSelector 获取 MessageSelector
 func getMessageSelector(config ConsumerConfig) consumer.MessageSelector {
 	// 使用辅助函数确保配置项的默认值
-	//config.MessageSelector.Type = utils.Ternary(config.MessageSelector.Type == "", "TAG", config.MessageSelector.Type)
-	//config.MessageSelector.Expression = utils.Ternary(config.MessageSelector.Expression == "", "*", config.MessageSelector.Expression)
-	return consumer.MessageSelector{}
-	//return consumer.MessageSelector{
-	//	Type:       consumer.ExpressionType(config.MessageSelector.Type),
-	//	Expression: config.MessageSelector.Expression,
-	//}
-}
-
-// getOptions 获取消费者设置
-func getOptions(config ConsumerConfig) []consumer.Option {
-	list := []consumer.Option{
-		consumer.WithGroupName(config.GroupName),
-		consumer.WithNsResolver(primitive.NewPassthroughResolver(config.NameServers)),
-		consumer.WithInstance(fmt.Sprintf("%s_%s", config.InstanceName, uuid.NewString())),
-		consumer.WithConsumeFromWhere(consumer.ConsumeFromWhere(config.ConsumeFromWhere)),
-		consumer.WithConsumerModel(consumer.Clustering),
-		consumer.WithConsumeMessageBatchMaxSize(config.ConsumeMessageBatchMaxSize),
-		consumer.WithPullBatchSize(int32(config.PullBatchSize)),
-		consumer.WithConsumeGoroutineNums(config.GoroutineNums),
-		consumer.WithRetry(config.RetryNum),
-		consumer.WithConsumeTimeout(time.Duration(config.ConsumeTimeout) * time.Second),
+	config.MessageSelector.Type = utils.Ternary(config.MessageSelector.Type == "", "TAG", config.MessageSelector.Type)
+	config.MessageSelector.Expression = utils.Ternary(config.MessageSelector.Expression == "", "*", config.MessageSelector.Expression)
+	return consumer.MessageSelector{
+		Type:       consumer.ExpressionType(config.MessageSelector.Type),
+		Expression: config.MessageSelector.Expression,
 	}
-	if config.AccessKey != "" && config.SecretKey != "" {
-		list = append(list, consumer.WithCredentials(primitive.Credentials{
-			AccessKey: config.AccessKey,
-			SecretKey: config.SecretKey,
-		}))
-	}
-	return list
 }
