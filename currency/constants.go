@@ -40,6 +40,6 @@ func WeiToYuan(c int64) string {
 	return decimal.NewFromInt(c).Div(decimal.NewFromInt(int64(Wei))).String()
 }
 
-func WeiToYuanFloor(c int64) int64 {
-	return decimal.NewFromInt(c).Div(decimal.NewFromInt(int64(Wei))).Floor().IntPart()
+func WeiToYuanFloor(c int64) decimal.Decimal {
+	return decimal.NewFromInt(c).Div(decimal.NewFromInt(int64(Wei))).Floor()
 }
