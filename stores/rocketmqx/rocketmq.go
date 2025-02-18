@@ -55,7 +55,6 @@ func StartConsumer(commonConfig RocketMQX, consumers []ConsumerConfig, handlers 
 	// 遍历所有消费者配置
 	for _, cc := range consumers {
 		cc = getConfig(commonConfig, cc)
-		utils.PrettyJSON(cc)
 		// 启动 WorkerNum 数量的消费者实例
 		for i := 0; i < cc.WorkerNum; i++ {
 			wg.Add(1) // 增加计数
