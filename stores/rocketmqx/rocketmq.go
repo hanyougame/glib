@@ -45,7 +45,7 @@ func NewConsumer(config ConsumerConfig, topic string, messageSelector consumer.M
 }
 
 // StartConsumer 启动多个消费者
-func StartConsumer(nameServers []string, consumers []ConsumerConfig, handlers map[string]MessageHandler) []rocketmq.PushConsumer {
+func StartConsumer(commonConfig RocketMQX, consumers []ConsumerConfig, handlers map[string]MessageHandler) []rocketmq.PushConsumer {
 	var (
 		ccs []rocketmq.PushConsumer
 		mu  sync.Mutex
@@ -54,6 +54,8 @@ func StartConsumer(nameServers []string, consumers []ConsumerConfig, handlers ma
 
 	// 遍历所有消费者配置
 	for _, cc := range consumers {
+		cc = getConfig(commonConfig, cc)
+		utils.PrettyJSON(cc)
 		// 启动 WorkerNum 数量的消费者实例
 		for i := 0; i < cc.WorkerNum; i++ {
 			wg.Add(1) // 增加计数
@@ -66,11 +68,6 @@ func StartConsumer(nameServers []string, consumers []ConsumerConfig, handlers ma
 				if !exists {
 					logx.Infof("处理函数 %s 未找到", consumerConfig.Handler)
 					return
-				}
-
-				// 如果配置中没有 NameServers，则使用传入的 nameServers
-				if len(consumerConfig.NameServers) == 0 {
-					consumerConfig.NameServers = nameServers
 				}
 
 				// 确定该消费者实例的 MessageSelector
@@ -95,6 +92,19 @@ func StartConsumer(nameServers []string, consumers []ConsumerConfig, handlers ma
 	wg.Wait()
 
 	return ccs
+}
+
+func getConfig(commonConfig RocketMQX, consumers ConsumerConfig) ConsumerConfig {
+	consumers.ConsumeTimeout = utils.Ternary(commonConfig.ConsumeTimeout > 0, commonConfig.ConsumeTimeout, consumers.ConsumeTimeout)
+	consumers.NameServers = utils.Ternary(len(commonConfig.NameServers) > 0, commonConfig.NameServers, consumers.NameServers)
+	consumers.ConsumeFromWhere = utils.Ternary(commonConfig.ConsumeFromWhere > 0, commonConfig.ConsumeFromWhere, consumers.ConsumeFromWhere)
+	consumers.SecretKey = utils.Ternary(commonConfig.SecretKey != "", commonConfig.SecretKey, consumers.SecretKey)
+	consumers.AccessKey = utils.Ternary(commonConfig.AccessKey != "", commonConfig.AccessKey, consumers.AccessKey)
+	consumers.GoroutineNums = utils.Ternary(commonConfig.GoroutineNums > 0, commonConfig.GoroutineNums, consumers.GoroutineNums)
+	consumers.PullBatchSize = utils.Ternary(commonConfig.PullBatchSize > 0, commonConfig.PullBatchSize, consumers.PullBatchSize)
+	consumers.RetryNum = utils.Ternary(commonConfig.RetryNum > 0, commonConfig.RetryNum, consumers.RetryNum)
+	consumers.WorkerNum = utils.Ternary(commonConfig.WorkerNum > 0, commonConfig.WorkerNum, consumers.WorkerNum)
+	return consumers
 }
 
 // getMessageSelector 获取 MessageSelector
