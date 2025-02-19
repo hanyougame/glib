@@ -2,11 +2,12 @@ package paginate
 
 // Pagination 分页
 type Pagination struct {
-	Page     int   `json:"page"`
-	PageSize int   `json:"page_size"`
-	Total    int64 `json:"total"`
-	Rows     any   `json:"rows"`
-	Extend   any   `json:"extend,omitempty"`
+	Page      int   `json:"page"`
+	PageSize  int   `json:"page_size"`
+	Total     int64 `json:"total"`
+	Rows      any   `json:"rows"`
+	Extend    any   `json:"extend,omitempty"`
+	TotalPage int64 `json:"total_page"`
 }
 
 func (p *Pagination) Offset() int {
