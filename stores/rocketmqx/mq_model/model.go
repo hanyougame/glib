@@ -18,15 +18,19 @@ type UserRechargeNotify struct {
 	RechargeAmount int64  `json:"recharge_amount"` //充值金额
 	RechargeTime   int64  `json:"recharge_time"`   //充值时间
 	FirstSign      bool   `json:"first_sign"`      //首充标志
-	RechargeType   int64  `json:"recharge_type"`   // 充值类型
+	RechargeType   int64  `json:"recharge_type"`   // 充值类型 1-在线充值 2-转账充值 3-客服代充
+	RechargeMerchantId int64 `json:"recharge_merchant_id"` // 充值商户Id
+	RechargeCategoryId int64 `json:"recharge_category_id"` // 充值类别Id
+	RechargeChannelId int64 `json:"recharge_channel_id"` // 充值通道Id
 }
 
 // UserWithdrawNotify 用户提现推送
 type UserWithdrawNotify struct {
 	UserId          int64  `json:"user_id"` //用户ID
-	UserAccount     string `json:"user_account"`
-	CurrencyCode    string `json:"currency_code"`
+	UserAccount     string `json:"user_account"`   //用户名
+	CurrencyCode    string `json:"currency_code"`  // 币种
 	WithdrawAmount  int64  `json:"withdraw_amount"`   //提现金额
+	WithdrawTime    int64  `json:"withdraw_time"`    // 提现时间
 	WithdrawEndTime int64  `json:"withdraw_end_time"` // 提现结束时间
 }
 
