@@ -1,9 +1,11 @@
 package gormx
 
 import (
+	"fmt"
 	"github.com/hanyougame/glib/stores/gormx/config"
 	"github.com/zeromicro/go-zero/core/jsonx"
 	"gorm.io/plugin/dbresolver"
+	"math"
 	"testing"
 )
 
@@ -116,4 +118,10 @@ func TestWriteRead(t *testing.T) {
 		t.Error(err)
 	}
 	t.Log("result", result)
+}
+
+func TestPaginate(t *testing.T) {
+	var totalRows = 111
+	var PageSize = 10
+	fmt.Println(int64(math.Ceil(float64(totalRows) / float64(PageSize))))
 }

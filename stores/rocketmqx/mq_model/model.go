@@ -1,4 +1,4 @@
-package _model
+package mq_model
 
 // UserLoginNotify 用户登陆通知
 type UserLoginNotify struct {
@@ -17,6 +17,7 @@ type UserRechargeNotify struct {
 	RechargeTime   int64 //充值时间
 	FirstSign      bool  //首充标志
 	LoginTime      int64 //登陆时间
+	RechargeType   int64 // 充值类型
 }
 
 // UserWithdrawNotify 用户提现推送
@@ -34,6 +35,7 @@ type UserBetSettlementNotify struct {
 	ValidBetAmount int64 //有效投注金额
 	GameId         int64 //游戏ID
 	GameCategory   int64 //游戏类型
+	PlatformID     int64 // 游戏平台ID
 	SettlementTime int64 // 领取时间
 }
 
