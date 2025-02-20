@@ -1,4 +1,4 @@
-package _model
+package mq_model
 
 // UserLoginNotify 用户登陆通知
 type UserLoginNotify struct {
@@ -13,10 +13,8 @@ type UserLoginNotify struct {
 type UserRechargeNotify struct {
 	UserId         int64 //用户ID
 	RechargeAmount int64 //充值金额
-	PaymentAmount  int64 //支付金额
 	RechargeTime   int64 //充值时间
 	FirstSign      bool  //首充标志
-	LoginTime      int64 //登陆时间
 }
 
 // UserWithdrawNotify 用户提现推送
