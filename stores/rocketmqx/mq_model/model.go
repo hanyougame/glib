@@ -2,47 +2,62 @@ package mq_model
 
 // UserLoginNotify 用户登陆通知
 type UserLoginNotify struct {
-	UserId                 int64 //用户ID
-	FirstToday             bool  //今天首次(有最好)
-	LoginTime              int64 //登陆时间
-	FirstRechargeTime      int64 // 首充时间
-	FirstBetSettlementTime int64 // 首次投注时间
+	UserId                 int64  `json:"user_id"` //用户ID
+	UserAccount            string `json:"user_account"`
+	FirstToday             bool   `json:"first_today"`               //今天首次(有最好)
+	LoginTime              int64  `json:"login_time"`                //登陆时间
+	FirstRechargeTime      int64  `json:"first_recharge_time"`       // 首充时间
+	FirstBetSettlementTime int64  `json:"first_bet_settlement_time"` // 首次投注时间
 }
 
 // UserRechargeNotify 用户成功充值推送
 type UserRechargeNotify struct {
-	UserId         int64 //用户ID
-	RechargeAmount int64 //充值金额
-	PaymentAmount  int64 //支付金额
-	RechargeTime   int64 //充值时间
-	FirstSign      bool  //首充标志
-	LoginTime      int64 //登陆时间
-	RechargeType   int64 // 充值类型
+	UserId         int64  `json:"user_id"` //用户ID
+	UserAccount    string `json:"user_account"`
+	CurrencyCode   string `json:"currency_code"`
+	RechargeAmount int64  `json:"recharge_amount"` //充值金额
+	RechargeTime   int64  `json:"recharge_time"`   //充值时间
+	FirstSign      bool   `json:"first_sign"`      //首充标志
+	RechargeType   int64  `json:"recharge_type"`   // 充值类型
 }
 
 // UserWithdrawNotify 用户提现推送
 type UserWithdrawNotify struct {
-	UserId          int64 //用户ID
-	WithdrawAmount  int64 //提现金额
-	WithdrawEndTime int64 // 提现结束时间
+	UserId          int64  `json:"user_id"` //用户ID
+	UserAccount     string `json:"user_account"`
+	CurrencyCode    string `json:"currency_code"`
+	WithdrawAmount  int64  `json:"withdraw_amount"`   //提现金额
+	WithdrawEndTime int64  `json:"withdraw_end_time"` // 提现结束时间
 }
 
 // UserBetSettlementNotify 用户投注结算通知
 type UserBetSettlementNotify struct {
-	UserId         int64 //用户ID
-	BetAmount      int64 //投注金额(不包含撤单金额)
-	WinAmount      int64 //中奖金额
-	ValidBetAmount int64 //有效投注金额
-	GameId         int64 //游戏ID
-	GameCategory   int64 //游戏类型
-	PlatformID     int64 // 游戏平台ID
-	SettlementTime int64 // 领取时间
+	UserId         int64  `json:"user_id"` //用户ID
+	UserAccount    string `json:"user_account"`
+	CurrencyCode   string `json:"currency_code"`
+	BetAmount      int64  `json:"bet_amount"`       //投注金额(不包含撤单金额)
+	WinAmount      int64  `json:"win_amount"`       //中奖金额
+	ValidBetAmount int64  `json:"valid_bet_amount"` //有效投注金额
+	GameId         int64  `json:"game_id"`          //游戏ID
+	GameCategory   int64  `json:"game_category"`    //游戏类型
+	PlatformID     int64  `json:"platform_id"`      // 游戏平台ID
+	SettlementTime int64  `json:"settlement_time"`  // 领取时间
 }
 
 // UserPromotionBonusNotify 用户优惠奖励领取通知
 type UserPromotionBonusNotify struct {
-	UserId          int64 //用户ID
-	BonusAmount     int64 //彩金金额
-	ReceiveTime     int64 // 领取时间
-	PromotionSource int64 // 优惠来源
+	UserId          int64  `json:"user_id"` //用户ID
+	UserAccount     string `json:"user_account"`
+	CurrencyCode    string `json:"currency_code"`
+	BonusAmount     int64  `json:"bonus_amount"`     //彩金金额
+	ReceiveTime     int64  `json:"receive_time"`     // 领取时间
+	PromotionSource int64  `json:"promotion_source"` // 优惠来源
+}
+
+// AgentBind 代理绑定消息结构
+type AgentBind struct {
+	UserID       int64  `json:"user_id"`  // 被绑定的用户id
+	AgentID      int64  `json:"agent_id"` // 上级代理id
+	BindTime     int64  `json:"bind_time"`
+	CurrencyCode string `json:"currency_code"`
 }
