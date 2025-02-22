@@ -2,12 +2,10 @@ package mq_model
 
 // UserLoginNotify 用户登陆通知
 type UserLoginNotify struct {
-	UserId                 int64  `json:"user_id"` //用户ID
-	UserAccount            string `json:"user_account"`
-	FirstToday             bool   `json:"first_today"`               //今天首次(有最好)
-	LoginTime              int64  `json:"login_time"`                //登陆时间
-	FirstRechargeTime      int64  `json:"first_recharge_time"`       // 首充时间
-	FirstBetSettlementTime int64  `json:"first_bet_settlement_time"` // 首次投注时间
+	UserId      int64  `json:"user_id"` //用户ID
+	UserAccount string `json:"user_account"`
+	FirstToday  bool   `json:"first_today"` //今天首次(有最好)
+	LoginTime   int64  `json:"login_time"`  //登陆时间
 }
 
 // UserRechargeNotify 用户成功充值推送
