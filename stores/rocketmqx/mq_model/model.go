@@ -10,9 +10,9 @@ type UserLoginNotify struct {
 
 // UserRechargeNotify 用户成功充值推送
 type UserRechargeNotify struct {
-	UserId             int64  `json:"user_id"` 		// 用户ID
-	UserAccount        string `json:"user_account"`		// 用户账号
-	CurrencyCode       string `json:"currency_code"`    	// 币种
+	UserId             int64  `json:"user_id"`              // 用户ID
+	UserAccount        string `json:"user_account"`         // 用户账号
+	CurrencyCode       string `json:"currency_code"`        // 币种
 	RechargeAmount     int64  `json:"recharge_amount"`      // 充值金额
 	RechargeTime       int64  `json:"recharge_time"`        // 充值时间
 	FirstSign          bool   `json:"first_sign"`           // 首充标志
@@ -57,18 +57,17 @@ type UserPromotionBonusNotify struct {
 	PromotionSource int64  `json:"promotion_source"` // 优惠来源
 }
 
-// AgentBind 代理绑定消息结构
-type AgentBind struct {
-	UserID       int64  `json:"user_id"`  // 被绑定的用户id
-	AgentID      int64  `json:"agent_id"` // 上级代理id
-	BindTime     int64  `json:"bind_time"`
-	CurrencyCode string `json:"currency_code"`
-}
-
 // AgentCommissionReceiveNotify 代理佣金领取通知
 type AgentCommissionReceiveNotify struct {
-	UserId 		int64 	`json:"user_id"`   	 // 用户Id
-	CurrencyCode 	string 	`json:"currency_code"`	 // 用户币种
-	ReceiveTime 	int64 	`json:"receive_time"` 	 // 领取时间
-	ReceiveAmount 	int64 	`json:"receive_amount"`  // 领取金额
+	UserId        int64  `json:"user_id"`        // 用户Id
+	CurrencyCode  string `json:"currency_code"`  // 用户币种
+	ReceiveTime   int64  `json:"receive_time"`   // 领取时间
+	ReceiveAmount int64  `json:"receive_amount"` // 领取金额
+}
+
+type UserRegister struct {
+	UserId       int64  `json:"user_id"`
+	UserAccount  string `json:"user_account"`
+	RegisterTime int64  `json:"register_time"`
+	CurrencyCode string `json:"currency_code"`
 }
