@@ -65,9 +65,10 @@ type AgentCommissionReceiveNotify struct {
 	ReceiveAmount int64  `json:"receive_amount"` // 领取金额
 }
 
-type UserRegister struct {
-	UserId       int64  `json:"user_id"`
-	UserAccount  string `json:"user_account"`
-	RegisterTime int64  `json:"register_time"`
-	CurrencyCode string `json:"currency_code"`
+type UserRegisterNotify struct {
+	ParentID     int64  `json:"parent_id"`     // 上级ID
+	UserId       int64  `json:"user_id"`       // 用户ID
+	UserAccount  string `json:"user_account"`  // 用户账号
+	RegisterTime int64  `json:"register_time"` // 注册时间
+	CurrencyCode string `json:"currency_code"` // 币种
 }
