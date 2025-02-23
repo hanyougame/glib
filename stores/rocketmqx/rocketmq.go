@@ -5,6 +5,7 @@ import (
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
+	"github.com/google/uuid"
 	"github.com/hanyougame/glib/utils"
 	"github.com/zeromicro/go-zero/core/logx"
 	"sync"
@@ -31,6 +32,7 @@ func NewConsumer(config ConsumerConfig, topic string, messageSelector consumer.M
 		consumer.WithPullBatchSize(int32(utils.Ternary(config.PullBatchSize > 32, 32, config.PullBatchSize))),
 		// 设置消费模式（默认集群模式）
 		consumer.WithConsumerModel(consumer.Clustering),
+		consumer.WithInstance(config.GroupName+"_"+uuid.New().String()),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("创建消费者失败: %w", err)
