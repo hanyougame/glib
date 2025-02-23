@@ -8,7 +8,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"path/filepath"
 )
 
 // CosStorage 实现腾讯云
@@ -64,7 +63,7 @@ func (s *CosStorage) Upload(ctx context.Context, file io.Reader, path string) (f
 		err = fmt.Errorf("failed to upload file to cos: %w", err)
 		return
 	}
-	fullPath = filepath.Join(s.requestURL, path)
+	fullPath, err = url.JoinPath(s.requestURL, path)
 	return
 }
 
