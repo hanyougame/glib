@@ -13,6 +13,4 @@ const (
 	TopicUserPromotionBonusNotify = "user_promotion_bonus_notify"
 	// TopicUserRegisterNotify 用户注册通知
 	TopicUserRegisterNotify = "user_register_notify"
-	// TopicAgentCommissionReceiveNotify 代理佣金结算通知
-	TopicAgentCommissionReceiveNotify = "agent_commission_receive_notify"
 )
