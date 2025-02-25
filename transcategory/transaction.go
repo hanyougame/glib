@@ -183,7 +183,9 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 		}
 	case TransactionCategoryGameBet:
 		return []TransactionSubCategory{
+			TransactionSubCategoryGameBet,
 			TransactionSubCategoryGameBetSettlement,
+			TransactionSubCategoryGameBetCancel,
 		}
 	default:
 		return []TransactionSubCategory{}
@@ -353,10 +355,12 @@ const (
 	TransactionSubCategoryBlindBoxLotteryReward                                                            // 盲盒抽奖奖励
 )
 
-// SubCategoryGameBetSettlement 盲盒抽奖子类
+// SubCategoryGameBetSettlement 游戏投注子类
 const (
 	SubCategoryGameBetSettlement            TransactionSubCategory = 18000
-	TransactionSubCategoryGameBetSettlement                        // 游戏投注结算
+	TransactionSubCategoryGameBet                                  = iota + SubCategoryGameBetSettlement // 游戏投注
+	TransactionSubCategoryGameBetSettlement                                                              // 游戏投注结算
+	TransactionSubCategoryGameBetCancel                                                                  // 游戏撤单
 )
 
 func (t TransactionSubCategory) Int() int {
