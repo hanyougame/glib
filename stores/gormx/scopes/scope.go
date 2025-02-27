@@ -193,3 +193,30 @@ func OrderBy(field, order string) func(db *gorm.DB) *gorm.DB {
 		return db.Order(field + " " + order)
 	}
 }
+
+// JsonArrayOrEmpty json数组or查询并查询所有为空的字段
+func JsonArrayOrEmpty[T any](field string, values ...T) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if len(values) == 0 {
+			return db
+		}
+
+		var (
+			conditions []string
+			args       []interface{}
+		)
+
+		for _, value := range values {
+			jsonValue, err := jsonx.Marshal(value)
+			if err != nil {
+				return db
+			}
+			conditions = append(conditions, fmt.Sprintf("%s @> ?", field))
+			args = append(args, jsonValue)
+		}
+		conditions = append(conditions, fmt.Sprintf("%s = '[]'", field))
+
+		orCondition := strings.Join(conditions, " OR ")
+		return db.Where(orCondition, args...)
+	}
+}
