@@ -39,12 +39,13 @@ type UserBetSettlementNotify struct {
 	UserAccount    string `json:"user_account"`
 	CurrencyCode   string `json:"currency_code"`
 	BetAmount      int64  `json:"bet_amount"`       //投注金额(不包含撤单金额)
-	WinAmount      int64  `json:"win_amount"`       //中奖金额
 	ValidBetAmount int64  `json:"valid_bet_amount"` //有效投注金额
 	GameId         int64  `json:"game_id"`          //游戏ID
 	GameCategory   int64  `json:"game_category"`    //游戏类型
 	PlatformID     int64  `json:"platform_id"`      // 游戏平台ID
 	SettlementTime int64  `json:"settlement_time"`  // 领取时间
+	BonusAmount    int64  `json:"bonus_amount"`     // 派奖金额
+	UserWinAmount  int64  `json:"user_win_amount"`  // 用户输赢金额 有负数
 }
 
 // UserPromotionBonusNotify 用户优惠奖励领取通知
