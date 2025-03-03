@@ -10,7 +10,7 @@ import (
 
 // 定义常量
 const (
-	// Redis键前缀
+	// KeyPrefix Redis键前缀
 	KeyPrefix = "{cache}:user:exception:%d"
 )
 
@@ -71,10 +71,10 @@ func (u *UserX) GetUserExceptionStatus(ctx context.Context, userId int64) (int64
 		// 其他错误
 		return 0, fmt.Errorf("获取用户异常状态失败: %w", err)
 	}
-	val1, err1 := strconv.ParseInt(value, 10, 64)
-	if err1 != nil {
+	val, err := strconv.ParseInt(value, 10, 64)
+	if err != nil {
 		return 0, fmt.Errorf("获取用户异常状态失败: %w", err)
 	}
 
-	return val1, nil
+	return val, nil
 }
