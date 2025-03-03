@@ -102,7 +102,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	switch t {
 	case TransactionCategoryCapitalSwitch:
 		return []TransactionSubCategory{
-			TransactionSubCategoryFunTa, TransactionSubCategoryPoly, TransactionSubCategoryBBIN,
+			TransactionSubCategoryWithdrawal, TransactionSubCategoryDeposits,
 		}
 	case TransactionCategoryUserRecharge:
 		return []TransactionSubCategory{
@@ -197,10 +197,10 @@ type TransactionSubCategory int
 
 // 资金切换子类
 const (
-	SubCategoryCapitalSwitch    TransactionSubCategory = 1000
-	TransactionSubCategoryFunTa                        = iota + SubCategoryCapitalSwitch // FunTa
-	TransactionSubCategoryPoly                                                           // Poly
-	TransactionSubCategoryBBIN                                                           // BBIN
+	SubCategoryCapitalSwitch         TransactionSubCategory = 1000
+	TransactionSubCategoryWithdrawal                        = iota + SubCategoryCapitalSwitch // 转出
+	TransactionSubCategoryDeposits                                                            // 转入
+
 )
 
 // 会员充值子类
@@ -373,12 +373,10 @@ func (t TransactionSubCategory) Int64() int64 {
 
 func (t TransactionSubCategory) String() string {
 	switch t {
-	case TransactionSubCategoryFunTa:
-		return "FunTa"
-	case TransactionSubCategoryPoly:
-		return "Poly"
-	case TransactionSubCategoryBBIN:
-		return "BBIN"
+	case TransactionSubCategoryWithdrawal:
+		return "转出"
+	case TransactionSubCategoryDeposits:
+		return "转入"
 	case TransactionSubCategoryUalaTransfer:
 		return "Uala转账"
 	case TransactionSubCategoryMercadoPagoTransfer:
