@@ -16,8 +16,10 @@ require (
 	github.com/jinzhu/copier v0.4.0
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.7.0
+	github.com/shopspring/decimal v1.4.0
 	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.7.1
+	github.com/tencentyun/cos-go-sdk-v5 v0.7.61
 	github.com/zeromicro/go-zero v1.8.0
 	github.com/zeromicro/x v0.0.0-20240408115609-8224c482b07e
 	go.opentelemetry.io/otel v1.34.0
@@ -92,10 +94,8 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/shopspring/decimal v1.4.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
-	github.com/tencentyun/cos-go-sdk-v5 v0.7.61 // indirect
 	github.com/tidwall/gjson v1.18.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect

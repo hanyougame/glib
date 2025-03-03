@@ -39,12 +39,13 @@ type UserBetSettlementNotify struct {
 	UserAccount    string `json:"user_account"`
 	CurrencyCode   string `json:"currency_code"`
 	BetAmount      int64  `json:"bet_amount"`       //投注金额(不包含撤单金额)
-	WinAmount      int64  `json:"win_amount"`       //中奖金额
 	ValidBetAmount int64  `json:"valid_bet_amount"` //有效投注金额
 	GameId         int64  `json:"game_id"`          //游戏ID
 	GameCategory   int64  `json:"game_category"`    //游戏类型
 	PlatformID     int64  `json:"platform_id"`      // 游戏平台ID
 	SettlementTime int64  `json:"settlement_time"`  // 领取时间
+	BonusAmount    int64  `json:"bonus_amount"`     // 派奖金额
+	UserWinAmount  int64  `json:"user_win_amount"`  // 用户输赢金额 有负数
 }
 
 // UserPromotionBonusNotify 用户优惠奖励领取通知
@@ -54,20 +55,26 @@ type UserPromotionBonusNotify struct {
 	CurrencyCode    string `json:"currency_code"`
 	BonusAmount     int64  `json:"bonus_amount"`     //彩金金额
 	ReceiveTime     int64  `json:"receive_time"`     // 领取时间
-	PromotionSource int64  `json:"promotion_source"` // 优惠来源
+	PromotionSource int64  `json:"promotion_source"` // 优惠来源，同后台 constants.PromotionSource
 }
 
-// AgentCommissionReceiveNotify 代理佣金领取通知
-type AgentCommissionReceiveNotify struct {
-	UserId        int64  `json:"user_id"`        // 用户Id
-	CurrencyCode  string `json:"currency_code"`  // 用户币种
-	ReceiveTime   int64  `json:"receive_time"`   // 领取时间
-	ReceiveAmount int64  `json:"receive_amount"` // 领取金额
+type UserRegisterNotify struct {
+	ParentID     int64  `json:"parent_id"`     // 上级ID
+	UserId       int64  `json:"user_id"`       // 用户ID
+	UserAccount  string `json:"user_account"`  // 用户账号
+	RegisterTime int64  `json:"register_time"` // 注册时间
+	CurrencyCode string `json:"currency_code"` // 币种
 }
 
-type UserRegister struct {
-	UserId       int64  `json:"user_id"`
-	UserAccount  string `json:"user_account"`
-	RegisterTime int64  `json:"register_time"`
-	CurrencyCode string `json:"currency_code"`
+// MqDepWdlTripartiteMsg 游戏转入转出第三方余额通知
+type MqDepWdlTripartiteMsg struct {
+	GamePlatformId   int64  `json:"game_platform_id"`  //游戏平台key  唯一标识
+	GameId           int64  `json:"game_id"`           //游戏标志
+	UserId           int64  `json:"user_id"`           //用户ID
+	CurrencyCode     string `json:"currency_code"`     //货币Code
+	PlatformAmount   int64  `json:"platform_amount"`   // 整数大于0 平台金额格式
+	TripartiteAmount string `json:"tripartite_amount"` // 保留2位小数 三方金额格式
+	GameOrderNo      string `json:"game_order_no"`     // 订单号
+	TransferType     int64  `json:"transfer_type"`     //交易类型 1转入,2转出
+	GameName         string `json:"game_name"`         //游戏名称
 }
