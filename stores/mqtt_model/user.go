@@ -6,3 +6,7 @@ type UserPushOff struct {
 	Device    string `json:"device"`     // 设备型号
 	LoginTime int64  `json:"login_time"` // 登录时间
 }
+
+type UserStatusChange struct {
+	Status int64 `json:"status"` // 状态
+}
