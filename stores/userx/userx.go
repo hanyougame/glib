@@ -63,3 +63,79 @@ func (u *UserX) DelUserExceptionStatus(ctx context.Context, userId int64) error 
 	}
 	return u.rdb.Del(ctx, fmt.Sprintf(KeyPrefix, userId)).Err()
 }
+
+// BatchStoreUserExceptionStatus 批量存储用户异常状态到Redis
+// userExceptions: 用户ID与异常状态值的映射
+// expireSeconds: 过期时间（秒），如果为0则使用默认过期时间
+// 返回: 存储是否成功，错误信息
+func (u *UserX) BatchStoreUserExceptionStatus(ctx context.Context, userExceptions map[int64]int64) error {
+	if len(userExceptions) == 0 {
+		return fmt.Errorf("用户异常状态映射不能为空")
+	}
+
+	pipe := u.rdb.Pipeline()
+	for userId, exceptionValue := range userExceptions {
+		if userId == 0 || exceptionValue == 0 {
+			return fmt.Errorf("用户ID和异常状态值不能为空")
+		}
+		pipe.Set(ctx, fmt.Sprintf(KeyPrefix, userId), exceptionValue, 0)
+	}
+	_, err := pipe.Exec(ctx)
+	return err
+}
+
+// BatchGetUserExceptionStatus 批量获取用户异常状态
+// userIds: 用户ID列表
+// 返回: 用户ID与异常状态值的映射，错误信息
+func (u *UserX) BatchGetUserExceptionStatus(ctx context.Context, userIds []int64) (map[int64]int64, error) {
+	if len(userIds) == 0 {
+		return nil, fmt.Errorf("用户ID列表不能为空")
+	}
+
+	keys := make([]string, len(userIds))
+	for i, userId := range userIds {
+		if userId == 0 {
+			return nil, fmt.Errorf("用户ID不能为空")
+		}
+		keys[i] = fmt.Sprintf(KeyPrefix, userId)
+	}
+
+	values, err := u.rdb.MGet(ctx, keys...).Result()
+	if err != nil {
+		return nil, err
+	}
+
+	result := make(map[int64]int64, len(userIds))
+	for i, val := range values {
+		if val == nil {
+			result[userIds[i]] = 1 // 键不存在，返回默认值
+		} else {
+			parsedVal, err := strconv.ParseInt(val.(string), 10, 64)
+			if err != nil {
+				return nil, err
+			}
+			result[userIds[i]] = parsedVal
+		}
+	}
+
+	return result, nil
+}
+
+// BatchDelUserExceptionStatus 批量删除用户异常状态
+// userIds: 用户ID列表
+// 返回: 是否删除成功，错误信息
+func (u *UserX) BatchDelUserExceptionStatus(ctx context.Context, userIds []int64) error {
+	if len(userIds) == 0 {
+		return fmt.Errorf("用户ID列表不能为空")
+	}
+
+	keys := make([]string, len(userIds))
+	for i, userId := range userIds {
+		if userId == 0 {
+			return fmt.Errorf("用户ID不能为空")
+		}
+		keys[i] = fmt.Sprintf(KeyPrefix, userId)
+	}
+
+	return u.rdb.Del(ctx, keys...).Err()
+}
