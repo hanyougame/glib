@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/redis/go-redis/v9"
-	"strconv"
+	"github.com/spf13/cast"
 )
 
 // 定义常量
@@ -27,7 +27,7 @@ func NewUserX(rdb redis.UniversalClient) *UserX {
 // exceptionValue: 异常状态值
 // expireSeconds: 过期时间（秒），如果为0则使用默认过期时间
 // 返回: 存储是否成功，错误信息
-func (u *UserX) StoreUserExceptionStatus(ctx context.Context, userId, exceptionValue int64) error {
+func (u *UserX) StoreUserExceptionStatus(ctx context.Context, userId int64, exceptionValue int) error {
 	if userId == 0 || exceptionValue == 0 {
 		return fmt.Errorf("用户ID和异常状态值不能为空")
 	}
@@ -37,7 +37,7 @@ func (u *UserX) StoreUserExceptionStatus(ctx context.Context, userId, exceptionV
 // GetUserExceptionStatus 从Redis获取用户异常状态
 // userId: 用户ID
 // 返回: 异常状态值，错误信息
-func (u *UserX) GetUserExceptionStatus(ctx context.Context, userId int64) (val int64, err error) {
+func (u *UserX) GetUserExceptionStatus(ctx context.Context, userId int64) (val int, err error) {
 	if userId == 0 {
 		return 0, fmt.Errorf("用户ID不能为空")
 	}
@@ -51,7 +51,7 @@ func (u *UserX) GetUserExceptionStatus(ctx context.Context, userId int64) (val i
 		// 其他错误
 		return
 	}
-	return strconv.ParseInt(value, 10, 64)
+	return cast.ToInt(value), nil
 }
 
 // DelUserExceptionStatus 从Redis删除用户异常状态
@@ -64,19 +64,23 @@ func (u *UserX) DelUserExceptionStatus(ctx context.Context, userId int64) error 
 	return u.rdb.Del(ctx, fmt.Sprintf(KeyPrefix, userId)).Err()
 }
 
-// BatchStoreUserExceptionStatus 批量存储用户异常状态到Redis
-// userExceptions: 用户ID与异常状态值的映射
+// BatchStoreUserExceptionStatus 批量存储多个用户相同的异常状态到Redis
+// userIds: 用户ID列表
+// exceptionValue: 统一的异常状态值
 // expireSeconds: 过期时间（秒），如果为0则使用默认过期时间
 // 返回: 存储是否成功，错误信息
-func (u *UserX) BatchStoreUserExceptionStatus(ctx context.Context, userExceptions map[int64]int64) error {
-	if len(userExceptions) == 0 {
-		return fmt.Errorf("用户异常状态映射不能为空")
+func (u *UserX) BatchStoreUserExceptionStatus(ctx context.Context, userIds []int64, exceptionValue int) error {
+	if len(userIds) == 0 {
+		return fmt.Errorf("用户ID列表不能为空")
+	}
+	if exceptionValue == 0 {
+		return fmt.Errorf("异常状态值不能为空")
 	}
 
 	pipe := u.rdb.Pipeline()
-	for userId, exceptionValue := range userExceptions {
-		if userId == 0 || exceptionValue == 0 {
-			return fmt.Errorf("用户ID和异常状态值不能为空")
+	for _, userId := range userIds {
+		if userId == 0 {
+			return fmt.Errorf("用户ID不能为空")
 		}
 		pipe.Set(ctx, fmt.Sprintf(KeyPrefix, userId), exceptionValue, 0)
 	}
@@ -87,7 +91,7 @@ func (u *UserX) BatchStoreUserExceptionStatus(ctx context.Context, userException
 // BatchGetUserExceptionStatus 批量获取用户异常状态
 // userIds: 用户ID列表
 // 返回: 用户ID与异常状态值的映射，错误信息
-func (u *UserX) BatchGetUserExceptionStatus(ctx context.Context, userIds []int64) (map[int64]int64, error) {
+func (u *UserX) BatchGetUserExceptionStatus(ctx context.Context, userIds []int64) (map[int64]int, error) {
 	if len(userIds) == 0 {
 		return nil, fmt.Errorf("用户ID列表不能为空")
 	}
@@ -105,16 +109,12 @@ func (u *UserX) BatchGetUserExceptionStatus(ctx context.Context, userIds []int64
 		return nil, err
 	}
 
-	result := make(map[int64]int64, len(userIds))
+	result := make(map[int64]int, len(userIds))
 	for i, val := range values {
 		if val == nil {
 			result[userIds[i]] = 1 // 键不存在，返回默认值
 		} else {
-			parsedVal, err := strconv.ParseInt(val.(string), 10, 64)
-			if err != nil {
-				return nil, err
-			}
-			result[userIds[i]] = parsedVal
+			result[userIds[i]] = cast.ToInt(val)
 		}
 	}
 
