@@ -13,4 +13,6 @@ const (
 	TopicUserPromotionBonusNotify = "user_promotion_bonus_notify"
 	// TopicUserRegisterNotify 用户注册通知
 	TopicUserRegisterNotify = "user_register_notify"
+	// TopicPublishMqtt 发送mqtt消息
+	TopicPublishMqtt = "publish_mqtt"
 )
