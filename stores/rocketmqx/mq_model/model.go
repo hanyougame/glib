@@ -78,3 +78,11 @@ type MqDepWdlTripartiteMsg struct {
 	TransferType     int64  `json:"transfer_type"`     //交易类型 1转入,2转出
 	GameName         string `json:"game_name"`         //游戏名称
 }
+
+// MqttPublish 发布mqtt消息
+type MqttPublish struct {
+	UserIDList []int64 `json:"user_id_list"` // 用户列表
+	Type       int64   `json:"type"`         // 1 全部 2 部分
+	Message    string  `json:"message"`      // 发送的内容
+	Code       int64   `json:"code"`         // 事件的code
+}
