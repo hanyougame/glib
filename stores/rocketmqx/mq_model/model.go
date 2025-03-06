@@ -21,6 +21,7 @@ type UserRechargeNotify struct {
 	RechargeCategoryId int64  `json:"recharge_category_id"` // 充值类别Id
 	RechargeChannelId  int64  `json:"recharge_channel_id"`  // 充值通道Id
 	GiftAmount         int64  `json:"gift_amount"`          // 赠送金额
+	SupplySign         bool   `json:"supply_sign"`          // 补单标志
 }
 
 // UserWithdrawNotify 用户提现推送
