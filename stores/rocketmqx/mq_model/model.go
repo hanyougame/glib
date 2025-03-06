@@ -38,6 +38,7 @@ type UserBetSettlementNotify struct {
 	UserId         int64  `json:"user_id"` //用户ID
 	UserAccount    string `json:"user_account"`
 	CurrencyCode   string `json:"currency_code"`
+	BetTime        int64  `json:"bet_time"`         // 投注时间
 	BetAmount      int64  `json:"bet_amount"`       //投注金额(不包含撤单金额)
 	ValidBetAmount int64  `json:"valid_bet_amount"` //有效投注金额
 	GameId         int64  `json:"game_id"`          //游戏ID
