@@ -84,7 +84,7 @@ type MqDepWdlTripartiteMsg struct {
 // MqttPublish 发布mqtt消息
 type MqttPublish struct {
 	ClientIDList []string `json:"client_id_list"` // 客户端id列表
-	UserIDList   []int64  `json:"user_id_list"`   // 用户列表
+	ServiceID    string   `json:"service_id"`     // 服务id
 	Type         int64    `json:"type"`           // 1 全部 2 部分
 	Message      string   `json:"message"`        // 发送的内容
 	Code         int64    `json:"code"`           // 事件的code
