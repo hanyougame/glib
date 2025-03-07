@@ -1,6 +1,6 @@
 package transcategory
 
-// TransactionCategory 账变大类
+// TransactionCategory represents transaction main category types
 type TransactionCategory int
 
 var TransactionCategories = []TransactionCategory{
@@ -26,24 +26,24 @@ var TransactionCategories = []TransactionCategory{
 
 const (
 	_                                         TransactionCategory = iota
-	TransactionCategoryCapitalSwitch                              // 资金切换
-	TransactionCategoryUserRecharge                               // 会员充值
-	TransactionCategoryUserWithdraw                               // 会员提现
-	TransactionCategoryBankMerchantSettlement                     // 银商结算
-	TransactionCategoryCapitalRevise                              // 资金修正
-	TransactionCategoryActivity                                   // 活动
-	TransactionCategoryGoldReturn                                 // 返水
-	TransactionCategoryRebate                                     // 返佣
-	TransactionCategoryInterest                                   // 利息宝
-	TransactionCategoryTask                                       // 任务
-	TransactionCategoryVipReward                                  // VIP奖励
-	TransactionCategoryRechargeBonus                              // 充值优惠
-	TransactionCategoryClub                                       // 俱乐部
-	TransactionCategoryReward                                     // 奖励
-	TransactionCategoryGuaranteeClaim                             // 担保理赔
-	TransactionCategoryProvidentFund                              // 公积金
-	TransactionCategoryBlindBoxLottery                            // 盲盒抽奖
-	TransactionCategoryGameBet                                    // 游戏投注
+	TransactionCategoryCapitalSwitch                              // Fund Switching
+	TransactionCategoryUserRecharge                               // User Recharge
+	TransactionCategoryUserWithdraw                               // User Withdrawal
+	TransactionCategoryBankMerchantSettlement                     // Bank Merchant Settlement
+	TransactionCategoryCapitalRevise                              // Capital Revision
+	TransactionCategoryActivity                                   // Activity
+	TransactionCategoryGoldReturn                                 // Gold Return
+	TransactionCategoryRebate                                     // Rebate
+	TransactionCategoryInterest                                   // Interest
+	TransactionCategoryTask                                       // Task
+	TransactionCategoryVipReward                                  // VIP Reward
+	TransactionCategoryRechargeBonus                              // Recharge Bonus
+	TransactionCategoryClub                                       // Club
+	TransactionCategoryReward                                     // Reward
+	TransactionCategoryGuaranteeClaim                             // Guarantee Claim
+	TransactionCategoryProvidentFund                              // Provident Fund
+	TransactionCategoryBlindBoxLottery                            // Blind Box Lottery
+	TransactionCategoryGameBet                                    // Game Bet
 )
 
 func (t TransactionCategory) Int() int {
@@ -57,41 +57,41 @@ func (t TransactionCategory) Int64() int64 {
 func (t TransactionCategory) String() string {
 	switch t {
 	case TransactionCategoryCapitalSwitch:
-		return "资金切换"
+		return "Fund Switching"
 	case TransactionCategoryUserRecharge:
-		return "会员充值"
+		return "User Recharge"
 	case TransactionCategoryUserWithdraw:
-		return "会员提现"
+		return "User Withdrawal"
 	case TransactionCategoryBankMerchantSettlement:
-		return "银商结算"
+		return "Bank Merchant Settlement"
 	case TransactionCategoryCapitalRevise:
-		return "资金修正"
+		return "Capital Revision"
 	case TransactionCategoryActivity:
-		return "活动"
+		return "Activity"
 	case TransactionCategoryGoldReturn:
-		return "返水"
+		return "Gold Return"
 	case TransactionCategoryRebate:
-		return "返佣"
+		return "Rebate"
 	case TransactionCategoryInterest:
-		return "利息宝"
+		return "Interest"
 	case TransactionCategoryTask:
-		return "任务"
+		return "Task"
 	case TransactionCategoryVipReward:
-		return "VIP奖励"
+		return "VIP Reward"
 	case TransactionCategoryRechargeBonus:
-		return "充值优惠"
+		return "Recharge Bonus"
 	case TransactionCategoryClub:
-		return "俱乐部"
+		return "Club"
 	case TransactionCategoryReward:
-		return "奖励"
+		return "Reward"
 	case TransactionCategoryGuaranteeClaim:
-		return "担保理赔"
+		return "Guarantee Claim"
 	case TransactionCategoryProvidentFund:
-		return "公积金"
+		return "Provident Fund"
 	case TransactionCategoryBlindBoxLottery:
-		return "盲盒抽奖"
+		return "Blind Box Lottery"
 	case TransactionCategoryGameBet:
-		return "游戏投注"
+		return "Game Bet"
 	default:
 		return ""
 	}
@@ -192,175 +192,174 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	}
 }
 
-// TransactionSubCategory 账变小类
+// TransactionSubCategory represents transaction sub-category types
 type TransactionSubCategory int
 
-// 资金切换子类
+// Capital Switch Subcategories
 const (
 	SubCategoryCapitalSwitch         TransactionSubCategory = 1000
-	TransactionSubCategoryWithdrawal                        = iota + SubCategoryCapitalSwitch // 转出
-	TransactionSubCategoryDeposits                                                            // 转入
-
+	TransactionSubCategoryWithdrawal                        = iota + SubCategoryCapitalSwitch // Transfer Out
+	TransactionSubCategoryDeposits                                                            // Transfer In
 )
 
-// 会员充值子类
+// User Recharge Subcategories
 const (
 	SubCategoryUserRecharge                   TransactionSubCategory = 2000
-	TransactionSubCategoryUalaTransfer                               = iota + SubCategoryUserRecharge // Uala转账
-	TransactionSubCategoryMercadoPagoTransfer                                                         // Mercado Pago转账
-	TransactionSubCategoryUPDAYTransfer                                                               // UPDAY转
-	TransactionSubCategoryRechargeOnline                                                              // 在线充值
+	TransactionSubCategoryUalaTransfer                               = iota + SubCategoryUserRecharge // Uala Transfer
+	TransactionSubCategoryMercadoPagoTransfer                                                         // Mercado Pago Transfer
+	TransactionSubCategoryUPDAYTransfer                                                               // UPDAY Transfer
+	TransactionSubCategoryRechargeOnline                                                              // Online Recharge
 )
 
-// 会员提现子类
+// User Withdrawal Subcategories
 const (
 	SubCategoryUserWithdraw               TransactionSubCategory = 3000
-	TransactionSubCategoryWithdrawFrozen                         = iota + SubCategoryUserWithdraw // 提现冻结
-	TransactionSubCategoryWithdrawReject                                                          // 提现拒绝
-	TransactionSubCategoryWithdrawDefrost                                                         // 提现解冻
-	TransactionSubCategoryWithdrawSucceed                                                         // 提现成功
+	TransactionSubCategoryWithdrawFrozen                         = iota + SubCategoryUserWithdraw // Withdrawal Freeze
+	TransactionSubCategoryWithdrawReject                                                          // Withdrawal Rejection
+	TransactionSubCategoryWithdrawDefrost                                                         // Withdrawal Unfreeze
+	TransactionSubCategoryWithdrawSucceed                                                         // Withdrawal Success
 )
 
-// 银商结算子类
+// Bank Merchant Settlement Subcategories
 const (
 	SubCategoryBankMerchantSettlement                TransactionSubCategory = 4000
-	TransactionSubCategoryBankMerchantTransfer                              = iota + SubCategoryBankMerchantSettlement // 转账给他人
-	TransactionSubCategoryBankMerchantAddAmount                                                                        // 银商加款
-	TransactionSubCategoryBankMerchantRecharge                                                                         // 银商充值
-	TransactionSubCategoryBankMerchantGiveUser                                                                         // 银商赠送会员金额
-	TransactionSubCategoryBankMerchantSubtractAmount                                                                   // 银商扣款
+	TransactionSubCategoryBankMerchantTransfer                              = iota + SubCategoryBankMerchantSettlement // Transfer to Others
+	TransactionSubCategoryBankMerchantAddAmount                                                                        // Merchant Addition
+	TransactionSubCategoryBankMerchantRecharge                                                                         // Merchant Recharge
+	TransactionSubCategoryBankMerchantGiveUser                                                                         // Merchant User Gift
+	TransactionSubCategoryBankMerchantSubtractAmount                                                                   // Merchant Deduction
 )
 
-// 资金修正子类
+// Capital Revision Subcategories
 const (
 	SubCategoryCapitalRevise                    TransactionSubCategory = 5000
-	TransactionSubCategoryManualAddAmount                              = iota + SubCategoryCapitalRevise // 人工加款
-	TransactionSubCategoryManualAddOrder                                                                 // 手动补单
-	TransactionSubCategoryBalanceRevise                                                                  // 修正负数余额
-	TransactionSubCategoryManualAddRewardAmount                                                          // 奖励手动加款
-	TransactionSubCategoryManualSubtractAmount                                                           // 手动扣款
-	TransactionSubCategoryDeductAll                                                                      // 扣除全部资产
-	TransactionSubCategorySurDeduct                                                                      // 追加扣除
-	TransactionSubCategoryManualPullBack                                                                 // 人工拉回
-	TransactionSubCategoryDeductExcessProfit                                                             // 扣除超额盈利
+	TransactionSubCategoryManualAddAmount                              = iota + SubCategoryCapitalRevise // Manual Addition
+	TransactionSubCategoryManualAddOrder                                                                 // Manual Order Adjustment
+	TransactionSubCategoryBalanceRevise                                                                  // Negative Balance Correction
+	TransactionSubCategoryManualAddRewardAmount                                                          // Reward Manual Addition
+	TransactionSubCategoryManualSubtractAmount                                                           // Manual Deduction
+	TransactionSubCategoryDeductAll                                                                      // Full Asset Deduction
+	TransactionSubCategorySurDeduct                                                                      // Additional Deduction
+	TransactionSubCategoryManualPullBack                                                                 // Manual Recall
+	TransactionSubCategoryDeductExcessProfit                                                             // Excess Profit Deduction
 )
 
-// 活动子类
+// Activity Subcategories
 const (
 	SubCategoryActivity                             TransactionSubCategory = 6000
-	TransactionSubCategoryAgentActivity                                    = iota + SubCategoryActivity // 代理活动
-	TransactionSubCategoryLuckyBetActivity                                                              // 幸运注单活动
-	TransactionSubCategoryInvestActivity                                                                // 投资活动
-	TransactionSubCategoryNewcomerRewardActivity                                                        // 新人彩金
-	TransactionSubCategoryBenefitActivity                                                               // 救援金活动
-	TransactionSubCategoryPromoteActivity                                                               // 推广活动
-	TransactionSubCategoryFeedbackRewardActivity                                                        // 有奖反馈活动
-	TransactionSubCategoryRedPacketActivity                                                             // 红包活动
-	TransactionSubCategoryBetActivity                                                                   // 打码活动
-	TransactionSubCategoryLotteryAssistanceActivity                                                     // 抽奖助力
-	TransactionSubCategoryRankActivity                                                                  // 排行榜活动
-	TransactionSubCategoryCustomizeActivity                                                             // 自定义活动
-	TransactionSubCategoryBargainActivity                                                               // 砍一刀
-	TransactionSubCategorySpinActivity                                                                  // 转盘活动
-	TransactionSubCategoryChannelRewardActivity                                                         // 渠道奖励
-	TransactionSubCategoryWordCollectionActivity                                                        // 集字活动
-	TransactionSubCategoryQuizActivity                                                                  // 竞猜活动
+	TransactionSubCategoryAgentActivity                                    = iota + SubCategoryActivity // Agent Activity
+	TransactionSubCategoryLuckyBetActivity                                                              // Lucky Bet Activity
+	TransactionSubCategoryInvestActivity                                                                // Investment Activity
+	TransactionSubCategoryNewcomerRewardActivity                                                        // Newcomer Bonus
+	TransactionSubCategoryBenefitActivity                                                               // Relief Fund Activity
+	TransactionSubCategoryPromoteActivity                                                               // Promotion Activity
+	TransactionSubCategoryFeedbackRewardActivity                                                        // Feedback Reward Activity
+	TransactionSubCategoryRedPacketActivity                                                             // Red Packet Activity
+	TransactionSubCategoryBetActivity                                                                   // Betting Activity
+	TransactionSubCategoryLotteryAssistanceActivity                                                     // Lottery Assistance
+	TransactionSubCategoryRankActivity                                                                  // Ranking Activity
+	TransactionSubCategoryCustomizeActivity                                                             // Custom Activity
+	TransactionSubCategoryBargainActivity                                                               // Bargain Activity
+	TransactionSubCategorySpinActivity                                                                  // Spin Activity
+	TransactionSubCategoryChannelRewardActivity                                                         // Channel Reward
+	TransactionSubCategoryWordCollectionActivity                                                        // Word Collection
+	TransactionSubCategoryQuizActivity                                                                  // Quiz
 	TransactionSubCategoryRechargeActivity                                                              // 充值活动
-	TransactionSubCategorySignInActivity                                                                // 签到活动
+	TransactionSubCategorySignInActivity                                                                // 签到活动// Activity
 )
 
-// 返水子类
+// Gold Return Subcategories
 const (
 	SubCategoryServiceCharge                   TransactionSubCategory = 7000
-	TransactionSubCategoryServiceChargeReceive                        = iota + SubCategoryServiceCharge // 返水领取
+	TransactionSubCategoryServiceChargeReceive                        = iota + SubCategoryServiceCharge // Service Charge Receipt
 )
 
-// 返佣子类
+// Rebate Subcategories
 const (
 	SubCategoryRebate                   TransactionSubCategory = 8000
-	TransactionSubCategoryRebateSend                           = iota + SubCategoryRebate // 发放佣金
-	TransactionSubCategoryRebateReceive                                                   // 领取佣金
+	TransactionSubCategoryRebateSend                           = iota + SubCategoryRebate // Rebate Distribution
+	TransactionSubCategoryRebateReceive                                                   // Rebate Receipt
 )
 
-// 利息宝子类
+// Interest Subcategories
 const (
 	SubCategoryInterest                          TransactionSubCategory = 9000
-	TransactionSubCategoryInterestProfit                                = iota + SubCategoryInterest // 利息宝收益
-	TransactionSubCategoryHallToInterest                                                             // 大厅转入利息宝
-	TransactionSubCategoryInterestManualPullback                                                     // 手动拉回-利息宝
-	TransactionSubCategoryInterestToHall                                                             // 利息宝转到大厅
+	TransactionSubCategoryInterestProfit                                = iota + SubCategoryInterest // Interest Earnings
+	TransactionSubCategoryHallToInterest                                                             // Hall to Interest Transfer
+	TransactionSubCategoryInterestManualPullback                                                     // Manual Recall - Interest
+	TransactionSubCategoryInterestToHall                                                             // Interest to Hall Transfer
 )
 
-// 任务子类
+// Task Subcategories
 const (
 	SubCategoryTask                          TransactionSubCategory = 10000
-	TransactionSubCategoryDailyTask                                 = iota + SubCategoryTask // 每日任务
-	TransactionSubCategoryWeekLyTask                                                         // 每周任务
-	TransactionSubCategoryNewcomerProfitTask                                                 // 新人福利
-	TransactionSubCategoryAlivenessBox                                                       // 活跃度宝箱
-	TransactionSubCategorySecretTask                                                         // 神秘任务
+	TransactionSubCategoryDailyTask                                 = iota + SubCategoryTask // Daily Task
+	TransactionSubCategoryWeekLyTask                                                         // Weekly Task
+	TransactionSubCategoryNewcomerProfitTask                                                 // Newcomer Benefits
+	TransactionSubCategoryAlivenessBox                                                       // Activity Box
+	TransactionSubCategorySecretTask                                                         // Secret Task
 )
 
-// VIP奖励子类
+// VIP Reward Subcategories
 const (
 	SubCategoryVipReward                   TransactionSubCategory = 11000
-	TransactionSubCategoryVipMonthlyReward                        = iota + SubCategoryVipReward // VIP月奖金
-	TransactionSubCategoryVipDailyReward                                                        // VIP日奖励
-	TransactionSubCategoryVipWeeklyReward                                                       // VIP周奖金
-	TransactionSubCategoryVipUpgradeReward                                                      // VIP晋级奖金
+	TransactionSubCategoryVipMonthlyReward                        = iota + SubCategoryVipReward // VIP Monthly Reward
+	TransactionSubCategoryVipDailyReward                                                        // VIP Daily Reward
+	TransactionSubCategoryVipWeeklyReward                                                       // VIP Weekly Reward
+	TransactionSubCategoryVipUpgradeReward                                                      // VIP Upgrade Reward
 )
 
-// 充值奖励子类
+// Recharge Bonus Subcategories
 const (
 	SubCategoryRechargeBonus            TransactionSubCategory = 12000
-	TransactionSubCategoryRechargeBonus                        = iota + SubCategoryRechargeBonus // 优惠
+	TransactionSubCategoryRechargeBonus                        = iota + SubCategoryRechargeBonus // Bonus
 )
 
-// 俱乐部子类
+// Club Subcategories
 const (
 	SubCategoryClub                          TransactionSubCategory = 13000
-	TransactionSubCategoryManualPullbackClub                        = iota + SubCategoryClub // 手动拉回-俱乐部
-	TransactionSubCategoryHallToClub                                                         // 大厅转入俱乐部
-	TransactionSubCategoryClubToHall                                                         // 俱乐部转到大厅
+	TransactionSubCategoryManualPullbackClub                        = iota + SubCategoryClub // Manual Recall - Club
+	TransactionSubCategoryHallToClub                                                         // Hall to Club Transfer
+	TransactionSubCategoryClubToHall                                                         // Club to Hall Transfer
 )
 
-// 奖励子类
+// Reward Subcategories
 const (
 	SubCategoryReward                  TransactionSubCategory = 14000
-	TransactionSubCategoryGiveUpReward                        = iota + SubCategoryReward // 放弃奖励
-	TransactionSubCategoryTransferOut                                                    // 转出
-	TransactionSubCategoryTransferIn                                                     // 转入
+	TransactionSubCategoryGiveUpReward                        = iota + SubCategoryReward // Reward Waiver
+	TransactionSubCategoryTransferOut                                                    // Transfer Out
+	TransactionSubCategoryTransferIn                                                     // Transfer In
 )
 
-// 担保理赔子类
+// Guarantee Claim Subcategories
 const (
 	SubCategoryGuaranteeClaim                 TransactionSubCategory = 15000
-	TransactionSubCategoryClaimFreeze                                = iota + SubCategoryGuaranteeClaim // 理赔冻结
-	TransactionSubCategoryClaimDefrost                                                                  // 理赔解冻
-	TransactionSubCategoryClaimFee                                                                      // 理赔手续费
-	TransactionSubCategoryClaimScoresIncrease                                                           // 理赔上分
-	TransactionSubCategoryClaimScoresDecrease                                                           // 理赔下分
+	TransactionSubCategoryClaimFreeze                                = iota + SubCategoryGuaranteeClaim // Claim Freeze
+	TransactionSubCategoryClaimDefrost                                                                  // Claim Unfreeze
+	TransactionSubCategoryClaimFee                                                                      // Claim Fee
+	TransactionSubCategoryClaimScoresIncrease                                                           // Score Increase
+	TransactionSubCategoryClaimScoresDecrease                                                           // Score Decrease
 )
 
-// 公积金子类
+// Provident Fund Subcategories
 const (
 	SubCategoryProvidentFund                   TransactionSubCategory = 16000
-	TransactionSubCategoryProvidentFundReceive                        = iota + SubCategoryProvidentFund // 公积金领取
+	TransactionSubCategoryProvidentFundReceive                        = iota + SubCategoryProvidentFund // Provident Fund Receipt
 )
 
-// 盲盒抽奖子类
+// Blind Box Lottery Subcategories
 const (
 	SubCategoryBlindBoxLottery                  TransactionSubCategory = 17000
-	TransactionSubCategoryBlindBoxLotteryDeduct                        = iota + SubCategoryBlindBoxLottery // 盲盒抽奖扣除
-	TransactionSubCategoryBlindBoxLotteryReward                                                            // 盲盒抽奖奖励
+	TransactionSubCategoryBlindBoxLotteryDeduct                        = iota + SubCategoryBlindBoxLottery // Blind Box Deduction
+	TransactionSubCategoryBlindBoxLotteryReward                                                            // Blind Box Reward
 )
 
-// SubCategoryGameBetSettlement 游戏投注子类
+// Game Bet Subcategories
 const (
 	SubCategoryGameBetSettlement            TransactionSubCategory = 18000
-	TransactionSubCategoryGameBet                                  = iota + SubCategoryGameBetSettlement // 游戏投注
-	TransactionSubCategoryGameBetSettlement                                                              // 游戏投注结算
-	TransactionSubCategoryGameBetCancel                                                                  // 游戏撤单
+	TransactionSubCategoryGameBet                                  = iota + SubCategoryGameBetSettlement // Game Bet
+	TransactionSubCategoryGameBetSettlement                                                              // Bet Settlement
+	TransactionSubCategoryGameBetCancel                                                                  // Bet Cancellation
 )
 
 func (t TransactionSubCategory) Int() int {
@@ -374,152 +373,151 @@ func (t TransactionSubCategory) Int64() int64 {
 func (t TransactionSubCategory) String() string {
 	switch t {
 	case TransactionSubCategoryWithdrawal:
-		return "转出"
+		return "Transfer Out"
 	case TransactionSubCategoryDeposits:
-		return "转入"
+		return "Transfer In"
 	case TransactionSubCategoryUalaTransfer:
-		return "Uala转账"
+		return "Uala Transfer"
 	case TransactionSubCategoryMercadoPagoTransfer:
-		return "Mercado Pago转账"
+		return "Mercado Pago Transfer"
 	case TransactionSubCategoryUPDAYTransfer:
-		return "UPDAY转账"
+		return "UPDAY Transfer"
 	case TransactionSubCategoryWithdrawFrozen:
-		return "提现扣款"
+		return "Withdrawal Freeze"
 	case TransactionSubCategoryWithdrawReject:
-		return "提现失败"
+		return "Withdrawal Rejection"
 	case TransactionSubCategoryWithdrawDefrost:
-		return "提现解冻"
+		return "Withdrawal Unfreeze"
 	case TransactionSubCategoryWithdrawSucceed:
-		return "提现成功"
+		return "Withdrawal Success"
 	case TransactionSubCategoryBankMerchantTransfer:
-		return "转账给他人"
+		return "Transfer to Others"
 	case TransactionSubCategoryBankMerchantAddAmount:
-		return "银商加款"
+		return "Merchant Addition"
 	case TransactionSubCategoryBankMerchantRecharge:
-		return "银商充值"
+		return "Merchant Recharge"
 	case TransactionSubCategoryBankMerchantGiveUser:
-		return "银商赠送会员金额"
+		return "Merchant User Gift"
 	case TransactionSubCategoryBankMerchantSubtractAmount:
-		return "银商扣款"
+		return "Merchant Deduction"
 	case TransactionSubCategoryManualAddAmount:
-		return "人工加款"
+		return "Manual Addition"
 	case TransactionSubCategoryManualAddOrder:
-		return "手动补单"
+		return "Manual Order Adjustment"
 	case TransactionSubCategoryBalanceRevise:
-		return "修正负数余额"
+		return "Negative Balance Correction"
 	case TransactionSubCategoryManualAddRewardAmount:
-		return "奖励手动加款"
+		return "Reward Manual Addition"
 	case TransactionSubCategoryManualSubtractAmount:
-		return "手动扣款"
+		return "Manual Deduction"
 	case TransactionSubCategoryDeductAll:
-		return "扣除全部资产"
+		return "Full Asset Deduction"
 	case TransactionSubCategorySurDeduct:
-		return "追加扣除"
+		return "Additional Deduction"
 	case TransactionSubCategoryManualPullBack:
-		return "人工拉回"
+		return "Manual Recall"
 	case TransactionSubCategoryDeductExcessProfit:
-		return "扣除超额盈利"
+		return "Excess Profit Deduction"
 	case TransactionSubCategoryAgentActivity:
-		return "代理活动"
+		return "Agent Activity"
 	case TransactionSubCategoryLuckyBetActivity:
-		return "幸运注单活动"
+		return "Lucky Bet Activity"
 	case TransactionSubCategoryInvestActivity:
-		return "投资活动"
+		return "Investment Activity"
 	case TransactionSubCategoryNewcomerRewardActivity:
-		return "新人彩金"
+		return "Newcomer Bonus"
 	case TransactionSubCategoryBenefitActivity:
-		return "救援金活动"
+		return "Relief Fund Activity"
 	case TransactionSubCategoryPromoteActivity:
-		return "推广活动"
+		return "Promotion Activity"
 	case TransactionSubCategoryFeedbackRewardActivity:
-		return "有奖反馈活动"
+		return "Feedback Reward Activity"
 	case TransactionSubCategoryRedPacketActivity:
-		return "红包活动"
+		return "Red Packet Activity"
 	case TransactionSubCategoryBetActivity:
-		return "打码活动"
+		return "Betting Activity"
 	case TransactionSubCategoryLotteryAssistanceActivity:
-		return "抽奖助力"
+		return "Lottery Assistance"
 	case TransactionSubCategoryRankActivity:
-		return "排行榜活动"
+		return "Ranking Activity"
 	case TransactionSubCategoryCustomizeActivity:
-		return "自定义活动"
+		return "Custom Activity"
 	case TransactionSubCategoryBargainActivity:
-		return "砍一刀"
+		return "Bargain Activity"
 	case TransactionSubCategorySpinActivity:
-		return "转盘活动"
+		return "Spin Activity"
 	case TransactionSubCategoryChannelRewardActivity:
-		return "渠道奖励"
+		return "Channel Reward"
 	case TransactionSubCategoryWordCollectionActivity:
-		return "集字活动"
+		return "Word Collection"
 	case TransactionSubCategoryQuizActivity:
-		return "竞猜活动"
+		return "Quiz Activity"
 	case TransactionSubCategoryServiceChargeReceive:
-		return "返水领取"
+		return "Service Charge Receipt"
 	case TransactionSubCategoryRebateSend:
-		return "发放佣金"
+		return "Rebate Distribution"
 	case TransactionSubCategoryRebateReceive:
-		return "领取佣金"
+		return "Rebate Receipt"
 	case TransactionSubCategoryInterestProfit:
-		return "利息宝收益"
+		return "Interest Earnings"
 	case TransactionSubCategoryHallToInterest:
-		return "大厅转入利息宝"
+		return "Hall to Interest Transfer"
 	case TransactionSubCategoryInterestManualPullback:
-		return "手动拉回-利息宝"
+		return "Manual Recall - Interest"
 	case TransactionSubCategoryInterestToHall:
-		return "利息宝转到大厅"
+		return "Interest to Hall Transfer"
 	case TransactionSubCategoryDailyTask:
-		return "每日任务"
+		return "Daily Task"
 	case TransactionSubCategoryWeekLyTask:
-		return "每周任务"
+		return "Weekly Task"
 	case TransactionSubCategoryNewcomerProfitTask:
-		return "新人福利"
+		return "Newcomer Benefits"
 	case TransactionSubCategoryAlivenessBox:
-		return "活跃度宝箱"
+		return "Activity Box"
 	case TransactionSubCategorySecretTask:
-		return "神秘任务"
+		return "Secret Task"
 	case TransactionSubCategoryVipMonthlyReward:
-		return "VIP月奖金"
+		return "VIP Monthly Reward"
 	case TransactionSubCategoryVipDailyReward:
-		return "VIP日奖励"
+		return "VIP Daily Reward"
 	case TransactionSubCategoryVipWeeklyReward:
-		return "VIP周奖金"
+		return "VIP Weekly Reward"
 	case TransactionSubCategoryVipUpgradeReward:
-		return "VIP晋级奖金"
+		return "VIP Upgrade Reward"
 	case TransactionSubCategoryRechargeBonus:
-		return "优惠"
+		return "Bonus"
 	case TransactionSubCategoryManualPullbackClub:
-		return "手动拉回-俱乐部"
+		return "Manual Recall - Club"
 	case TransactionSubCategoryHallToClub:
-		return "大厅转入俱乐部"
+		return "Hall to Club Transfer"
 	case TransactionSubCategoryClubToHall:
-		return "俱乐部转到大厅"
+		return "Club to Hall Transfer"
 	case TransactionSubCategoryGiveUpReward:
-		return "放弃奖励"
+		return "Reward Waiver"
 	case TransactionSubCategoryTransferOut:
-		return "转出"
+		return "Transfer Out"
 	case TransactionSubCategoryTransferIn:
-		return "转入"
+		return "Transfer In"
 	case TransactionSubCategoryClaimFreeze:
-		return "理赔冻结"
+		return "Claim Freeze"
 	case TransactionSubCategoryClaimDefrost:
-		return "理赔解冻"
+		return "Claim Unfreeze"
 	case TransactionSubCategoryClaimFee:
-		return "理赔手续费"
+		return "Claim Fee"
 	case TransactionSubCategoryClaimScoresIncrease:
-		return "理赔上分"
+		return "Score Increase"
 	case TransactionSubCategoryClaimScoresDecrease:
-		return "理赔下分"
+		return "Score Decrease"
 	case TransactionSubCategoryProvidentFundReceive:
-		return "公积金领取"
+		return "Provident Fund Receipt"
 	case TransactionSubCategoryBlindBoxLotteryDeduct:
-		return "盲盒抽奖扣除"
+		return "Blind Box Deduction"
 	case TransactionSubCategoryBlindBoxLotteryReward:
-		return "盲盒抽奖奖励"
+		return "Blind Box Reward"
 	case TransactionSubCategoryGameBetSettlement:
-		return "游戏投注结算"
+		return "Bet Settlement"
 	case TransactionSubCategoryRechargeOnline:
-		return "在线充值"
-
+		return "Online Recharge"
 	default:
 		return ""
 	}
