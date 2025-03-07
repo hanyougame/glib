@@ -384,9 +384,9 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryUPDAYTransfer:
 		return "UPDAY转账"
 	case TransactionSubCategoryWithdrawFrozen:
-		return "提现冻结"
+		return "提现扣款"
 	case TransactionSubCategoryWithdrawReject:
-		return "提现拒绝"
+		return "提现失败"
 	case TransactionSubCategoryWithdrawDefrost:
 		return "提现解冻"
 	case TransactionSubCategoryWithdrawSucceed:

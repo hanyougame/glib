@@ -21,6 +21,7 @@ type UserRechargeNotify struct {
 	RechargeCategoryId int64  `json:"recharge_category_id"` // 充值类别Id
 	RechargeChannelId  int64  `json:"recharge_channel_id"`  // 充值通道Id
 	GiftAmount         int64  `json:"gift_amount"`          // 赠送金额
+	SupplySign         bool   `json:"supply_sign"`          // 补单标志
 }
 
 // UserWithdrawNotify 用户提现推送
@@ -38,6 +39,7 @@ type UserBetSettlementNotify struct {
 	UserId         int64  `json:"user_id"` //用户ID
 	UserAccount    string `json:"user_account"`
 	CurrencyCode   string `json:"currency_code"`
+	BetTime        int64  `json:"bet_time"`         // 投注时间
 	BetAmount      int64  `json:"bet_amount"`       //投注金额(不包含撤单金额)
 	ValidBetAmount int64  `json:"valid_bet_amount"` //有效投注金额
 	GameId         int64  `json:"game_id"`          //游戏ID
@@ -77,4 +79,13 @@ type MqDepWdlTripartiteMsg struct {
 	GameOrderNo      string `json:"game_order_no"`     // 订单号
 	TransferType     int64  `json:"transfer_type"`     //交易类型 1转入,2转出
 	GameName         string `json:"game_name"`         //游戏名称
+}
+
+// MqttPublish 发布mqtt消息
+type MqttPublish struct {
+	ClientIDList []string `json:"client_id_list"` // 客户端id列表
+	ServiceID    string   `json:"service_id"`     // 服务id
+	Type         int64    `json:"type"`           // 1 全部 2 部分
+	Message      string   `json:"message"`        // 发送的内容
+	Code         int64    `json:"code"`           // 事件的code
 }
