@@ -26,6 +26,8 @@ const (
 	CtxBrowserFingerprint = "browser_fingerprint"
 	// CtxCurrencyCode 币种code
 	CtxCurrencyCode = "currency_code"
+	// CtxChannelID 渠道id
+	CtxChannelID = "channel_id"
 )
 
 const (
@@ -127,4 +129,12 @@ func GetRegionFromCtx(ctx context.Context) string {
 		return region
 	}
 	return ""
+}
+
+// GetChannelIDFromCtx 从上下文获取渠道id
+func GetChannelIDFromCtx(ctx context.Context) int64 {
+	if channelID, ok := GetMetadata[int64](ctx, CtxChannelID); ok {
+		return channelID
+	}
+	return 0
 }
