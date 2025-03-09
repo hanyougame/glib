@@ -15,4 +15,6 @@ const (
 	TopicUserRegisterNotify = "user_register_notify"
 	// TopicPublishMqtt 发送mqtt消息
 	TopicPublishMqtt = "publish_mqtt"
+	// TopicUserRechargeLogNotify
+	TopicUserRechargeLogNotify = "user_recharge_log_notify"
 )
