@@ -90,7 +90,26 @@ type MqttPublish struct {
 	Code         int64    `json:"code"`           // 事件的code
 }
 
+// 订单超时
 type OrderTimeout struct {
 	OrderNo string `json:"order_no"`      // 订单号
 	UserID  int64  `json:"user_id"`       // 用户ID
+}
+
+// 充值日志
+type RechargeLog struct {
+	RechargeType        int8   `json:"recharge_type"`               // 充值类型 1-在线充值 2-转账充值 3-客服代充
+	PaymentId           int64  `json:"payment_id"`                  // paymentId
+	RechargeCategoryId  int64  `json:"recharge_category_id"`  	// 充值大类Id
+	RechargeMerchantId  int64  `json:"recharge_merchant_id"`   	// 充值商户Id
+	RechargeChannelId   int64  `json:"recharge_channel_id"`     	// 充值渠道Id
+	RechargeOrderNumber string `json:"recharge_order_number"` 	// 充值订单号
+	RechargeAmount      int64  `json:"recharge_amount"`             // 充值金额
+	GiftAmount          int64  `json:"gift_amount"`             	// 赠送金额
+	ReceiveAmount       int64  `json:"receive_amount"`             	// 实际到账金额
+	UserId              int64  `json:"user_id"`                  	// 充值用户
+	CurrencyCode        string `json:"currency_code"`               // 充值币种
+	RechargeTime        int64  `json:"recharge_time"`               // 充值时间 通过该时间进行统计
+	SuccessTime         int64  `json:"success_time"`                // 充值成功时间
+	Status              int    `json:"status"`                      // 充值状态 0-无状态（订单被创建） 1-充值成功 2-充值失败
 }
