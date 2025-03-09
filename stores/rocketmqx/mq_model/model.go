@@ -89,3 +89,8 @@ type MqttPublish struct {
 	Message      string   `json:"message"`        // 发送的内容
 	Code         int64    `json:"code"`           // 事件的code
 }
+
+type OrderTimeout struct {
+	OrderNo string `json:"order_no"`      // 订单号
+	UserID  int64  `json:"user_id"`       // 用户ID
+}
