@@ -36,7 +36,7 @@ type UserWithdrawNotify struct {
 
 // UserBetSettlementNotify 用户投注结算通知
 type UserBetSettlementNotify struct {
-	BetID                int64  `json:"bet_id"`                 // 投注记录ID
+	BetID                string `json:"bet_id"`                 // 投注记录ID 对应投注中的order_id
 	UserId               int64  `json:"user_id"`                // 用户ID
 	UserAccount          string `json:"user_account"`           // 用户账号
 	CurrencyCode         string `json:"currency_code"`          // 币种
