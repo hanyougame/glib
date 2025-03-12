@@ -6,6 +6,7 @@ type UserLoginNotify struct {
 	UserAccount string `json:"user_account"`
 	FirstToday  bool   `json:"first_today"` //今天首次(有最好)
 	LoginTime   int64  `json:"login_time"`  //登陆时间
+	Os          string `json:"os"`          // OS
 }
 
 // UserRechargeNotify 用户成功充值推送
@@ -70,6 +71,8 @@ type UserRegisterNotify struct {
 	UserAccount  string `json:"user_account"`  // 用户账号
 	RegisterTime int64  `json:"register_time"` // 注册时间
 	CurrencyCode string `json:"currency_code"` // 币种
+	RegisterIp   string `json:"register_ip"`   // 注册IP
+	RegisterDevice string `json:"register_device"` // 注册设备号
 }
 
 // MqDepWdlTripartiteMsg 游戏转入转出第三方余额通知
