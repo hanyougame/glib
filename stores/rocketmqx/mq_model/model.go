@@ -36,18 +36,22 @@ type UserWithdrawNotify struct {
 
 // UserBetSettlementNotify 用户投注结算通知
 type UserBetSettlementNotify struct {
-	UserId         int64  `json:"user_id"` //用户ID
-	UserAccount    string `json:"user_account"`
-	CurrencyCode   string `json:"currency_code"`
-	BetTime        int64  `json:"bet_time"`         // 投注时间
-	BetAmount      int64  `json:"bet_amount"`       //投注金额(不包含撤单金额)
-	ValidBetAmount int64  `json:"valid_bet_amount"` //有效投注金额
-	GameId         int64  `json:"game_id"`          //游戏ID
-	GameCategory   int64  `json:"game_category"`    //游戏类型
-	PlatformID     int64  `json:"platform_id"`      // 游戏平台ID
-	SettlementTime int64  `json:"settlement_time"`  // 领取时间
-	BonusAmount    int64  `json:"bonus_amount"`     // 派奖金额
-	UserWinAmount  int64  `json:"user_win_amount"`  // 用户输赢金额 有负数
+	BetID                int64  `json:"bet_id"`                 // 投注记录ID
+	UserId               int64  `json:"user_id"`                // 用户ID
+	UserAccount          string `json:"user_account"`           // 用户账号
+	CurrencyCode         string `json:"currency_code"`          // 币种
+	BetTime              int64  `json:"bet_time"`               // 投注时间
+	BetAmount            int64  `json:"bet_amount"`             // 投注金额(不包含撤单金额)
+	ValidBetAmount       int64  `json:"valid_bet_amount"`       // 有效投注金额
+	GameId               int64  `json:"game_id"`                // 游戏ID
+	GameCategoryID       int64  `json:"game_category_id"`       // 游戏类型ID
+	GameCategoryName     string `json:"game_category_name"`     // 游戏类型名称
+	TripartiteCategoryID int64  `json:"tripartite_category_id"` // 三方游戏类型ID
+	PlatformID           int64  `json:"platform_id"`            // 游戏平台ID
+	PlatformName         string `json:"platform_name"`          // 游戏平台名称
+	SettlementTime       int64  `json:"settlement_time"`        // 领取时间（投注结算时间）
+	BonusAmount          int64  `json:"bonus_amount"`           // 派奖金额
+	UserWinAmount        int64  `json:"user_win_amount"`        // 用户输赢金额 有负数
 }
 
 // UserPromotionBonusNotify 用户优惠奖励领取通知
@@ -91,25 +95,25 @@ type MqttPublish struct {
 }
 
 type OrderTimeout struct {
-	OrderNo string `json:"order_no"`      // 订单号
-	UserID  int64  `json:"user_id"`       // 用户ID
+	OrderNo string `json:"order_no"` // 订单号
+	UserID  int64  `json:"user_id"`  // 用户ID
 }
 
 // 充值日志
 type RechargeLog struct {
-	ID                  int64  `json:"id"`                          // Id            
-	RechargeType        int8   `json:"recharge_type"`               // 充值类型 1-在线充值 2-转账充值 3-客服代充
-	PaymentId           int64  `json:"payment_id"`                  // paymentId
-	RechargeCategoryId  int64  `json:"recharge_category_id"`  	// 充值大类Id
-	RechargeMerchantId  int64  `json:"recharge_merchant_id"`   	// 充值商户Id
-	RechargeChannelId   int64  `json:"recharge_channel_id"`     	// 充值渠道Id
-	RechargeOrderNumber string `json:"recharge_order_number"` 	// 充值订单号
-	RechargeAmount      int64  `json:"recharge_amount"`             // 充值金额
-	GiftAmount          int64  `json:"gift_amount"`             	// 赠送金额
-	ReceiveAmount       int64  `json:"receive_amount"`             	// 实际到账金额
-	UserId              int64  `json:"user_id"`                  	// 充值用户
-	CurrencyCode        string `json:"currency_code"`               // 充值币种
-	RechargeTime        int64  `json:"recharge_time"`               // 充值时间 通过该时间进行统计
-	SuccessTime         int64  `json:"success_time"`                // 充值成功时间
-	Status              int    `json:"status"`                      // 充值状态 0-无状态（订单被创建） 1-充值成功 2-充值失败
+	ID                  int64  `json:"id"`                    // Id
+	RechargeType        int8   `json:"recharge_type"`         // 充值类型 1-在线充值 2-转账充值 3-客服代充
+	PaymentId           int64  `json:"payment_id"`            // paymentId
+	RechargeCategoryId  int64  `json:"recharge_category_id"`  // 充值大类Id
+	RechargeMerchantId  int64  `json:"recharge_merchant_id"`  // 充值商户Id
+	RechargeChannelId   int64  `json:"recharge_channel_id"`   // 充值渠道Id
+	RechargeOrderNumber string `json:"recharge_order_number"` // 充值订单号
+	RechargeAmount      int64  `json:"recharge_amount"`       // 充值金额
+	GiftAmount          int64  `json:"gift_amount"`           // 赠送金额
+	ReceiveAmount       int64  `json:"receive_amount"`        // 实际到账金额
+	UserId              int64  `json:"user_id"`               // 充值用户
+	CurrencyCode        string `json:"currency_code"`         // 充值币种
+	RechargeTime        int64  `json:"recharge_time"`         // 充值时间 通过该时间进行统计
+	SuccessTime         int64  `json:"success_time"`          // 充值成功时间
+	Status              int    `json:"status"`                // 充值状态 0-无状态（订单被创建） 1-充值成功 2-充值失败
 }
