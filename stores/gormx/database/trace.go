@@ -2,6 +2,7 @@ package database
 
 import (
 	"github.com/hanyougame/glib/tracing"
+	"github.com/zeromicro/go-zero/core/logx"
 	"go.opentelemetry.io/otel/attribute"
 	oteltrace "go.opentelemetry.io/otel/trace"
 	"gorm.io/gorm"
@@ -33,6 +34,7 @@ func registerTraceHook(tx *gorm.DB) {
 
 func traceSql(spanName string, db *gorm.DB) {
 	sql := db.Dialector.Explain(db.Statement.SQL.String(), db.Statement.Vars...)
+	logx.WithContext(db.Statement.Context).Infof("spanName : %s, sql:%s", spanName, sql)
 	tracing.Inject(db.Statement.Context, spanName, func(span oteltrace.Span) oteltrace.Span {
 		span.SetAttributes(attribute.KeyValue{
 			Key:   "gorm.sql",

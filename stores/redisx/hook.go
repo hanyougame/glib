@@ -27,7 +27,7 @@ func (DebugHook) ProcessHook(next redis.ProcessHook) redis.ProcessHook {
 
 func (DebugHook) ProcessPipelineHook(next redis.ProcessPipelineHook) redis.ProcessPipelineHook {
 	return func(ctx context.Context, cmds []redis.Cmder) error {
-		logc.Debugf(ctx, "redis cmd: %s", func() []string {
+		logc.Infof(ctx, "redis cmd: %s", func() []string {
 			var cmdsStr []string
 			for _, cmd := range cmds {
 				cmdsStr = append(cmdsStr, cmd.String())
