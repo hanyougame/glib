@@ -4,11 +4,13 @@ import (
 	"context"
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
+	rmqclient "github.com/apache/rocketmq-clients/golang/v5"
 )
 
 type RocketMQX struct {
 	NameServers      []string         `json:"name_servers"`
 	ConsumerList     []ConsumerConfig `json:"consumer_list"`
+	PullConsumerList []ConsumerConfig `json:"pull_consumer_list"`
 	WorkerNum        int              `json:"worker_num,default=5"`         // 消费者消费线程数
 	RetryNum         int              `json:"retry_num,default=5"`          // 重试次数
 	GoroutineNums    int              `json:"goroutine_nums,default=10"`    // 最大线程数
@@ -34,10 +36,13 @@ type ConsumerConfig struct {
 		Expression string `json:"expression,default=*"`
 		Type       string `json:"type,default=TAG"`
 	} `json:"message_selector,omitempty"`
-	ConsumeTimeout int64  `json:"consume_timeout,default=60"`
-	SecretKey      string `json:"secret_key,optional"`
-	AccessKey      string `json:"access_key,optional"`
+	ConsumeTimeout        int64  `json:"consume_timeout,default=60"`
+	SecretKey             string `json:"secret_key,optional"`
+	AccessKey             string `json:"access_key,optional"`
+	AwaitDuration         int64  `json:"await_duration,default=5"`
+	PullConsumerSleepTime int64  `json:"pull_consumer_sleep_time,default=2"`
 }
 
 // MessageHandler 消息处理函数类型
 type MessageHandler func(ctx context.Context, msgs ...*primitive.MessageExt) (consumer.ConsumeResult, error)
+type PullMessageHandler func(ctx context.Context, msgs ...*rmqclient.MessageView) (consumer.ConsumeResult, error)
