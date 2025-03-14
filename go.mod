@@ -5,6 +5,7 @@ go 1.23
 require (
 	cloud.google.com/go/translate v1.12.3
 	github.com/apache/rocketmq-client-go/v2 v2.1.2
+	github.com/apache/rocketmq-clients/golang/v5 v5.1.1-rc1
 	github.com/aws/aws-sdk-go-v2 v1.36.1
 	github.com/aws/aws-sdk-go-v2/config v1.29.6
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.59
@@ -46,7 +47,6 @@ require (
 	github.com/ClickHouse/ch-go v0.64.1 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.30.3 // indirect
 	github.com/andybalholm/brotli v1.1.1 // indirect
-	github.com/apache/rocketmq-clients/golang/v5 v5.1.1-rc1 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.8 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.28 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.32 // indirect
