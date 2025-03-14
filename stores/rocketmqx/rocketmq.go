@@ -1,13 +1,17 @@
 package rocketmqx
 
 import (
+	"context"
 	"fmt"
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
+	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
+	"github.com/apache/rocketmq-clients/golang/v5/credentials"
 	"github.com/google/uuid"
 	"github.com/hanyougame/glib/utils"
 	"github.com/zeromicro/go-zero/core/logx"
+	"os"
 	"sync"
 	"time"
 )
@@ -96,15 +100,15 @@ func StartConsumer(commonConfig RocketMQX, consumers []ConsumerConfig, handlers 
 }
 
 func getConfig(commonConfig RocketMQX, consumers ConsumerConfig) ConsumerConfig {
-	consumers.ConsumeTimeout = utils.Ternary(commonConfig.ConsumeTimeout > 0, commonConfig.ConsumeTimeout, consumers.ConsumeTimeout)
-	consumers.NameServers = utils.Ternary(len(commonConfig.NameServers) > 0, commonConfig.NameServers, consumers.NameServers)
-	consumers.ConsumeFromWhere = utils.Ternary(commonConfig.ConsumeFromWhere > 0, commonConfig.ConsumeFromWhere, consumers.ConsumeFromWhere)
-	consumers.SecretKey = utils.Ternary(commonConfig.SecretKey != "", commonConfig.SecretKey, consumers.SecretKey)
-	consumers.AccessKey = utils.Ternary(commonConfig.AccessKey != "", commonConfig.AccessKey, consumers.AccessKey)
-	consumers.GoroutineNums = utils.Ternary(commonConfig.GoroutineNums > 0, commonConfig.GoroutineNums, consumers.GoroutineNums)
-	consumers.PullBatchSize = utils.Ternary(commonConfig.PullBatchSize > 0, commonConfig.PullBatchSize, consumers.PullBatchSize)
-	consumers.RetryNum = utils.Ternary(commonConfig.RetryNum > 0, commonConfig.RetryNum, consumers.RetryNum)
-	consumers.WorkerNum = utils.Ternary(commonConfig.WorkerNum > 0, commonConfig.WorkerNum, consumers.WorkerNum)
+	consumers.ConsumeTimeout = utils.Ternary(consumers.ConsumeTimeout > 0, consumers.ConsumeTimeout, commonConfig.ConsumeTimeout)
+	consumers.NameServers = utils.Ternary(len(consumers.NameServers) > 0, consumers.NameServers, commonConfig.NameServers)
+	consumers.ConsumeFromWhere = utils.Ternary(consumers.ConsumeFromWhere > 0, consumers.ConsumeFromWhere, commonConfig.ConsumeFromWhere)
+	consumers.SecretKey = utils.Ternary(consumers.SecretKey != "", consumers.SecretKey, commonConfig.SecretKey)
+	consumers.AccessKey = utils.Ternary(consumers.AccessKey != "", consumers.AccessKey, commonConfig.AccessKey)
+	consumers.GoroutineNums = utils.Ternary(consumers.GoroutineNums > 0, consumers.GoroutineNums, commonConfig.GoroutineNums)
+	consumers.PullBatchSize = utils.Ternary(consumers.PullBatchSize > 0, consumers.PullBatchSize, commonConfig.PullBatchSize)
+	consumers.RetryNum = utils.Ternary(consumers.RetryNum > 0, consumers.RetryNum, commonConfig.RetryNum)
+	consumers.WorkerNum = utils.Ternary(consumers.WorkerNum > 0, consumers.WorkerNum, commonConfig.WorkerNum)
 	return consumers
 }
 
@@ -117,4 +121,66 @@ func getMessageSelector(config ConsumerConfig) consumer.MessageSelector {
 		Type:       consumer.ExpressionType(config.MessageSelector.Type),
 		Expression: config.MessageSelector.Expression,
 	}
+}
+
+func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler PullMessageHandler) {
+	_ = os.Setenv("mq.consoleAppender.enabled", "true")
+	rmq_client.ResetLogger()
+	config = getConfig(commonConfig, config)
+	sleepTime := time.Duration(config.PullConsumerSleepTime) * time.Second
+	simpleConsumer, err := rmq_client.NewSimpleConsumer(&rmq_client.Config{
+		Endpoint:      utils.Ternary(len(config.NameServers) > 0, config.NameServers[0], ""),
+		ConsumerGroup: config.GroupName,
+		Credentials: &credentials.SessionCredentials{
+			AccessKey:    config.AccessKey,
+			AccessSecret: config.SecretKey,
+		},
+	},
+		rmq_client.WithAwaitDuration(time.Duration(config.AwaitDuration)*time.Second),
+		rmq_client.WithSubscriptionExpressions(map[string]*rmq_client.FilterExpression{
+			config.Topic: rmq_client.SUB_ALL,
+		}),
+	)
+	if err != nil {
+		logx.Errorf("初始化消费者失败，原因为：%s", err.Error())
+		return
+	}
+
+	if err = simpleConsumer.Start(); err != nil {
+		logx.Errorf("启动消费者失败，原因为：%s", err.Error())
+		return
+	}
+
+	defer simpleConsumer.GracefulStop()
+	for {
+		var ctx, cancel = context.WithTimeout(context.Background(), time.Duration(config.ConsumeTimeout)*time.Second)
+		mvs, err := simpleConsumer.Receive(ctx, int32(config.PullBatchSize), time.Duration(config.ConsumeTimeout)*time.Second)
+		if err != nil {
+			cancel()
+			logx.Errorf("拉取消息失败，topic:%s,原因为:%s", config.Topic, err.Error())
+			time.Sleep(sleepTime)
+			continue
+		}
+		// ack message
+		res, err := handler(ctx, mvs...)
+		if err != nil {
+			cancel()
+			logx.Errorf("处理消息失败,topic:%s,原因为：%s", config.Topic, err.Error())
+			time.Sleep(sleepTime)
+			continue
+		}
+		if res == consumer.ConsumeSuccess {
+			for _, mv := range mvs {
+				if err = simpleConsumer.Ack(ctx, mv); err != nil {
+					logx.Errorf("ack message failed, reason: %s", err.Error())
+					continue
+				}
+			}
+			cancel()
+			continue
+		}
+		cancel()
+		time.Sleep(sleepTime)
+	}
+
 }
