@@ -157,7 +157,7 @@ func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler Pull
 		mvs, err := simpleConsumer.Receive(ctx, int32(config.PullBatchSize), time.Duration(config.ConsumeTimeout)*time.Second)
 		if err != nil {
 			cancel()
-			logx.Errorf("拉取消息失败，原因为：%s", err.Error())
+			logx.Errorf("拉取消息失败，topic:%s,原因为:%s", config.Topic, err.Error())
 			time.Sleep(sleepTime)
 			continue
 		}
@@ -165,7 +165,7 @@ func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler Pull
 		res, err := handler(ctx, mvs...)
 		if err != nil {
 			cancel()
-			logx.Errorf("处理消息失败，原因为：%s", err.Error())
+			logx.Errorf("处理消息失败,topic:%s,原因为：%s", config.Topic, err.Error())
 			time.Sleep(sleepTime)
 			continue
 		}
