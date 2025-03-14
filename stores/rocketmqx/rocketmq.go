@@ -128,6 +128,7 @@ func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler Pull
 	rmq_client.ResetLogger()
 	config = getConfig(commonConfig, config)
 	sleepTime := time.Duration(config.PullConsumerSleepTime) * time.Second
+	fmt.Println(utils.Ternary(len(config.NameServers) > 0, config.NameServers[0], ""))
 	simpleConsumer, err := rmq_client.NewSimpleConsumer(&rmq_client.Config{
 		Endpoint:      utils.Ternary(len(config.NameServers) > 0, config.NameServers[0], ""),
 		ConsumerGroup: config.GroupName,
@@ -148,6 +149,7 @@ func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler Pull
 
 	if err = simpleConsumer.Start(); err != nil {
 		logx.Errorf("启动消费者失败，原因为：%s", err.Error())
+		return
 	}
 
 	defer simpleConsumer.GracefulStop()
