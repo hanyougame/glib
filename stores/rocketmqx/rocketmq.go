@@ -100,15 +100,15 @@ func StartConsumer(commonConfig RocketMQX, consumers []ConsumerConfig, handlers 
 }
 
 func getConfig(commonConfig RocketMQX, consumers ConsumerConfig) ConsumerConfig {
-	consumers.ConsumeTimeout = utils.Ternary(commonConfig.ConsumeTimeout > 0, commonConfig.ConsumeTimeout, consumers.ConsumeTimeout)
-	consumers.NameServers = utils.Ternary(len(commonConfig.NameServers) > 0, commonConfig.NameServers, consumers.NameServers)
-	consumers.ConsumeFromWhere = utils.Ternary(commonConfig.ConsumeFromWhere > 0, commonConfig.ConsumeFromWhere, consumers.ConsumeFromWhere)
-	consumers.SecretKey = utils.Ternary(commonConfig.SecretKey != "", commonConfig.SecretKey, consumers.SecretKey)
-	consumers.AccessKey = utils.Ternary(commonConfig.AccessKey != "", commonConfig.AccessKey, consumers.AccessKey)
-	consumers.GoroutineNums = utils.Ternary(commonConfig.GoroutineNums > 0, commonConfig.GoroutineNums, consumers.GoroutineNums)
-	consumers.PullBatchSize = utils.Ternary(commonConfig.PullBatchSize > 0, commonConfig.PullBatchSize, consumers.PullBatchSize)
-	consumers.RetryNum = utils.Ternary(commonConfig.RetryNum > 0, commonConfig.RetryNum, consumers.RetryNum)
-	consumers.WorkerNum = utils.Ternary(commonConfig.WorkerNum > 0, commonConfig.WorkerNum, consumers.WorkerNum)
+	consumers.ConsumeTimeout = utils.Ternary(consumers.ConsumeTimeout > 0, consumers.ConsumeTimeout, commonConfig.ConsumeTimeout)
+	consumers.NameServers = utils.Ternary(len(consumers.NameServers) > 0, consumers.NameServers, commonConfig.NameServers)
+	consumers.ConsumeFromWhere = utils.Ternary(consumers.ConsumeFromWhere > 0, consumers.ConsumeFromWhere, commonConfig.ConsumeFromWhere)
+	consumers.SecretKey = utils.Ternary(consumers.SecretKey != "", consumers.SecretKey, commonConfig.SecretKey)
+	consumers.AccessKey = utils.Ternary(consumers.AccessKey != "", consumers.AccessKey, commonConfig.AccessKey)
+	consumers.GoroutineNums = utils.Ternary(consumers.GoroutineNums > 0, consumers.GoroutineNums, commonConfig.GoroutineNums)
+	consumers.PullBatchSize = utils.Ternary(consumers.PullBatchSize > 0, consumers.PullBatchSize, commonConfig.PullBatchSize)
+	consumers.RetryNum = utils.Ternary(consumers.RetryNum > 0, consumers.RetryNum, commonConfig.RetryNum)
+	consumers.WorkerNum = utils.Ternary(consumers.WorkerNum > 0, consumers.WorkerNum, commonConfig.WorkerNum)
 	return consumers
 }
 
