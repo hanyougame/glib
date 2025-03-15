@@ -13,6 +13,7 @@ type UserLoginNotify struct {
 type UserRechargeNotify struct {
 	UserId             int64  `json:"user_id"`              // 用户ID
 	UserAccount        string `json:"user_account"`         // 用户账号
+	OrderNo            string `json:"order_no"`             // 订单号
 	CurrencyCode       string `json:"currency_code"`        // 币种
 	RechargeAmount     int64  `json:"recharge_amount"`      // 充值金额
 	RechargeTime       int64  `json:"recharge_time"`        // 充值时间
