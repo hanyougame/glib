@@ -45,10 +45,13 @@ type UserBetSettlementNotify struct {
 	BetTime              int64  `json:"bet_time"`               // 投注时间
 	BetAmount            int64  `json:"bet_amount"`             // 投注金额(不包含撤单金额)
 	ValidBetAmount       int64  `json:"valid_bet_amount"`       // 有效投注金额
+	GameName             string `json:"game_name"`              // 游戏名称
 	GameId               int64  `json:"game_id"`                // 游戏ID
+	TripartiteGameId     int64  `json:"tripartite_game_id"`     // 三方游戏ID
 	GameCategoryID       int64  `json:"game_category_id"`       // 游戏类型ID
 	GameCategoryName     string `json:"game_category_name"`     // 游戏类型名称
 	TripartiteCategoryID int64  `json:"tripartite_category_id"` // 三方游戏类型ID
+	TripartitePlatformID int64  `json:"tripartite_platform_id"` // 三方游戏平台ID
 	PlatformID           int64  `json:"platform_id"`            // 游戏平台ID
 	PlatformName         string `json:"platform_name"`          // 游戏平台名称
 	SettlementTime       int64  `json:"settlement_time"`        // 领取时间（投注结算时间）
@@ -67,12 +70,12 @@ type UserPromotionBonusNotify struct {
 }
 
 type UserRegisterNotify struct {
-	ParentID     int64  `json:"parent_id"`     // 上级ID
-	UserId       int64  `json:"user_id"`       // 用户ID
-	UserAccount  string `json:"user_account"`  // 用户账号
-	RegisterTime int64  `json:"register_time"` // 注册时间
-	CurrencyCode string `json:"currency_code"` // 币种
-	RegisterIp   string `json:"register_ip"`   // 注册IP
+	ParentID       int64  `json:"parent_id"`       // 上级ID
+	UserId         int64  `json:"user_id"`         // 用户ID
+	UserAccount    string `json:"user_account"`    // 用户账号
+	RegisterTime   int64  `json:"register_time"`   // 注册时间
+	CurrencyCode   string `json:"currency_code"`   // 币种
+	RegisterIp     string `json:"register_ip"`     // 注册IP
 	RegisterDevice string `json:"register_device"` // 注册设备号
 }
 
