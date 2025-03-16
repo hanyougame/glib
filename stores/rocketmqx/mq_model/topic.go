@@ -21,4 +21,6 @@ const (
 	TopicUserRechargeTimeoutNotify = "user_recharge_timeout_notify"
 	// TopicUserSingleGameBetNotify  用户单一钱包游戏投注结算相关通知·
 	TopicUserSingleGameBetNotify = "user_single_game_bet_notify"
+	// TopicUserBetNotify 用户游戏投注通知 
+	TopicUserBetNotify = "user_bet_notify"
 )
