@@ -124,3 +124,15 @@ type RechargeLog struct {
 	SuccessTime         int64  `json:"success_time"`          // 充值成功时间
 	Status              int    `json:"status"`                // 充值状态 0-无状态（订单被创建） 1-充值成功 2-充值失败
 }
+
+// 游戏投注
+type UserBetNotify struct {
+	UserId               int64  `json:"user_id"`                // 用户Id
+	UserAccount          string `json:"user_account"`           // 用户账号
+	CurrencyCode         string `json:"currency_code"`          // 币种
+	BetTime              int64  `json:"bet_time"`               // 投注时间
+	BetAmount            int64  `json:"bet_amount"`             // 投注金额
+	GameId               int64  `json:"game_id"`                // 游戏ID
+	GameCategoryID       int64  `json:"game_category_id"`       // 游戏分类ID
+	TripartiteCategoryID int64  `json:"tripartite_category_id"` // 三方游戏分类ID
+}
