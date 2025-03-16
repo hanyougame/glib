@@ -518,6 +518,10 @@ func (t TransactionSubCategory) String() string {
 		return "Bet Settlement"
 	case TransactionSubCategoryRechargeOnline:
 		return "Online Recharge"
+	case TransactionSubCategoryGameBet:
+		return "Game Bet"
+	case TransactionSubCategoryGameBetCancel:
+		return "Game Bet Cancel"
 	default:
 		return ""
 	}
