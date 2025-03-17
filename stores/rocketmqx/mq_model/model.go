@@ -127,12 +127,19 @@ type RechargeLog struct {
 
 // 游戏投注
 type UserBetNotify struct {
+	BetID                string `json:"bet_id"`                 // 投注记录ID 对应投注中的order_id
 	UserId               int64  `json:"user_id"`                // 用户Id
 	UserAccount          string `json:"user_account"`           // 用户账号
 	CurrencyCode         string `json:"currency_code"`          // 币种
 	BetTime              int64  `json:"bet_time"`               // 投注时间
 	BetAmount            int64  `json:"bet_amount"`             // 投注金额
+	GameName             string `json:"game_name"`              // 游戏名称
 	GameId               int64  `json:"game_id"`                // 游戏ID
-	GameCategoryID       int64  `json:"game_category_id"`       // 游戏分类ID
-	TripartiteCategoryID int64  `json:"tripartite_category_id"` // 三方游戏分类ID
+	TripartiteGameId     int64  `json:"tripartite_game_id"`     // 三方游戏ID
+	GameCategoryID       int64  `json:"game_category_id"`       // 游戏类型ID
+	GameCategoryName     string `json:"game_category_name"`     // 游戏类型名称
+	TripartiteCategoryID int64  `json:"tripartite_category_id"` // 三方游戏类型ID
+	TripartitePlatformID int64  `json:"tripartite_platform_id"` // 三方游戏平台ID
+	PlatformID           int64  `json:"platform_id"`            // 游戏平台ID
+	PlatformName         string `json:"platform_name"`          // 游戏平台名称
 }
