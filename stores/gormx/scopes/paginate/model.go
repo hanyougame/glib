@@ -18,7 +18,7 @@ func (p *Pagination) Offset() int {
 }
 
 func (p *Pagination) Limit() int {
-	if p.PageSize < 10 {
+	if p.PageSize == 0 {
 		p.PageSize = 10
 	}
 	if p.PageSize > 100 {
