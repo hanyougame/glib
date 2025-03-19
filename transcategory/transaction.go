@@ -111,7 +111,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	case TransactionCategoryUserWithdraw:
 		return []TransactionSubCategory{
 			TransactionSubCategoryWithdrawFrozen, TransactionSubCategoryWithdrawReject,
-			TransactionSubCategoryWithdrawDefrost, TransactionSubCategoryWithdrawSucceed,
+			//TransactionSubCategoryWithdrawDefrost, TransactionSubCategoryWithdrawSucceed,
 		}
 	case TransactionCategoryBankMerchantSettlement:
 		return []TransactionSubCategory{
@@ -383,11 +383,11 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryUPDAYTransfer:
 		return "UPDAY Transfer"
 	case TransactionSubCategoryWithdrawFrozen:
-		return "Withdrawal Freeze"
+		return "Withdrawal Deduct"
 	case TransactionSubCategoryWithdrawReject:
 		return "Withdrawal Rejection"
 	case TransactionSubCategoryWithdrawDefrost:
-		return "Withdrawal Unfreeze"
+		return "Withdrawal Fail"
 	case TransactionSubCategoryWithdrawSucceed:
 		return "Withdrawal Success"
 	case TransactionSubCategoryBankMerchantTransfer:
