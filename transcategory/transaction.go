@@ -522,6 +522,10 @@ func (t TransactionSubCategory) String() string {
 		return "Game Bet"
 	case TransactionSubCategoryGameBetCancel:
 		return "Game Bet Cancel"
+	case TransactionSubCategoryRechargeActivity:
+		return "Recharge Activity" // 充值活动
+	case TransactionSubCategorySignInActivity:
+		return "Sign In" // 签到活动
 	default:
 		return ""
 	}
