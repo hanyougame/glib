@@ -9,3 +9,7 @@ const (
 const (
 	EnterQuitGameCode = 2001 + iota // 进出游戏通知
 )
+
+const (
+	ActivityRechargePopWindow = 3001 + iota // 活动充值弹窗
+)
