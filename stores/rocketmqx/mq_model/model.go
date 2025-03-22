@@ -7,6 +7,7 @@ type UserLoginNotify struct {
 	FirstToday  bool   `json:"first_today"` //今天首次(有最好)
 	LoginTime   int64  `json:"login_time"`  //登陆时间
 	Os          string `json:"os"`          // OS
+	CurrencyCode string `json:"currency_code"`  //币种
 }
 
 // UserRechargeNotify 用户成功充值推送
