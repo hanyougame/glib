@@ -54,7 +54,9 @@ func GetMetadata[T any](ctx context.Context, key any) (T, bool) {
 	if val, ok := ctx.Value(key).(T); ok {
 		return val, true
 	}
-
+	fmt.Println(fmt.Sprintf("%T", ctx.Value(key)))
+	fmt.Println(key)
+	fmt.Println(1)
 	var zero T
 	return zero, false
 }
@@ -133,8 +135,5 @@ func GetRegionFromCtx(ctx context.Context) string {
 
 // GetChannelIDFromCtx 从上下文获取渠道id
 func GetChannelIDFromCtx(ctx context.Context) int64 {
-	if channelID, ok := GetMetadata[int64](ctx, CtxChannelID); ok {
-		return channelID
-	}
-	return 0
+	return cast.ToInt64(ctx.Value(CtxChannelID))
 }
