@@ -131,7 +131,8 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			TransactionSubCategoryFeedbackRewardActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBetActivity,
 			TransactionSubCategoryLotteryAssistanceActivity, TransactionSubCategoryRankActivity, TransactionSubCategoryCustomizeActivity,
 			TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryChannelRewardActivity,
-			TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity,
+			TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
+			TransactionSubCategorySignInActivity,
 		}
 	case TransactionCategoryGoldReturn:
 		return []TransactionSubCategory{
