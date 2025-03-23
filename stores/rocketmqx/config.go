@@ -45,4 +45,4 @@ type ConsumerConfig struct {
 
 // MessageHandler 消息处理函数类型
 type MessageHandler func(ctx context.Context, msgs ...*primitive.MessageExt) (consumer.ConsumeResult, error)
-type PullMessageHandler func(ctx context.Context, msgs ...*rmqclient.MessageView) (consumer.ConsumeResult, error)
+type PullMessageHandler func(ctx context.Context, msgs ...*rmqclient.MessageView) (consumer.ConsumeResult, []string, error)
