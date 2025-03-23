@@ -13,7 +13,6 @@ import (
 	"github.com/hanyougame/glib/utils"
 	"github.com/zeromicro/go-zero/core/logx"
 	"os"
-	"slices"
 	"strings"
 	"sync"
 	"time"
@@ -169,7 +168,7 @@ func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler Pull
 			continue
 		}
 		// ack message
-		res, msgIDList, err := handler(ctx, mvs...)
+		res, err := handler(ctx, mvs...)
 		if err != nil {
 			cancel()
 			logx.Errorf("处理消息失败,topic:%s,原因为：%s", config.Topic, err.Error())
@@ -186,16 +185,6 @@ func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler Pull
 			}
 			cancel()
 			continue
-		} else {
-			for _, mv := range mvs {
-				if !slices.Contains(msgIDList, mv.GetMessageId()) {
-					continue
-				}
-				if err = simpleConsumer.Ack(ctx, mv); err != nil {
-					logx.Errorf("ack message failed, reason: %s, msgID:%s", err.Error(), mv.GetMessageId())
-					continue
-				}
-			}
 		}
 		cancel()
 		time.Sleep(sleepTime)
