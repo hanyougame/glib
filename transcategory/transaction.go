@@ -187,6 +187,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			TransactionSubCategoryGameBet,
 			TransactionSubCategoryGameBetSettlement,
 			TransactionSubCategoryGameBetCancel,
+			TransactionSubCategoryGameBetRollback,
 		}
 	default:
 		return []TransactionSubCategory{}
@@ -361,6 +362,7 @@ const (
 	TransactionSubCategoryGameBet                                  = iota + SubCategoryGameBetSettlement // Game Bet
 	TransactionSubCategoryGameBetSettlement                                                              // Bet Settlement
 	TransactionSubCategoryGameBetCancel                                                                  // Bet Cancellation
+	TransactionSubCategoryGameBetRollback                                                                // Bet Rollback
 )
 
 func (t TransactionSubCategory) Int() int {
@@ -523,6 +525,8 @@ func (t TransactionSubCategory) String() string {
 		return "Game Bet"
 	case TransactionSubCategoryGameBetCancel:
 		return "Game Bet Cancel"
+	case TransactionSubCategoryGameBetRollback:
+		return "Game Bet RollBack"
 	case TransactionSubCategoryRechargeActivity:
 		return "Recharge Activity" // 充值活动
 	case TransactionSubCategorySignInActivity:
