@@ -12,7 +12,7 @@ var TransactionCategories = []TransactionCategory{
 	TransactionCategoryActivity,
 	//TransactionCategoryGoldReturn,
 	TransactionCategoryRebate,
-	TransactionCategoryInterest,
+	//TransactionCategoryInterest,
 	//TransactionCategoryTask,
 	TransactionCategoryVipReward,
 	TransactionCategoryRechargeBonus,
