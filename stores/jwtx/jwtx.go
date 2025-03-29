@@ -21,7 +21,7 @@ var (
 	ErrJwtGenerateError = errors.New("token generate error")
 )
 
-const cacheJwtInfoKey = "{cache}:jwt:%s:%v"
+const cacheJwtInfoKey = "jwt:%s:%v"
 
 type JWT struct {
 	rdb    redis.UniversalClient //redis
