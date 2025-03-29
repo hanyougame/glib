@@ -7,20 +7,20 @@ var TransactionCategories = []TransactionCategory{
 	TransactionCategoryCapitalSwitch,
 	TransactionCategoryUserRecharge,
 	TransactionCategoryUserWithdraw,
-	TransactionCategoryBankMerchantSettlement,
+	//TransactionCategoryBankMerchantSettlement,
 	TransactionCategoryCapitalRevise,
 	TransactionCategoryActivity,
-	TransactionCategoryGoldReturn,
+	//TransactionCategoryGoldReturn,
 	TransactionCategoryRebate,
-	TransactionCategoryInterest,
-	TransactionCategoryTask,
+	//TransactionCategoryInterest,
+	//TransactionCategoryTask,
 	TransactionCategoryVipReward,
 	TransactionCategoryRechargeBonus,
-	TransactionCategoryClub,
-	TransactionCategoryReward,
-	TransactionCategoryGuaranteeClaim,
-	TransactionCategoryProvidentFund,
-	TransactionCategoryBlindBoxLottery,
+	//TransactionCategoryClub,
+	//TransactionCategoryReward,
+	//TransactionCategoryGuaranteeClaim,
+	//TransactionCategoryProvidentFund,
+	//TransactionCategoryBlindBoxLottery,
 	TransactionCategoryGameBet,
 }
 
@@ -113,11 +113,11 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			TransactionSubCategoryWithdrawFrozen, TransactionSubCategoryWithdrawReject,
 			//TransactionSubCategoryWithdrawDefrost, TransactionSubCategoryWithdrawSucceed,
 		}
-	case TransactionCategoryBankMerchantSettlement:
-		return []TransactionSubCategory{
-			TransactionSubCategoryBankMerchantTransfer, TransactionSubCategoryBankMerchantAddAmount, TransactionSubCategoryBankMerchantRecharge, // 银商充值
-			TransactionSubCategoryBankMerchantGiveUser, TransactionSubCategoryBankMerchantSubtractAmount,
-		}
+	//case TransactionCategoryBankMerchantSettlement:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryBankMerchantTransfer, TransactionSubCategoryBankMerchantAddAmount, TransactionSubCategoryBankMerchantRecharge, // 银商充值
+	//		TransactionSubCategoryBankMerchantGiveUser, TransactionSubCategoryBankMerchantSubtractAmount,
+	//	}
 	case TransactionCategoryCapitalRevise:
 		return []TransactionSubCategory{
 			TransactionSubCategoryManualAddAmount, TransactionSubCategoryManualAddOrder, TransactionSubCategoryBalanceRevise,
@@ -134,24 +134,24 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
 			TransactionSubCategorySignInActivity,
 		}
-	case TransactionCategoryGoldReturn:
-		return []TransactionSubCategory{
-			TransactionSubCategoryServiceChargeReceive,
-		}
+	//case TransactionCategoryGoldReturn:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryServiceChargeReceive,
+	//	}
 	case TransactionCategoryRebate:
 		return []TransactionSubCategory{
 			TransactionSubCategoryRebateSend, TransactionSubCategoryRebateReceive,
 		}
-	case TransactionCategoryInterest:
-		return []TransactionSubCategory{
-			TransactionSubCategoryInterestProfit, TransactionSubCategoryHallToInterest,
-			TransactionSubCategoryInterestManualPullback, TransactionSubCategoryInterestToHall,
-		}
-	case TransactionCategoryTask:
-		return []TransactionSubCategory{
-			TransactionSubCategoryDailyTask, TransactionSubCategoryWeekLyTask, TransactionSubCategoryNewcomerProfitTask,
-			TransactionSubCategoryAlivenessBox, TransactionSubCategorySecretTask,
-		}
+	//case TransactionCategoryInterest:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryInterestProfit, TransactionSubCategoryHallToInterest,
+	//		TransactionSubCategoryInterestManualPullback, TransactionSubCategoryInterestToHall,
+	//	}
+	//case TransactionCategoryTask:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryDailyTask, TransactionSubCategoryWeekLyTask, TransactionSubCategoryNewcomerProfitTask,
+	//		TransactionSubCategoryAlivenessBox, TransactionSubCategorySecretTask,
+	//	}
 	case TransactionCategoryVipReward:
 		return []TransactionSubCategory{
 			TransactionSubCategoryVipMonthlyReward, TransactionSubCategoryVipDailyReward,
@@ -161,27 +161,27 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 		return []TransactionSubCategory{
 			TransactionSubCategoryRechargeBonus,
 		}
-	case TransactionCategoryClub:
-		return []TransactionSubCategory{
-			TransactionSubCategoryManualPullbackClub, TransactionSubCategoryHallToClub, TransactionSubCategoryClubToHall,
-		}
-	case TransactionCategoryReward:
-		return []TransactionSubCategory{
-			TransactionSubCategoryGiveUpReward, TransactionSubCategoryTransferOut, TransactionSubCategoryTransferIn,
-		}
-	case TransactionCategoryGuaranteeClaim:
-		return []TransactionSubCategory{
-			TransactionSubCategoryClaimFreeze, TransactionSubCategoryClaimDefrost, TransactionSubCategoryClaimFee,
-			TransactionSubCategoryClaimScoresIncrease, TransactionSubCategoryClaimScoresDecrease,
-		}
-	case TransactionCategoryProvidentFund:
-		return []TransactionSubCategory{
-			TransactionSubCategoryRechargeBonus,
-		}
-	case TransactionCategoryBlindBoxLottery:
-		return []TransactionSubCategory{
-			TransactionSubCategoryBlindBoxLotteryDeduct, TransactionSubCategoryBlindBoxLotteryReward,
-		}
+	//case TransactionCategoryClub:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryManualPullbackClub, TransactionSubCategoryHallToClub, TransactionSubCategoryClubToHall,
+	//	}
+	//case TransactionCategoryReward:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryGiveUpReward, TransactionSubCategoryTransferOut, TransactionSubCategoryTransferIn,
+	//	}
+	//case TransactionCategoryGuaranteeClaim:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryClaimFreeze, TransactionSubCategoryClaimDefrost, TransactionSubCategoryClaimFee,
+	//		TransactionSubCategoryClaimScoresIncrease, TransactionSubCategoryClaimScoresDecrease,
+	//	}
+	//case TransactionCategoryProvidentFund:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryRechargeBonus,
+	//	}
+	//case TransactionCategoryBlindBoxLottery:
+	//	return []TransactionSubCategory{
+	//		TransactionSubCategoryBlindBoxLotteryDeduct, TransactionSubCategoryBlindBoxLotteryReward,
+	//	}
 	case TransactionCategoryGameBet:
 		return []TransactionSubCategory{
 			TransactionSubCategoryGameBet,
