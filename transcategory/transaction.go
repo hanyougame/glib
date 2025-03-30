@@ -27,22 +27,22 @@ var TransactionCategories = []TransactionCategory{
 const (
 	_                                         TransactionCategory = iota
 	TransactionCategoryCapitalSwitch                              // Fund Switching
-	TransactionCategoryUserRecharge                               // User Recharge
-	TransactionCategoryUserWithdraw                               // User Withdrawal
-	TransactionCategoryBankMerchantSettlement                     // Bank Merchant Settlement
-	TransactionCategoryCapitalRevise                              // Capital Revision
-	TransactionCategoryActivity                                   // Activity
-	TransactionCategoryGoldReturn                                 // Gold Return
-	TransactionCategoryRebate                                     // Rebate
+	TransactionCategoryUserRecharge                               // Member deposit
+	TransactionCategoryUserWithdraw                               // Member withdrawal
+	TransactionCategoryBankMerchantSettlement                     // Merchant settlement
+	TransactionCategoryCapitalRevise                              // Fund correction
+	TransactionCategoryActivity                                   // Event
+	TransactionCategoryGoldReturn                                 // Rebate
+	TransactionCategoryRebate                                     // Commission
 	TransactionCategoryInterest                                   // Interest
-	TransactionCategoryTask                                       // Task
-	TransactionCategoryVipReward                                  // VIP Reward
-	TransactionCategoryRechargeBonus                              // Recharge Bonus
+	TransactionCategoryTask                                       // Mission
+	TransactionCategoryVipReward                                  // VIP reward
+	TransactionCategoryRechargeBonus                              // Deposit promotion
 	TransactionCategoryClub                                       // Club
 	TransactionCategoryReward                                     // Reward
-	TransactionCategoryGuaranteeClaim                             // Guarantee Claim
+	TransactionCategoryGuaranteeClaim                             // Guaranteed claims
 	TransactionCategoryProvidentFund                              // Provident Fund
-	TransactionCategoryBlindBoxLottery                            // Blind Box Lottery
+	TransactionCategoryBlindBoxLottery                            // Blind box
 	TransactionCategoryGameBet                                    // Game Bet
 )
 
@@ -59,37 +59,37 @@ func (t TransactionCategory) String() string {
 	case TransactionCategoryCapitalSwitch:
 		return "Fund Switching"
 	case TransactionCategoryUserRecharge:
-		return "User Recharge"
+		return "Member Deposit"
 	case TransactionCategoryUserWithdraw:
-		return "User Withdrawal"
+		return "Member Withdrawal"
 	case TransactionCategoryBankMerchantSettlement:
-		return "Bank Merchant Settlement"
+		return "Merchant Settlement"
 	case TransactionCategoryCapitalRevise:
-		return "Capital Revision"
+		return "Fund Correction"
 	case TransactionCategoryActivity:
-		return "Activity"
+		return "Event"
 	case TransactionCategoryGoldReturn:
-		return "Gold Return"
-	case TransactionCategoryRebate:
 		return "Rebate"
+	case TransactionCategoryRebate:
+		return "Commission"
 	case TransactionCategoryInterest:
 		return "Interest"
 	case TransactionCategoryTask:
-		return "Task"
+		return "Mission"
 	case TransactionCategoryVipReward:
 		return "VIP Reward"
 	case TransactionCategoryRechargeBonus:
-		return "Recharge Bonus"
+		return "Deposit Promotion"
 	case TransactionCategoryClub:
 		return "Club"
 	case TransactionCategoryReward:
 		return "Reward"
 	case TransactionCategoryGuaranteeClaim:
-		return "Guarantee Claim"
+		return "Guaranteed Claims"
 	case TransactionCategoryProvidentFund:
 		return "Provident Fund"
 	case TransactionCategoryBlindBoxLottery:
-		return "Blind Box Lottery"
+		return "Blind box"
 	case TransactionCategoryGameBet:
 		return "Game Bet"
 	default:
@@ -106,7 +106,8 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 		}
 	case TransactionCategoryUserRecharge:
 		return []TransactionSubCategory{
-			TransactionSubCategoryUalaTransfer, TransactionSubCategoryMercadoPagoTransfer, TransactionSubCategoryUPDAYTransfer, TransactionSubCategoryRechargeOnline,
+			//TransactionSubCategoryUalaTransfer, TransactionSubCategoryMercadoPagoTransfer, TransactionSubCategoryUPDAYTransfer, TransactionSubCategoryRechargeOnline,
+			TransactionSubCategoryRechargeOnline,
 		}
 	case TransactionCategoryUserWithdraw:
 		return []TransactionSubCategory{
@@ -120,19 +121,23 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	//	}
 	case TransactionCategoryCapitalRevise:
 		return []TransactionSubCategory{
-			TransactionSubCategoryManualAddAmount, TransactionSubCategoryManualAddOrder, TransactionSubCategoryBalanceRevise,
-			TransactionSubCategoryManualAddRewardAmount, TransactionSubCategoryManualSubtractAmount, TransactionSubCategoryDeductAll, // 扣除全部资产
-			TransactionSubCategorySurDeduct, TransactionSubCategoryManualPullBack, TransactionSubCategoryDeductExcessProfit,
+			//TransactionSubCategoryManualAddAmount, TransactionSubCategoryManualAddOrder, TransactionSubCategoryBalanceRevise,
+			//TransactionSubCategoryManualAddRewardAmount, TransactionSubCategoryManualSubtractAmount, TransactionSubCategoryDeductAll, // 扣除全部资产
+			//TransactionSubCategorySurDeduct, TransactionSubCategoryManualPullBack, TransactionSubCategoryDeductExcessProfit,
+			TransactionSubCategoryManualAddAmount, TransactionSubCategoryManualAddOrder,
+			TransactionSubCategoryManualSubtractAmount, TransactionSubCategoryDeductAll,
 		}
 	case TransactionCategoryActivity:
 		return []TransactionSubCategory{
-			TransactionSubCategoryAgentActivity, TransactionSubCategoryLuckyBetActivity, TransactionSubCategoryInvestActivity,
-			TransactionSubCategoryNewcomerRewardActivity, TransactionSubCategoryBenefitActivity, TransactionSubCategoryPromoteActivity,
-			TransactionSubCategoryFeedbackRewardActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBetActivity,
-			TransactionSubCategoryLotteryAssistanceActivity, TransactionSubCategoryRankActivity, TransactionSubCategoryCustomizeActivity,
-			TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryChannelRewardActivity,
-			TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
-			TransactionSubCategorySignInActivity,
+			//TransactionSubCategoryAgentActivity, TransactionSubCategoryLuckyBetActivity, TransactionSubCategoryInvestActivity,
+			//TransactionSubCategoryNewcomerRewardActivity, TransactionSubCategoryBenefitActivity, TransactionSubCategoryPromoteActivity,
+			//TransactionSubCategoryFeedbackRewardActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBetActivity,
+			//TransactionSubCategoryLotteryAssistanceActivity, TransactionSubCategoryRankActivity, TransactionSubCategoryCustomizeActivity,
+			//TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryChannelRewardActivity,
+			//TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
+			//TransactionSubCategorySignInActivity,
+			TransactionSubCategoryAgentActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategorySignInActivity,
+			TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity,
 		}
 	//case TransactionCategoryGoldReturn:
 	//	return []TransactionSubCategory{
@@ -394,7 +399,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryWithdrawSucceed:
 		return "Withdrawal Success"
 	case TransactionSubCategoryBankMerchantTransfer:
-		return "Transfer to Others"
+		return "Transfer To Others"
 	case TransactionSubCategoryBankMerchantAddAmount:
 		return "Merchant Addition"
 	case TransactionSubCategoryBankMerchantRecharge:
@@ -406,7 +411,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryManualAddAmount:
 		return "Manual Addition"
 	case TransactionSubCategoryManualAddOrder:
-		return "Manual Order Adjustment"
+		return "Manual Order Filling"
 	case TransactionSubCategoryBalanceRevise:
 		return "Negative Balance Correction"
 	case TransactionSubCategoryManualAddRewardAmount:
@@ -414,7 +419,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryManualSubtractAmount:
 		return "Manual Deduction"
 	case TransactionSubCategoryDeductAll:
-		return "Full Asset Deduction"
+		return "Deduct All Assets"
 	case TransactionSubCategorySurDeduct:
 		return "Additional Deduction"
 	case TransactionSubCategoryManualPullBack:
@@ -422,7 +427,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryDeductExcessProfit:
 		return "Excess Profit Deduction"
 	case TransactionSubCategoryAgentActivity:
-		return "Agent Activity"
+		return "Agent Event"
 	case TransactionSubCategoryLuckyBetActivity:
 		return "Lucky Bet Activity"
 	case TransactionSubCategoryInvestActivity:
@@ -432,13 +437,13 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryBenefitActivity:
 		return "Relief Fund Activity"
 	case TransactionSubCategoryPromoteActivity:
-		return "Promotion Activity"
+		return "Promotion Event"
 	case TransactionSubCategoryFeedbackRewardActivity:
 		return "Feedback Reward Activity"
 	case TransactionSubCategoryRedPacketActivity:
 		return "Red Packet Activity"
 	case TransactionSubCategoryBetActivity:
-		return "Betting Activity"
+		return "Bet Event"
 	case TransactionSubCategoryLotteryAssistanceActivity:
 		return "Lottery Assistance"
 	case TransactionSubCategoryRankActivity:
@@ -458,9 +463,9 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryServiceChargeReceive:
 		return "Service Charge Receipt"
 	case TransactionSubCategoryRebateSend:
-		return "Rebate Distribution"
+		return "Commission Distribution"
 	case TransactionSubCategoryRebateReceive:
-		return "Rebate Receipt"
+		return "Claim Commission"
 	case TransactionSubCategoryInterestProfit:
 		return "Interest Earnings"
 	case TransactionSubCategoryHallToInterest:
@@ -480,15 +485,15 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategorySecretTask:
 		return "Secret Task"
 	case TransactionSubCategoryVipMonthlyReward:
-		return "VIP Monthly Reward"
+		return "VIP Monthly Bonus"
 	case TransactionSubCategoryVipDailyReward:
-		return "VIP Daily Reward"
+		return "VIP Daily Bonus"
 	case TransactionSubCategoryVipWeeklyReward:
-		return "VIP Weekly Reward"
+		return "VIP Weekly Bonus"
 	case TransactionSubCategoryVipUpgradeReward:
-		return "VIP Upgrade Reward"
+		return "VIP Promotion Bonus"
 	case TransactionSubCategoryRechargeBonus:
-		return "Bonus"
+		return "Offers"
 	case TransactionSubCategoryManualPullbackClub:
 		return "Manual Recall - Club"
 	case TransactionSubCategoryHallToClub:
@@ -520,7 +525,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryGameBetSettlement:
 		return "Bet Settlement"
 	case TransactionSubCategoryRechargeOnline:
-		return "Online Recharge"
+		return "Online Deposit"
 	case TransactionSubCategoryGameBet:
 		return "Game Bet"
 	case TransactionSubCategoryGameBetCancel:
@@ -528,9 +533,9 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryGameBetRollback:
 		return "Game Bet RollBack"
 	case TransactionSubCategoryRechargeActivity:
-		return "Recharge Activity" // 充值活动
+		return "Deposit Event" // 充值活动
 	case TransactionSubCategorySignInActivity:
-		return "Sign In" // 签到活动
+		return "Check-In Event" // 签到活动
 	default:
 		return ""
 	}
