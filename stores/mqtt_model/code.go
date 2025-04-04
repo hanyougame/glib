@@ -13,3 +13,9 @@ const (
 const (
 	ActivityRechargePopWindow = 3001 + iota // 活动充值弹窗
 )
+
+const (
+	WithdrawApplyCode             = 4001 + iota // 发起提现申请
+	WithdrawFailCode                            // 提现三方回调失败
+	WithdrawRiskControlReviewCode               // 提现风控审核
+)
