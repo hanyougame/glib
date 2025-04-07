@@ -6,6 +6,7 @@ type Config struct {
 	AppToken   string            `json:"app_token"`
 	Auth       string            `json:"auth,optional"`
 	EventCodes []EventCodeConfig `json:"event_codes"`
+	PixelId    string            `json:"pixel_id"`
 }
 
 type EventCodeConfig struct {
