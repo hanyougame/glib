@@ -22,6 +22,8 @@ type DefaultEvent struct {
 	CreatedAtUnix int64  `form:"created_at_unix"` // 事件时间戳
 	Environment   string `form:"environment"`     // 环境 sandbox | production
 	Authorization string `header:"authorization"` // Authorization
+	IpAddres      string `form:"ip_address"`      // IP地址
+	UserAgent     string `form:"user_agent"`      // useragent
 }
 
 type RevenueEvent struct {
@@ -34,4 +36,6 @@ type RevenueEvent struct {
 	Authorization string `header:"authorization"` // Authorization
 	Currency string  `form:"currency"` // 币种
 	Revenue  float64 `form:"revenue"`  // 金额
+	IpAddres      string `form:"ip_address"`      // IP地址
+	UserAgent     string `form:"user_agent"`      // useragent
 }
