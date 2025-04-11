@@ -137,7 +137,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			//TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
 			//TransactionSubCategorySignInActivity,
 			TransactionSubCategoryAgentActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategorySignInActivity,
-			TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity,
+			TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity, TransactionSubCategoryLoginActivity,
 		}
 	//case TransactionCategoryGoldReturn:
 	//	return []TransactionSubCategory{
@@ -273,6 +273,7 @@ const (
 	TransactionSubCategoryQuizActivity                                                                  // Quiz
 	TransactionSubCategoryRechargeActivity                                                              // 充值活动
 	TransactionSubCategorySignInActivity                                                                // 签到活动// Activity
+	TransactionSubCategoryLoginActivity                                                                 // Login Activity 登录活动
 )
 
 // Gold Return Subcategories
@@ -536,6 +537,8 @@ func (t TransactionSubCategory) String() string {
 		return "Deposit Event" // 充值活动
 	case TransactionSubCategorySignInActivity:
 		return "Check-In Event" // 签到活动
+	case TransactionSubCategoryLoginActivity:
+		return "Login Event" // 登录活动
 	default:
 		return ""
 	}
