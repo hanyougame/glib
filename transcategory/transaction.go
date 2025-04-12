@@ -22,6 +22,7 @@ var TransactionCategories = []TransactionCategory{
 	//TransactionCategoryProvidentFund,
 	//TransactionCategoryBlindBoxLottery,
 	TransactionCategoryGameBet,
+	TransactionCategoryDataMigration,
 }
 
 const (
@@ -44,6 +45,7 @@ const (
 	TransactionCategoryProvidentFund                              // Provident Fund
 	TransactionCategoryBlindBoxLottery                            // Blind box
 	TransactionCategoryGameBet                                    // Game Bet
+	TransactionCategoryDataMigration                              // Data Migration
 )
 
 func (t TransactionCategory) Int() int {
@@ -92,6 +94,8 @@ func (t TransactionCategory) String() string {
 		return "Blind box"
 	case TransactionCategoryGameBet:
 		return "Game Bet"
+	case TransactionCategoryDataMigration:
+		return "Data Migration"
 	default:
 		return ""
 	}
