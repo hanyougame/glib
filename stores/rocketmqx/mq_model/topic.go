@@ -19,8 +19,10 @@ const (
 	TopicUserRechargeLogNotify = "user_recharge_log_notify"
 	// TopicUserRechargeTimeoutNotify
 	TopicUserRechargeTimeoutNotify = "user_recharge_timeout_notify"
-	// TopicUserSingleGameBetNotify  用户单一钱包游戏投注结算相关通知·
+	// TopicUserSingleGameBetNotify  用户单一钱包游戏投注相关通知·
 	TopicUserSingleGameBetNotify = "user_single_game_bet_notify"
-	// TopicUserBetNotify 用户游戏投注通知 
+	// TopicUserSingleGameBetSettleNotify  用户单一钱包游戏结算相关通知·
+	TopicUserSingleGameBetSettleNotify = "user_single_game_bet_settle_notify"
+	// TopicUserBetNotify 用户游戏投注通知
 	TopicUserBetNotify = "user_bet_notify"
 )

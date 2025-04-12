@@ -8,10 +8,12 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
 	"github.com/apache/rocketmq-clients/golang/v5/credentials"
+	v2 "github.com/apache/rocketmq-clients/golang/v5/protocol/v2"
 	"github.com/google/uuid"
 	"github.com/hanyougame/glib/utils"
 	"github.com/zeromicro/go-zero/core/logx"
 	"os"
+	"strings"
 	"sync"
 	"time"
 )
@@ -157,6 +159,10 @@ func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler Pull
 		mvs, err := simpleConsumer.Receive(ctx, int32(config.PullBatchSize), time.Duration(config.ConsumeTimeout)*time.Second)
 		if err != nil {
 			cancel()
+			if strings.Contains(err.Error(), v2.Code_name[int32(v2.Code_MESSAGE_NOT_FOUND)]) {
+				time.Sleep(sleepTime)
+				continue
+			}
 			logx.Errorf("拉取消息失败，topic:%s,原因为:%s", config.Topic, err.Error())
 			time.Sleep(sleepTime)
 			continue
@@ -169,10 +175,11 @@ func NewPullConsumer(commonConfig RocketMQX, config ConsumerConfig, handler Pull
 			time.Sleep(sleepTime)
 			continue
 		}
+		// 如果全部成功
 		if res == consumer.ConsumeSuccess {
 			for _, mv := range mvs {
 				if err = simpleConsumer.Ack(ctx, mv); err != nil {
-					logx.Errorf("ack message failed, reason: %s", err.Error())
+					logx.Errorf("ack message failed, reason: %s, msgID:%s", err.Error(), mv.GetMessageId())
 					continue
 				}
 			}

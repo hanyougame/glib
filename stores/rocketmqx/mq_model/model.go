@@ -2,11 +2,12 @@ package mq_model
 
 // UserLoginNotify 用户登陆通知
 type UserLoginNotify struct {
-	UserId      int64  `json:"user_id"` //用户ID
-	UserAccount string `json:"user_account"`
-	FirstToday  bool   `json:"first_today"` //今天首次(有最好)
-	LoginTime   int64  `json:"login_time"`  //登陆时间
-	Os          string `json:"os"`          // OS
+	UserId       int64  `json:"user_id"` //用户ID
+	UserAccount  string `json:"user_account"`
+	FirstToday   bool   `json:"first_today"`   //今天首次(有最好)
+	LoginTime    int64  `json:"login_time"`    //登陆时间
+	Os           string `json:"os"`            // OS
+	CurrencyCode string `json:"currency_code"` //币种
 }
 
 // UserRechargeNotify 用户成功充值推送
@@ -34,6 +35,7 @@ type UserWithdrawNotify struct {
 	WithdrawAmount  int64  `json:"withdraw_amount"`   //提现金额
 	WithdrawTime    int64  `json:"withdraw_time"`     // 提现时间
 	WithdrawEndTime int64  `json:"withdraw_end_time"` // 提现结束时间
+	OrderNo         string `json:"order_no"`          // 订单号
 }
 
 // UserBetSettlementNotify 用户投注结算通知
@@ -67,6 +69,7 @@ type UserPromotionBonusNotify struct {
 	BonusAmount     int64  `json:"bonus_amount"`     //彩金金额
 	ReceiveTime     int64  `json:"receive_time"`     // 领取时间
 	PromotionSource int64  `json:"promotion_source"` // 优惠来源，同后台 constants.PromotionSource
+	OrderNo         string `json:"order_no"`         // 订单号
 }
 
 type UserRegisterNotify struct {
@@ -99,6 +102,7 @@ type MqttPublish struct {
 	Type         int64    `json:"type"`           // 1 全部 2 部分
 	Message      string   `json:"message"`        // 发送的内容
 	Code         int64    `json:"code"`           // 事件的code
+	UserType     int64    `json:"user_type"`      // 用户类型 0 普通用户 1后台管理员
 }
 
 type OrderTimeout struct {

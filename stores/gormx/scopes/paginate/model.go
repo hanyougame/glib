@@ -2,12 +2,13 @@ package paginate
 
 // Pagination 分页
 type Pagination struct {
-	Page      int   `json:"page"`
-	PageSize  int   `json:"page_size"`
-	Total     int64 `json:"total"`
-	Rows      any   `json:"rows"`
-	Extend    any   `json:"extend,omitempty"`
-	TotalPage int64 `json:"total_page"`
+	Page         int   `json:"page"`
+	PageSize     int   `json:"page_size"`
+	Total        int64 `json:"total"`
+	Rows         any   `json:"rows"`
+	Extend       any   `json:"extend,omitempty"`
+	TotalPage    int64 `json:"total_page"`
+	NoQueryTotal bool  `json:"no_query_total"` // 是否不查询总数
 }
 
 func (p *Pagination) Offset() int {
@@ -18,7 +19,7 @@ func (p *Pagination) Offset() int {
 }
 
 func (p *Pagination) Limit() int {
-	if p.PageSize < 10 {
+	if p.PageSize == 0 {
 		p.PageSize = 10
 	}
 	if p.PageSize > 100 {
