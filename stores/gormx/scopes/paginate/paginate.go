@@ -16,7 +16,7 @@ func Paginate(pagination *Pagination) func(db *gorm.DB) *gorm.DB {
 			tx        = db.Session(&gorm.Session{})
 			totalRows int64
 		)
-		if pagination.QueryTotal {
+		if !pagination.NoQueryTotal {
 			tx.Model(db.Statement.Model).Count(&totalRows)
 		}
 		pagination.Total = totalRows
