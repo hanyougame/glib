@@ -28,6 +28,10 @@ const (
 	CtxCurrencyCode = "currency_code"
 	// CtxChannelID 渠道id
 	CtxChannelID = "channel_id"
+	// CtxRegisterIP    注册ip
+	CtxRegisterIP = "register_ip"
+	// CtxRegisterDevice  设备类型
+	CtxRegisterDevice = "register_device"
 )
 
 const (
@@ -67,6 +71,16 @@ func GetUidFromCtx(ctx context.Context) int64 {
 // GetUsernameFromCtx 从上下文中获取username
 func GetUsernameFromCtx(ctx context.Context) string {
 	return cast.ToString(ctx.Value(CtxJWTUsername))
+}
+
+// GetRegisterIPFromCtx 从上下文中获取注册ip
+func GetRegisterIPFromCtx(ctx context.Context) string {
+	return cast.ToString(ctx.Value(CtxRegisterIP))
+}
+
+// GetRegisterDeviceFromCtx 从上下文中获取注册设备号
+func GetRegisterDeviceFromCtx(ctx context.Context) string {
+	return cast.ToString(ctx.Value(CtxRegisterDevice))
 }
 
 // GetCurrencyCodeFromCtx 从上下文中获取currency_code
