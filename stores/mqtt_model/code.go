@@ -11,7 +11,8 @@ const (
 )
 
 const (
-	ActivityRechargePopWindow = 3001 + iota // 活动充值弹窗
+	ActivityRechargePopWindow   = 3001 + iota // 活动充值弹窗
+	ActivityRechargeRedEnvelope               // 活动抢红包
 )
 
 const (
