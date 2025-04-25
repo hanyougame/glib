@@ -11,7 +11,7 @@ import (
 // 定义常量
 const (
 	// KeyPrefix Redis键前缀
-	KeyPrefix = "{cache}:user:exception:%d"
+	KeyPrefix = "cache:user:exception:%d"
 )
 
 type UserX struct {
