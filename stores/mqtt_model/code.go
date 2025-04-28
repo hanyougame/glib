@@ -22,5 +22,5 @@ const (
 )
 
 const (
-	GameAwardMonitoring = 5001 + iota // 游戏派奖监控后台警告
+	GameAwardMonitoringCode = 5001 + iota // 游戏派奖监控后台警告
 )
