@@ -125,3 +125,17 @@ func TestPaginate(t *testing.T) {
 	var PageSize = 10
 	fmt.Println(int64(math.Ceil(float64(totalRows) / float64(PageSize))))
 }
+
+func TestUniqueError(t *testing.T) {
+	Must(config.Config{
+		Mode:  config.Postgres,
+		DSN:   "host=192.168.6.113 user=dbadmin password=XK7d1*pKKW0 dbname=k1-dev port=5432 sslmode=disable TimeZone=Asia/Shanghai",
+		Debug: true,
+	})
+	err := Engine.Postgres.Table("test_unique").Create(map[string]interface{}{
+		"id":     1,
+		"userid": 1,
+	}).Error
+
+	fmt.Println("IsUniqueError: ", IsUniqueError(err))
+}
