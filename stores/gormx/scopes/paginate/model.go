@@ -23,7 +23,7 @@ func (p *Pagination) Limit() int {
 	if p.PageSize == 0 {
 		p.PageSize = 10
 	}
-	if p.ForcePageSize && p.PageSize > 100 {
+	if !p.ForcePageSize && p.PageSize > 100 {
 		p.PageSize = 100
 	}
 	return p.PageSize
