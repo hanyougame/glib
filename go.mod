@@ -11,6 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.59
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.76.0
 	github.com/dtm-labs/rockscache v0.1.1
+	github.com/fatih/structs v1.1.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/go-resty/resty/v2 v2.16.5
 	github.com/golang-jwt/jwt/v4 v4.5.1
