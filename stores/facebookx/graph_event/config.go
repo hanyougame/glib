@@ -6,6 +6,7 @@ const (
 )
 
 type Config struct {
-	PixelID     string `gorm:"pixel_id" json:"pixel_id"`                // 像素ID
-	AccessToken string `gorm:"column:access_token" json:"access_token"` // token
+	PixelID     string      `gorm:"pixel_id" json:"pixel_id"`                // 像素ID
+	AccessToken string      `gorm:"column:access_token" json:"access_token"` // token
+	EventsName  []EventName `gorm:"column:events_name" json:"events_name"`   // 事件名称
 }
