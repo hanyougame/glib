@@ -57,6 +57,11 @@ func wrapBaseResponse(v any) BaseResponse[any] {
 	case error:
 		resp.Code = 500
 		resp.Message = data.Error()
+	case ErrorResult:
+	case *ErrorResult:
+		resp.Code = data.Code
+		resp.Message = data.Message
+		resp.Data = data.Data
 	default:
 		resp.Code = BusinessCodeOK
 		resp.Message = BusinessMsgOk
