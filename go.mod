@@ -19,7 +19,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jinzhu/copier v0.4.0
 	github.com/pkg/errors v0.9.1
-	github.com/redis/go-redis/v9 v9.7.2
+	github.com/redis/go-redis/v9 v9.7.0
 	github.com/samber/lo v1.50.0
 	github.com/shopspring/decimal v1.4.0
 	github.com/sony/sonyflake v1.2.0
