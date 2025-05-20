@@ -4,17 +4,17 @@ import (
 	"context"
 	"firebase.google.com/go/v4/messaging"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/jsonx"
 	"testing"
 	"time"
 )
 
 func TestSendBatch(t *testing.T) {
-	const creat = ``
-	var c Config
-	if err := jsonx.UnmarshalFromString(creat, &c); err != nil {
-		t.Fatal(err)
+	var c = Config{
+		Type: "service_account",
 	}
+	//if err := jsonx.UnmarshalFromString("", &c); err != nil {
+	//	t.Fatal(err)
+	//}
 	//fmt.Printf("c: %+v\n", c)
 	var ctx, cancel = context.WithTimeout(context.Background(), 10*time.Minute)
 	defer cancel()
