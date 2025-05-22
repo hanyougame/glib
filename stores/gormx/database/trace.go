@@ -34,7 +34,7 @@ func registerTraceHook(tx *gorm.DB) {
 
 func traceSql(spanName string, db *gorm.DB) {
 	sql := db.Dialector.Explain(db.Statement.SQL.String(), db.Statement.Vars...)
-	logx.WithContext(db.Statement.Context).Infof("spanName : %s, sql:%s", spanName, sql)
+	logx.WithContext(db.Statement.Context).Debugf("spanName : %s, sql:%s", spanName, sql)
 	tracing.Inject(db.Statement.Context, spanName, func(span oteltrace.Span) oteltrace.Span {
 		span.SetAttributes(attribute.KeyValue{
 			Key:   "gorm.sql",
