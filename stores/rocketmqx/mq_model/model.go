@@ -147,3 +147,10 @@ type UserBetNotify struct {
 	PlatformID           int64  `json:"platform_id"`            // 游戏平台ID
 	PlatformName         string `json:"platform_name"`          // 游戏平台名称
 }
+
+type UserRedPacketNotify struct {
+	UserIDs      []int64 ` json:"user_ids,omitempty"`     // 用户id
+	CurrencyCode string  `json:"currency_code,omitempty"` // 币种
+	ActivityID   int64   ` json:"activity_id,omitempty"`  // 活动id
+	PeriodIndex  int64   ` json:"period_index,omitempty"` // 活动阶段
+}
