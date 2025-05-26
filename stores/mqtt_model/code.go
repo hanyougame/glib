@@ -20,3 +20,12 @@ const (
 	WithdrawFailCode                            // 提现三方回调失败
 	WithdrawRiskControlReviewCode               // 提现风控审核
 )
+
+const (
+	GameAwardMonitoringCode = 5001 + iota // 游戏派奖监控后台警告
+)
+
+const (
+	ExportSuccessCode = 6001 + iota
+	ExportFailCode
+)
