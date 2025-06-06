@@ -155,3 +155,14 @@ type UserRedPacketNotify struct {
 	ActivityID   int64   ` json:"activity_id,omitempty"`  // 活动id
 	PeriodIndex  int64   ` json:"period_index,omitempty"` // 活动阶段
 }
+
+// UserRecallBindNotify 用户召回绑定信息
+type UserRecallBindNotify struct {
+	ActivityID      int64  `json:"activity_id"`      // 活动id
+	InviteeID       int64  `json:"invitee_id"`       // 被邀请人用户id
+	InviteeAccount  string `json:"invitee_account"`  // 被邀请人用户账号
+	InviteeCurrency string `json:"invitee_currency"` // 被邀请人币种
+	InviterID       int64  `json:"inviter_id"`       // 邀请人用户id
+	InviterAccount  string `json:"inviter_account"`  // 邀请人用户账号
+	InviterCurrency string `json:"inviter_currency"` // 邀请人币种
+}
