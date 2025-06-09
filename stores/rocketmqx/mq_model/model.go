@@ -25,6 +25,7 @@ type UserRechargeNotify struct {
 	RechargeChannelId  int64  `json:"recharge_channel_id"`  // 充值通道Id
 	GiftAmount         int64  `json:"gift_amount"`          // 赠送金额
 	SupplySign         bool   `json:"supply_sign"`          // 补单标志
+	RealAmount         int64  `json:"real_amount"`          // 实际到账的余额
 	UpdateAfterAmount  int64  `json:"update_after_amount"`  // 充值之后的余额
 }
 
