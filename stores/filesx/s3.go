@@ -2,11 +2,13 @@ package filesx
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/aws/smithy-go"
 	config2 "github.com/hanyougame/glib/stores/filesx/config"
 	"io"
 	"os"
@@ -79,6 +81,20 @@ func (s *s3Storage) Delete(ctx context.Context, path string) error {
 	return nil
 }
 
+func (s *s3Storage) Exist(ctx context.Context, fileName string) (bool, error) {
+	if _, err := s.client.HeadObject(ctx, &s3.HeadObjectInput{
+		Bucket: aws.String(s.bucket),
+		Key:    aws.String(fileName),
+	}); err != nil {
+		var apiErr smithy.APIError
+		if errors.As(err, &apiErr) && apiErr.ErrorCode() == "NotFound" {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
+}
+
 type localStorage struct {
 	basePath  string
 	cdnDomain string // CDN域名（可选）
@@ -138,4 +154,15 @@ func (l *localStorage) Delete(ctx context.Context, path string) error {
 		return fmt.Errorf("failed to delete file: %w", err)
 	}
 	return nil
+}
+
+func (l *localStorage) Exist(ctx context.Context, fileName string) (bool, error) {
+	_, err := os.Stat(filepath.Join(l.basePath, fileName))
+	if err != nil {
+		if os.IsNotExist(err) {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
 }
