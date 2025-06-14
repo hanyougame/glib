@@ -8,6 +8,7 @@ type UserLoginNotify struct {
 	LoginTime    int64  `json:"login_time"`    //登陆时间
 	Os           string `json:"os"`            // OS
 	CurrencyCode string `json:"currency_code"` //币种
+	IsGuest      bool   `json:"is_guest"`      // 是否是游客
 }
 
 // UserRechargeNotify 用户成功充值推送
@@ -82,6 +83,7 @@ type UserRegisterNotify struct {
 	CurrencyCode   string `json:"currency_code"`   // 币种
 	RegisterIp     string `json:"register_ip"`     // 注册IP
 	RegisterDevice string `json:"register_device"` // 注册设备号
+	IsGuest        bool   `json:"is_guest"`        // 是否是游客
 }
 
 // MqDepWdlTripartiteMsg 游戏转入转出第三方余额通知
