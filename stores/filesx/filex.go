@@ -26,6 +26,7 @@ const (
 type Storage interface {
 	Upload(ctx context.Context, file io.Reader, path, contentType string) (string, error)
 	Delete(ctx context.Context, path string) error
+	Exist(ctx context.Context, fileName string) (bool, error)
 }
 
 var (

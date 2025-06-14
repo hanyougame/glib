@@ -25,4 +25,8 @@ const (
 	TopicUserSingleGameBetSettleNotify = "user_single_game_bet_settle_notify"
 	// TopicUserBetNotify 用户游戏投注通知
 	TopicUserBetNotify = "user_bet_notify"
+	// TopicUserRedPacketNotify 用户红包活动通知
+	TopicUserRedPacketNotify = "user_red_packet_notify"
+	// TopicUserRecallNotify 用户召回通知
+	TopicUserRecallNotify = "user_recall_notify"
 )

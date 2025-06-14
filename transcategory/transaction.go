@@ -1,5 +1,11 @@
 package transcategory
 
+const (
+	// zh 中文 en 英文
+	ZhLanguage = "zh"
+	EnLanguage = "en"
+)
+
 // TransactionCategory represents transaction main category types
 type TransactionCategory int
 
@@ -98,6 +104,42 @@ func (t TransactionCategory) String() string {
 		return "Data Migration"
 	default:
 		return ""
+	}
+}
+
+var TransactionCategoryZhMap = map[TransactionCategory]string{
+	TransactionCategoryCapitalSwitch:          "资金切换",
+	TransactionCategoryUserRecharge:           "会员充值",
+	TransactionCategoryUserWithdraw:           "会员提现",
+	TransactionCategoryBankMerchantSettlement: "银商结算",
+	TransactionCategoryCapitalRevise:          "资金修正",
+	TransactionCategoryActivity:               "活动",
+	TransactionCategoryGoldReturn:             "返水",
+	TransactionCategoryRebate:                 "返佣",
+	TransactionCategoryInterest:               "利息宝",
+	TransactionCategoryTask:                   "任务",
+	TransactionCategoryVipReward:              "VIP奖励",
+	TransactionCategoryRechargeBonus:          "充值优惠",
+	TransactionCategoryClub:                   "俱乐部",
+	TransactionCategoryReward:                 "奖励",
+	TransactionCategoryGuaranteeClaim:         "担保理赔",
+	TransactionCategoryProvidentFund:          "公积金",
+	TransactionCategoryBlindBoxLottery:        "盲盒抽奖",
+	TransactionCategoryGameBet:                "游戏投注",
+	TransactionCategoryDataMigration:          "迁移",
+}
+
+func (t TransactionCategory) StringByLanguage(language string) string {
+	switch language {
+	case EnLanguage:
+		// 英文内容
+		return t.String()
+	case ZhLanguage:
+		// 获取中文内容
+		return TransactionCategoryZhMap[t]
+	default:
+		// 默认英文内容
+		return t.String()
 	}
 }
 
@@ -545,5 +587,101 @@ func (t TransactionSubCategory) String() string {
 		return "Login Event" // 登录活动
 	default:
 		return ""
+	}
+}
+
+var TransactionSubCategoryMap = map[TransactionSubCategory]string{
+	TransactionSubCategoryWithdrawal:                 "转入",
+	TransactionSubCategoryDeposits:                   "转出",
+	TransactionSubCategoryUalaTransfer:               "Uala转账",
+	TransactionSubCategoryMercadoPagoTransfer:        "MercadoPago转账",
+	TransactionSubCategoryUPDAYTransfer:              "UPDAY转账",
+	TransactionSubCategoryWithdrawFrozen:             "提现扣款",
+	TransactionSubCategoryWithdrawReject:             "提现失败",
+	TransactionSubCategoryWithdrawDefrost:            "提现失败",
+	TransactionSubCategoryWithdrawSucceed:            "提现成功",
+	TransactionSubCategoryBankMerchantTransfer:       "转账给他人",
+	TransactionSubCategoryBankMerchantAddAmount:      "银商加款",
+	TransactionSubCategoryBankMerchantRecharge:       "银商充值",
+	TransactionSubCategoryBankMerchantGiveUser:       "银商赠送会员金额",
+	TransactionSubCategoryBankMerchantSubtractAmount: "银商扣款",
+	TransactionSubCategoryManualAddAmount:            "人工加款",
+	TransactionSubCategoryManualAddOrder:             "手动补单",
+	TransactionSubCategoryBalanceRevise:              "修正负数余额",
+	TransactionSubCategoryManualAddRewardAmount:      "人工加款",
+	TransactionSubCategoryManualSubtractAmount:       "手动扣款",
+	TransactionSubCategoryDeductAll:                  "扣除全部资产",
+	TransactionSubCategorySurDeduct:                  "追缴扣除",
+	TransactionSubCategoryManualPullBack:             "返还资金",
+	TransactionSubCategoryDeductExcessProfit:         "扣除超额盈利",
+	TransactionSubCategoryAgentActivity:              "代理活动",
+	TransactionSubCategoryLuckyBetActivity:           "幸运注单活动",
+	TransactionSubCategoryInvestActivity:             "投资活动",
+	TransactionSubCategoryNewcomerRewardActivity:     "新人彩金",
+	TransactionSubCategoryBenefitActivity:            "救援金活动",
+	TransactionSubCategoryPromoteActivity:            "推广活动",
+	TransactionSubCategoryFeedbackRewardActivity:     "有奖反馈活动",
+	TransactionSubCategoryRedPacketActivity:          "红包活动",
+	TransactionSubCategoryBetActivity:                "打码活动",
+	TransactionSubCategoryLotteryAssistanceActivity:  "抽奖助力活动",
+	TransactionSubCategoryRankActivity:               "排行榜活动",
+	TransactionSubCategoryCustomizeActivity:          "自定义活动",
+	TransactionSubCategoryBargainActivity:            "砍一刀",
+	TransactionSubCategorySpinActivity:               "转盘活动",
+	TransactionSubCategoryChannelRewardActivity:      "渠道奖励",
+	TransactionSubCategoryWordCollectionActivity:     "集字活动",
+	TransactionSubCategoryQuizActivity:               "竞猜活动",
+	TransactionSubCategoryServiceChargeReceive:       "返水领取",
+	TransactionSubCategoryRebateSend:                 "发放佣金",
+	TransactionSubCategoryRebateReceive:              "领取佣金",
+	TransactionSubCategoryInterestProfit:             "利息宝收益",
+	TransactionSubCategoryHallToInterest:             "大厅转入利息宝",
+	TransactionSubCategoryInterestManualPullback:     "手动拉回-利息宝",
+	TransactionSubCategoryInterestToHall:             "利息宝转到大厅",
+	TransactionSubCategoryDailyTask:                  "每日任务",
+	TransactionSubCategoryWeekLyTask:                 "每周任务",
+	TransactionSubCategoryNewcomerProfitTask:         "新人福利",
+	TransactionSubCategoryAlivenessBox:               "活跃度宝箱",
+	TransactionSubCategorySecretTask:                 "神秘任务",
+	TransactionSubCategoryVipMonthlyReward:           "VIP月奖金",
+	TransactionSubCategoryVipDailyReward:             "VIP日奖励",
+	TransactionSubCategoryVipWeeklyReward:            "VIP周奖金",
+	TransactionSubCategoryVipUpgradeReward:           "VIP晋级奖金",
+	TransactionSubCategoryRechargeBonus:              "优惠",
+	TransactionSubCategoryManualPullbackClub:         "手动拉回-俱乐部",
+	TransactionSubCategoryHallToClub:                 "大厅转入俱乐部",
+	TransactionSubCategoryClubToHall:                 "俱乐部转到大厅",
+	TransactionSubCategoryGiveUpReward:               "放弃奖励",
+	TransactionSubCategoryTransferOut:                "转入",
+	TransactionSubCategoryTransferIn:                 "转出",
+	TransactionSubCategoryClaimFreeze:                "理赔冻结",
+	TransactionSubCategoryClaimDefrost:               "理赔解冻",
+	TransactionSubCategoryClaimFee:                   "理赔手续费",
+	TransactionSubCategoryClaimScoresIncrease:        "理赔上分",
+	TransactionSubCategoryClaimScoresDecrease:        "理赔下分",
+	TransactionSubCategoryProvidentFundReceive:       "公积金领取",
+	TransactionSubCategoryBlindBoxLotteryDeduct:      "盲盒抽奖扣除",
+	TransactionSubCategoryBlindBoxLotteryReward:      "盲盒抽奖奖励",
+	TransactionSubCategoryGameBetSettlement:          "投注派奖",
+	TransactionSubCategoryRechargeOnline:             "在线充值",
+	TransactionSubCategoryGameBet:                    "游戏投注",
+	TransactionSubCategoryGameBetCancel:              "投注取消",
+	TransactionSubCategoryGameBetRollback:            "投注回滚",
+	TransactionSubCategoryRechargeActivity:           "充值活动", // 充值活动
+	TransactionSubCategorySignInActivity:             "签到活动", // 签到活动
+	TransactionSubCategoryLoginActivity:              "登录活动", // 登录活动
+}
+
+func (t TransactionSubCategory) StringByLanguage(language string) string {
+	switch language {
+	case EnLanguage:
+		// 英文内容
+		return t.String()
+	case ZhLanguage:
+		// 中文内容获取
+		return TransactionSubCategoryMap[t]
+	default:
+		// 默认英文内容
+		return t.String()
 	}
 }

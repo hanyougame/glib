@@ -8,6 +8,7 @@ type UserLoginNotify struct {
 	LoginTime    int64  `json:"login_time"`    //登陆时间
 	Os           string `json:"os"`            // OS
 	CurrencyCode string `json:"currency_code"` //币种
+	IsGuest      bool   `json:"is_guest"`      // 是否是游客
 }
 
 // UserRechargeNotify 用户成功充值推送
@@ -25,6 +26,8 @@ type UserRechargeNotify struct {
 	RechargeChannelId  int64  `json:"recharge_channel_id"`  // 充值通道Id
 	GiftAmount         int64  `json:"gift_amount"`          // 赠送金额
 	SupplySign         bool   `json:"supply_sign"`          // 补单标志
+	RealAmount         int64  `json:"real_amount"`          // 实际到账的余额
+	UpdateAfterAmount  int64  `json:"update_after_amount"`  // 充值之后的余额
 }
 
 // UserWithdrawNotify 用户提现推送
@@ -80,6 +83,7 @@ type UserRegisterNotify struct {
 	CurrencyCode   string `json:"currency_code"`   // 币种
 	RegisterIp     string `json:"register_ip"`     // 注册IP
 	RegisterDevice string `json:"register_device"` // 注册设备号
+	IsGuest        bool   `json:"is_guest"`        // 是否是游客
 }
 
 // MqDepWdlTripartiteMsg 游戏转入转出第三方余额通知
@@ -146,4 +150,22 @@ type UserBetNotify struct {
 	TripartitePlatformID int64  `json:"tripartite_platform_id"` // 三方游戏平台ID
 	PlatformID           int64  `json:"platform_id"`            // 游戏平台ID
 	PlatformName         string `json:"platform_name"`          // 游戏平台名称
+}
+
+type UserRedPacketNotify struct {
+	UserIDs      []int64 ` json:"user_ids,omitempty"`     // 用户id
+	CurrencyCode string  `json:"currency_code,omitempty"` // 币种
+	ActivityID   int64   ` json:"activity_id,omitempty"`  // 活动id
+	PeriodIndex  int64   ` json:"period_index,omitempty"` // 活动阶段
+}
+
+// UserRecallBindNotify 用户召回绑定信息
+type UserRecallBindNotify struct {
+	ActivityID      int64  `json:"activity_id"`      // 活动id
+	InviteeID       int64  `json:"invitee_id"`       // 被邀请人用户id
+	InviteeAccount  string `json:"invitee_account"`  // 被邀请人用户账号
+	InviteeCurrency string `json:"invitee_currency"` // 被邀请人币种
+	InviterID       int64  `json:"inviter_id"`       // 邀请人用户id
+	InviterAccount  string `json:"inviter_account"`  // 邀请人用户账号
+	InviterCurrency string `json:"inviter_currency"` // 邀请人币种
 }

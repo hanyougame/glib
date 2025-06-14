@@ -74,3 +74,13 @@ func (s *CosStorage) Delete(ctx context.Context, path string) error {
 	}
 	return nil
 }
+
+func (s *CosStorage) Exist(ctx context.Context, fileName string) (bool, error) {
+	if _, err := s.client.Object.Head(ctx, fileName, nil); err != nil {
+		if cos.IsNotFoundError(err) {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
+}
