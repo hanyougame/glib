@@ -295,6 +295,7 @@ const (
 	TransactionSubCategorySurDeduct                                                                      // Additional Deduction
 	TransactionSubCategoryManualPullBack                                                                 // Manual Recall
 	TransactionSubCategoryDeductExcessProfit                                                             // Excess Profit Deduction
+	TransactionSubCategoryBloggerSalary                                                                  // Blogger Salary
 )
 
 // Activity Subcategories
@@ -670,6 +671,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryRechargeActivity:           "充值活动", // 充值活动
 	TransactionSubCategorySignInActivity:             "签到活动", // 签到活动
 	TransactionSubCategoryLoginActivity:              "登录活动", // 登录活动
+	TransactionSubCategoryBloggerSalary:              "博主工资",
 }
 
 func (t TransactionSubCategory) StringByLanguage(language string) string {
