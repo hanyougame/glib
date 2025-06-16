@@ -439,7 +439,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryUPDAYTransfer:
 		return "UPDAY Transfer"
 	case TransactionSubCategoryWithdrawFrozen:
-		return "Withdrawal Deduct"
+		return "Withdrawals&Deductions"
 	case TransactionSubCategoryWithdrawReject:
 		return "Withdrawal Rejection"
 	case TransactionSubCategoryWithdrawDefrost:
@@ -483,7 +483,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryNewcomerRewardActivity:
 		return "Newcomer Bonus"
 	case TransactionSubCategoryBenefitActivity:
-		return "Relief Fund Activity"
+		return "Daily Loss Recovery"
 	case TransactionSubCategoryPromoteActivity:
 		return "Promotion Event"
 	case TransactionSubCategoryFeedbackRewardActivity:
@@ -579,13 +579,15 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryGameBetCancel:
 		return "Game Bet Cancel"
 	case TransactionSubCategoryGameBetRollback:
-		return "Game Bet RollBack"
+		return "Game Bet Roll-Back"
 	case TransactionSubCategoryRechargeActivity:
 		return "Deposit Event" // 充值活动
 	case TransactionSubCategorySignInActivity:
 		return "Check-In Event" // 签到活动
 	case TransactionSubCategoryLoginActivity:
 		return "Login Event" // 登录活动
+	case TransactionSubCategoryBloggerSalary:
+		return "Blogger Salary" // 博主工资
 	default:
 		return ""
 	}
