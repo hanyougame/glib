@@ -172,6 +172,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			//TransactionSubCategorySurDeduct, TransactionSubCategoryManualPullBack, TransactionSubCategoryDeductExcessProfit,
 			TransactionSubCategoryManualAddAmount, TransactionSubCategoryManualAddOrder,
 			TransactionSubCategoryManualSubtractAmount, TransactionSubCategoryDeductAll,
+			TransactionSubCategoryBloggerSalary,
 		}
 	case TransactionCategoryActivity:
 		return []TransactionSubCategory{
