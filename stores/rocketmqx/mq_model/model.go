@@ -177,4 +177,5 @@ type UserProfileAuthNotify struct {
 	AuthType    int    `json:"auth_type"`    // 认证类型 0-未知  1-手机号, 2-Email
 	AuthTime    int64  `json:"auth_time"`    // 认证时间
 	AuthProfile string `json:"auth_profile"` // 认证资料 对应认证类型的值
+	CountryCode string `json:"country_code"` // 国别代码  认证类型为手机时为手机区号
 }
