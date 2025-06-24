@@ -29,4 +29,6 @@ const (
 	TopicUserRedPacketNotify = "user_red_packet_notify"
 	// TopicUserRecallNotify 用户召回通知
 	TopicUserRecallNotify = "user_recall_notify"
+	// TopicUserProfileAuthNotify 用户资料认证
+	TopicUserProfileAuthNotify = "user_profile_auth_notify"
 )
