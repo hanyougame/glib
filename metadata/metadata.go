@@ -32,6 +32,8 @@ const (
 	CtxRegisterIP = "register_ip"
 	// CtxRegisterDevice  设备类型
 	CtxRegisterDevice = "register_device"
+	// CtxIsGuest 是否游客
+	CtxIsGuest = "is_guest"
 )
 
 const (
@@ -147,4 +149,9 @@ func GetRegionFromCtx(ctx context.Context) string {
 // GetChannelIDFromCtx 从上下文获取渠道id
 func GetChannelIDFromCtx(ctx context.Context) int64 {
 	return cast.ToInt64(ctx.Value(CtxChannelID))
+} // GetChannelIDFromCtx 从上下文获取渠道id
+
+// IsGuest 从上下文中判断是否是游客
+func IsGuest(ctx context.Context) bool {
+	return cast.ToBool(ctx.Value(CtxIsGuest))
 }

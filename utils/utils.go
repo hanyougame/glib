@@ -24,3 +24,11 @@ func Ternary[T any](condition bool, value1, value2 T) T {
 	}
 	return value2
 }
+
+func ToPrettyJSON(v interface{}) string {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return fmt.Sprintf("%v", v)
+	}
+	return string(b)
+}

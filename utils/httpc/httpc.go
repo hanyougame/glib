@@ -17,6 +17,14 @@ func Do(ctx context.Context) *resty.Request {
 	return engine.R().SetContext(ctx)
 }
 
+func New(ctx context.Context, fs ...func(cli *resty.Client)) *resty.Request {
+	client := MustClient()
+	for _, f := range fs {
+		f(client)
+	}
+	return client.R().SetContext(ctx)
+}
+
 // MustClient new http client
 func MustClient() *resty.Client {
 	return resty.New()
