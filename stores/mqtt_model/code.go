@@ -13,6 +13,7 @@ const (
 const (
 	ActivityRechargePopWindow   = 3001 + iota // 活动充值弹窗
 	ActivityRechargeRedEnvelope               // 活动抢红包
+	ActivityBargainWinNotice                  // 活动砍一刀中奖（爆奖）通知
 )
 
 const (
