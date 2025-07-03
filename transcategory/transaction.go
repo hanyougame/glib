@@ -182,9 +182,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			//TransactionSubCategoryLotteryAssistanceActivity, TransactionSubCategoryRankActivity, TransactionSubCategoryCustomizeActivity,
 			//TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryChannelRewardActivity,
 			//TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
-			//TransactionSubCategorySignInActivity,
-			TransactionSubCategoryAgentActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategorySignInActivity,
-			TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity, TransactionSubCategoryLoginActivity,
+			TransactionSubCategoryAgentActivity, TransactionSubCategorySignInActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity, TransactionSubCategoryNewcomerProfitTask, TransactionSubCategoryBenefitActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity,
 		}
 	//case TransactionCategoryGoldReturn:
 	//	return []TransactionSubCategory{
@@ -192,7 +190,8 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	//	}
 	case TransactionCategoryRebate:
 		return []TransactionSubCategory{
-			TransactionSubCategoryRebateSend, TransactionSubCategoryRebateReceive,
+			//TransactionSubCategoryRebateSend,
+			TransactionSubCategoryRebateReceive,
 		}
 	//case TransactionCategoryInterest:
 	//	return []TransactionSubCategory{
@@ -322,6 +321,7 @@ const (
 	TransactionSubCategoryRechargeActivity                                                              // 充值活动
 	TransactionSubCategorySignInActivity                                                                // 签到活动// Activity
 	TransactionSubCategoryLoginActivity                                                                 // Login Activity 登录活动
+	TransactionSubCategoryReturnUserActivity                                                            // return user 用户召回活动
 )
 
 // Gold Return Subcategories
@@ -490,7 +490,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryFeedbackRewardActivity:
 		return "Feedback Reward Activity"
 	case TransactionSubCategoryRedPacketActivity:
-		return "Red Packet Activity"
+		return "Red Envelope Event"
 	case TransactionSubCategoryBetActivity:
 		return "Bet Event"
 	case TransactionSubCategoryLotteryAssistanceActivity:
@@ -500,9 +500,9 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryCustomizeActivity:
 		return "Custom Activity"
 	case TransactionSubCategoryBargainActivity:
-		return "Bargain Activity"
+		return "Lucky draw"
 	case TransactionSubCategorySpinActivity:
-		return "Spin Activity"
+		return "Fortune Wheel Event"
 	case TransactionSubCategoryChannelRewardActivity:
 		return "Channel Reward"
 	case TransactionSubCategoryWordCollectionActivity:
@@ -528,7 +528,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryWeekLyTask:
 		return "Weekly Task"
 	case TransactionSubCategoryNewcomerProfitTask:
-		return "Newcomer Benefits"
+		return "New Player Bonus"
 	case TransactionSubCategoryAlivenessBox:
 		return "Activity Box"
 	case TransactionSubCategorySecretTask:
@@ -586,9 +586,11 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategorySignInActivity:
 		return "Check-In Event" // 签到活动
 	case TransactionSubCategoryLoginActivity:
-		return "Login Event" // 登录活动
+		return "Login Activity" // 登录活动
 	case TransactionSubCategoryBloggerSalary:
 		return "Blogger Salary" // 博主工资
+	case TransactionSubCategoryReturnUserActivity:
+		return "Returning User Event" // 召回惠东
 	default:
 		return ""
 	}
@@ -644,7 +646,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryInterestToHall:             "利息宝转到大厅",
 	TransactionSubCategoryDailyTask:                  "每日任务",
 	TransactionSubCategoryWeekLyTask:                 "每周任务",
-	TransactionSubCategoryNewcomerProfitTask:         "新人福利",
+	TransactionSubCategoryNewcomerProfitTask:         "新人彩金",
 	TransactionSubCategoryAlivenessBox:               "活跃度宝箱",
 	TransactionSubCategorySecretTask:                 "神秘任务",
 	TransactionSubCategoryVipMonthlyReward:           "VIP月奖金",
@@ -675,6 +677,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategorySignInActivity:             "签到活动", // 签到活动
 	TransactionSubCategoryLoginActivity:              "登录活动", // 登录活动
 	TransactionSubCategoryBloggerSalary:              "博主工资",
+	TransactionSubCategoryReturnUserActivity:         "用户召回活动",
 }
 
 func (t TransactionSubCategory) StringByLanguage(language string) string {
