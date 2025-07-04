@@ -482,7 +482,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryInvestActivity:
 		return "Investment Activity"
 	case TransactionSubCategoryNewcomerRewardActivity:
-		return "Newcomer Bonus"
+		return "New Player Bonus"
 	case TransactionSubCategoryBenefitActivity:
 		return "Daily Loss Recovery"
 	case TransactionSubCategoryPromoteActivity:
@@ -528,7 +528,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryWeekLyTask:
 		return "Weekly Task"
 	case TransactionSubCategoryNewcomerProfitTask:
-		return "New Player Bonus"
+		return "New Player Bonus Task"
 	case TransactionSubCategoryAlivenessBox:
 		return "Activity Box"
 	case TransactionSubCategorySecretTask:
