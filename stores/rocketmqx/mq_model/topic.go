@@ -17,7 +17,7 @@ const (
 	TopicPublishMqtt = "publish_mqtt"
 	// TopicUserRechargeLogNotify 用户充值日志
 	TopicUserRechargeLogNotify = "user_recharge_log_notify"
-	// TopicUserRechargeTimeoutNotify
+	// TopicUserRechargeTimeoutNotify 用户充值超时通知
 	TopicUserRechargeTimeoutNotify = "user_recharge_timeout_notify"
 	// TopicUserSingleGameBetNotify  用户单一钱包游戏投注相关通知·
 	TopicUserSingleGameBetNotify = "user_single_game_bet_notify"
@@ -31,4 +31,6 @@ const (
 	TopicUserRecallNotify = "user_recall_notify"
 	// TopicUserProfileAuthNotify 用户资料认证
 	TopicUserProfileAuthNotify = "user_profile_auth_notify"
+	// TopicUserProfileUpdateNotify 用户资料更新
+	TopicUserProfileUpdateNotify = "user_profile_update_notify"
 )

@@ -179,3 +179,12 @@ type UserProfileAuthNotify struct {
 	AuthProfile string `json:"auth_profile"` // 认证资料 对应认证类型的值
 	CountryCode string `json:"country_code"` // 国别代码  认证类型为手机时为手机区号
 }
+
+type UserProfileUpdateNotify struct {
+	UserId      int64  `json:"user_id"`      // 用户ID
+	UserName    string `json:"user_name"`    // 用户名
+	Currency    string `json:"currency"`     // 币种
+	UpdateAt    int64  `json:"update_at"`    // 更新资料时间
+	ProfileType int    `json:"profile_type"` // 资料类型 1-首次绑定银行卡, 2-添加提现账户, 3-设置生日, 4-设置取款密码, 5-设置密保, 6-设置头像
+	ProfileData string `json:"profile_data"` // 资料内容 JSON格式
+}
