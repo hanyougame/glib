@@ -182,7 +182,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			//TransactionSubCategoryLotteryAssistanceActivity, TransactionSubCategoryRankActivity, TransactionSubCategoryCustomizeActivity,
 			//TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryChannelRewardActivity,
 			//TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
-			TransactionSubCategoryAgentActivity, TransactionSubCategorySignInActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity, TransactionSubCategoryNewcomerProfitTask, TransactionSubCategoryBenefitActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity,
+			TransactionSubCategoryAgentActivity, TransactionSubCategorySignInActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity, TransactionSubCategoryNewcomerRewardActivity, TransactionSubCategoryBenefitActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity,
 		}
 	//case TransactionCategoryGoldReturn:
 	//	return []TransactionSubCategory{
@@ -586,11 +586,11 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategorySignInActivity:
 		return "Check-In Event" // 签到活动
 	case TransactionSubCategoryLoginActivity:
-		return "Login Activity" // 登录活动
+		return "Login Event" // 登录活动
 	case TransactionSubCategoryBloggerSalary:
 		return "Blogger Salary" // 博主工资
 	case TransactionSubCategoryReturnUserActivity:
-		return "Returning User Event" // 召回惠东
+		return "Returning User Event" // 召回活动
 	default:
 		return ""
 	}
