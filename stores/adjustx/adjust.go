@@ -62,7 +62,7 @@ func (sender *Sender) GetAuth() string {
 	return fmt.Sprintf("Bearer %s", sender.Auth)
 }
 
-func (sender *Sender) Send(e interface{}) {
+func (sender *Sender) Send(e interface{}) error {
 
 	logger := logx.WithContext(sender.ctx)
 
@@ -73,30 +73,28 @@ func (sender *Sender) Send(e interface{}) {
 	}
 	req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, sender.url, nil)
 	if err != nil {
-		logger.Errorf("[Adjust] S2SEvent request Fail error: %v", err)
-		return
+		return fmt.Errorf("S2SEvent new request err: %v", err)
 	}
 	req.URL.RawQuery = formValues.Encode()
 	req.Header.Set(httpx.ContentType, "application/x-www-form-urlencoded")
 	req.Header.Set("Authorization", sender.GetAuth())
 	response, err := httpc.DoRequest(req)
 	if err != nil {
-		logger.Errorf("[Adjust] S2SEvent request Fail error: %v", err)
-		return
+		return fmt.Errorf("S2SEvent do request err: %v", err)
 	}
 	defer response.Body.Close()
 
 	// 解析 JSON 响应
 	var data map[string]string
 	if err = json.NewDecoder(response.Body).Decode(&data); err != nil {
-		logger.Errorf("[Adjust] S2SEvent response Fail error: %v", err)
-		return
+		return fmt.Errorf("S2SEvent response err: %v", err)
 	}
 
 	if response.StatusCode != http.StatusOK {
-		logger.Errorf("[Adjust] S2SEvent response Fail: %v, %v", response.StatusCode, data)
-		return
+		return fmt.Errorf("S2SEvent response status err, status: %v, data: %v", response.StatusCode, data)
 	}
 
 	logger.Infof("[Adjust] S2SEvent response Success: %v, Response: %v", response.StatusCode, data)
+
+	return nil
 }
