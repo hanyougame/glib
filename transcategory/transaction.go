@@ -19,7 +19,7 @@ var TransactionCategories = []TransactionCategory{
 	//TransactionCategoryGoldReturn,
 	TransactionCategoryRebate,
 	//TransactionCategoryInterest,
-	//TransactionCategoryTask,
+	TransactionCategoryTask,
 	TransactionCategoryVipReward,
 	TransactionCategoryRechargeBonus,
 	//TransactionCategoryClub,
@@ -198,11 +198,11 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	//		TransactionSubCategoryInterestProfit, TransactionSubCategoryHallToInterest,
 	//		TransactionSubCategoryInterestManualPullback, TransactionSubCategoryInterestToHall,
 	//	}
-	//case TransactionCategoryTask:
-	//	return []TransactionSubCategory{
-	//		TransactionSubCategoryDailyTask, TransactionSubCategoryWeekLyTask, TransactionSubCategoryNewcomerProfitTask,
-	//		TransactionSubCategoryAlivenessBox, TransactionSubCategorySecretTask,
-	//	}
+	case TransactionCategoryTask:
+		return []TransactionSubCategory{
+			TransactionSubCategoryDailyTask, TransactionSubCategoryWeekLyTask, TransactionSubCategoryNewcomerProfitTask,
+			TransactionSubCategoryAlivenessBox, TransactionSubCategorySecretTask,
+		}
 	case TransactionCategoryVipReward:
 		return []TransactionSubCategory{
 			TransactionSubCategoryVipMonthlyReward, TransactionSubCategoryVipDailyReward,
