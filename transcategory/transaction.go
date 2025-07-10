@@ -201,7 +201,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	case TransactionCategoryTask:
 		return []TransactionSubCategory{
 			TransactionSubCategoryDailyTask, TransactionSubCategoryWeekLyTask, TransactionSubCategoryNewcomerProfitTask,
-			TransactionSubCategoryAlivenessBox, TransactionSubCategorySecretTask,
+			TransactionSubCategoryAlivenessBox,
 		}
 	case TransactionCategoryVipReward:
 		return []TransactionSubCategory{
