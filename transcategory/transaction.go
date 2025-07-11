@@ -524,13 +524,13 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryInterestToHall:
 		return "Interest to Hall Transfer"
 	case TransactionSubCategoryDailyTask:
-		return "Daily Task"
+		return "Daily Mission"
 	case TransactionSubCategoryWeekLyTask:
-		return "Weekly Task"
+		return "Weekly Mission"
 	case TransactionSubCategoryNewcomerProfitTask:
-		return "New Player Bonus Task"
+		return "Newplayer Bonus"
 	case TransactionSubCategoryAlivenessBox:
-		return "Activity Box"
+		return "Activity Treasure Box"
 	case TransactionSubCategorySecretTask:
 		return "Secret Task"
 	case TransactionSubCategoryVipMonthlyReward:
@@ -646,7 +646,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryInterestToHall:             "利息宝转到大厅",
 	TransactionSubCategoryDailyTask:                  "每日任务",
 	TransactionSubCategoryWeekLyTask:                 "每周任务",
-	TransactionSubCategoryNewcomerProfitTask:         "新人彩金",
+	TransactionSubCategoryNewcomerProfitTask:         "新人福利",
 	TransactionSubCategoryAlivenessBox:               "活跃度宝箱",
 	TransactionSubCategorySecretTask:                 "神秘任务",
 	TransactionSubCategoryVipMonthlyReward:           "VIP月奖金",
