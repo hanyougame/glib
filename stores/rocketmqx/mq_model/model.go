@@ -28,6 +28,8 @@ type UserRechargeNotify struct {
 	SupplySign         bool   `json:"supply_sign"`          // 补单标志
 	RealAmount         int64  `json:"real_amount"`          // 实际到账的余额
 	UpdateAfterAmount  int64  `json:"update_after_amount"`  // 充值之后的余额
+	RechargeTarget     int    `json:"recharge_target"`      // 充值目标 1 用户钱包 2 周卡 3 月卡
+	TargetId           int64  `json:"target_id"`            // 充值目标ID
 }
 
 // UserWithdrawNotify 用户提现推送
