@@ -322,6 +322,7 @@ const (
 	TransactionSubCategorySignInActivity                                                                // 签到活动// Activity
 	TransactionSubCategoryLoginActivity                                                                 // Login Activity 登录活动
 	TransactionSubCategoryReturnUserActivity                                                            // return user 用户召回活动
+	TransactionSubCategoryActivityCard                                                                  // 周卡月卡活动
 )
 
 // Gold Return Subcategories
@@ -591,6 +592,8 @@ func (t TransactionSubCategory) String() string {
 		return "Blogger Salary" // 博主工资
 	case TransactionSubCategoryReturnUserActivity:
 		return "Returning User Event" // 召回活动
+	case TransactionSubCategoryActivityCard:
+		return "Weekly/Monthly Card Activity"
 	default:
 		return ""
 	}
@@ -678,6 +681,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryLoginActivity:              "登录活动", // 登录活动
 	TransactionSubCategoryBloggerSalary:              "博主工资",
 	TransactionSubCategoryReturnUserActivity:         "用户召回活动",
+	TransactionSubCategoryActivityCard:               "周卡月卡活动",
 }
 
 func (t TransactionSubCategory) StringByLanguage(language string) string {
