@@ -30,6 +30,8 @@ type UserRechargeNotify struct {
 	UpdateAfterAmount  int64  `json:"update_after_amount"`  // 充值之后的余额
 	RechargeTarget     int    `json:"recharge_target"`      // 充值目标 1 用户钱包 2 周卡 3 月卡
 	TargetId           int64  `json:"target_id"`            // 充值目标ID
+	SubTargetId        int64  `json:"sub_target_id"`        // 子目标ID
+	FirstIncludeSign   bool   `json:"first_include_sign"`   // 标记在内的首次
 }
 
 // UserWithdrawNotify 用户提现推送
