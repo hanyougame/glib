@@ -32,6 +32,7 @@ type UserRechargeNotify struct {
 	TargetId           int64  `json:"target_id"`            // 充值目标ID
 	SubTargetId        int64  `json:"sub_target_id"`        // 子目标ID
 	FirstIncludeSign   bool   `json:"first_include_sign"`   // 标记在内的首次
+	IsInclude          bool   `json:"is_include"`           // 其他活动计算卡项充值 是否计算在内
 }
 
 // UserWithdrawNotify 用户提现推送
