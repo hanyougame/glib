@@ -16,7 +16,7 @@ var TransactionCategories = []TransactionCategory{
 	//TransactionCategoryBankMerchantSettlement,
 	TransactionCategoryCapitalRevise,
 	TransactionCategoryActivity,
-	//TransactionCategoryGoldReturn,
+	TransactionCategoryGoldReturn,
 	TransactionCategoryRebate,
 	//TransactionCategoryInterest,
 	TransactionCategoryTask,
@@ -184,10 +184,10 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			//TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
 			TransactionSubCategoryAgentActivity, TransactionSubCategorySignInActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity, TransactionSubCategoryNewcomerRewardActivity, TransactionSubCategoryBenefitActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBargainActivity, TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity,
 		}
-	//case TransactionCategoryGoldReturn:
-	//	return []TransactionSubCategory{
-	//		TransactionSubCategoryServiceChargeReceive,
-	//	}
+	case TransactionCategoryGoldReturn:
+		return []TransactionSubCategory{
+			TransactionSubCategoryServiceChargeReceive,
+		}
 	case TransactionCategoryRebate:
 		return []TransactionSubCategory{
 			//TransactionSubCategoryRebateSend,
@@ -511,7 +511,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryQuizActivity:
 		return "Quiz Activity"
 	case TransactionSubCategoryServiceChargeReceive:
-		return "Service Charge Receipt"
+		return "Rebate Claimed"
 	case TransactionSubCategoryRebateSend:
 		return "Commission Distribution"
 	case TransactionSubCategoryRebateReceive:
