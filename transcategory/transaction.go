@@ -595,6 +595,8 @@ func (t TransactionSubCategory) String() string {
 		return "Returning User Event" // 召回活动
 	case TransactionSubCategoryActivityCard:
 		return "Weekly/Monthly Card Activity"
+	case TransactionSubCategoryBulletinReward:
+		return "News Reward"
 	default:
 		return ""
 	}
