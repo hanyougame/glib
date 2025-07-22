@@ -594,7 +594,7 @@ func (t TransactionSubCategory) String() string {
 	case TransactionSubCategoryReturnUserActivity:
 		return "Returning User Event" // 召回活动
 	case TransactionSubCategoryActivityCard:
-		return "Weekly/Monthly Card Activity"
+		return "CashBack Cards"
 	case TransactionSubCategoryBulletinReward:
 		return "News Reward"
 	default:
@@ -684,7 +684,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryLoginActivity:              "登录活动", // 登录活动
 	TransactionSubCategoryBloggerSalary:              "博主工资",
 	TransactionSubCategoryReturnUserActivity:         "用户召回活动",
-	TransactionSubCategoryActivityCard:               "周卡月卡活动",
+	TransactionSubCategoryActivityCard:               "周月卡奖励",
 	TransactionSubCategoryBulletinReward:             "公告奖励",
 }
 
