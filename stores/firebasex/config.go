@@ -15,8 +15,8 @@ type Config struct {
 }
 
 type WebConfig struct {
-	ApplicationIdentity string       `json:"application_identity"`
-	SdkConfig           WebSdkConfig `json:"sdk_config"`
+	VAPIDPublicKey string       `json:"vapid_public_key"`
+	SdkConfig      WebSdkConfig `json:"sdk_config"`
 }
 
 type WebSdkConfig struct {
