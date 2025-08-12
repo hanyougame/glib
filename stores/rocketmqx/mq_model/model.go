@@ -89,6 +89,7 @@ type UserRegisterNotify struct {
 	RegisterIp     string `json:"register_ip"`     // 注册IP
 	RegisterDevice string `json:"register_device"` // 注册设备号
 	IsGuest        bool   `json:"is_guest"`        // 是否是游客
+	InviteCode     string `json:"invite_code"`     // 上级邀请码
 }
 
 // MqDepWdlTripartiteMsg 游戏转入转出第三方余额通知
