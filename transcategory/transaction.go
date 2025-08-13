@@ -148,7 +148,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	switch t {
 	case TransactionCategoryCapitalSwitch:
 		return []TransactionSubCategory{
-			TransactionSubCategoryWithdrawal, TransactionSubCategoryDeposits,
+			TransactionSubCategoryWithdrawal, TransactionSubCategoryDeposits, TransactionSubCategoryWeeklyMonthCard,
 		}
 	case TransactionCategoryUserRecharge:
 		return []TransactionSubCategory{
@@ -250,9 +250,10 @@ type TransactionSubCategory int
 
 // Capital Switch Subcategories
 const (
-	SubCategoryCapitalSwitch         TransactionSubCategory = 1000
-	TransactionSubCategoryWithdrawal                        = iota + SubCategoryCapitalSwitch // Transfer Out
-	TransactionSubCategoryDeposits                                                            // Transfer In
+	SubCategoryCapitalSwitch              TransactionSubCategory = 1000
+	TransactionSubCategoryWithdrawal                             = iota + SubCategoryCapitalSwitch // Transfer Out
+	TransactionSubCategoryDeposits                                                                 // Transfer In
+	TransactionSubCategoryWeeklyMonthCard                                                          // 周卡月卡储值
 )
 
 // User Recharge Subcategories
@@ -435,6 +436,8 @@ func (t TransactionSubCategory) String() string {
 		return "Transfer Out"
 	case TransactionSubCategoryDeposits:
 		return "Transfer In"
+	case TransactionSubCategoryWeeklyMonthCard:
+		return "Buy CashBack Cards"
 	case TransactionSubCategoryUalaTransfer:
 		return "Uala Transfer"
 	case TransactionSubCategoryMercadoPagoTransfer:
@@ -605,6 +608,7 @@ func (t TransactionSubCategory) String() string {
 var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryWithdrawal:                 "转入",
 	TransactionSubCategoryDeposits:                   "转出",
+	TransactionSubCategoryWeeklyMonthCard:            "周月卡奖励储值",
 	TransactionSubCategoryUalaTransfer:               "Uala转账",
 	TransactionSubCategoryMercadoPagoTransfer:        "MercadoPago转账",
 	TransactionSubCategoryUPDAYTransfer:              "UPDAY转账",
