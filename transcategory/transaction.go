@@ -170,7 +170,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			//TransactionSubCategoryManualAddAmount, TransactionSubCategoryManualAddOrder, TransactionSubCategoryBalanceRevise,
 			//TransactionSubCategoryManualAddRewardAmount, TransactionSubCategoryManualSubtractAmount, TransactionSubCategoryDeductAll, // 扣除全部资产
 			//TransactionSubCategorySurDeduct, TransactionSubCategoryManualPullBack, TransactionSubCategoryDeductExcessProfit,
-			TransactionSubCategoryManualAddAmount, TransactionSubCategoryManualAddOrder,
+			TransactionSubCategoryManualAddRewardAmount, TransactionSubCategoryManualAddOrder,
 			TransactionSubCategoryManualSubtractAmount, TransactionSubCategoryDeductAll,
 			TransactionSubCategoryBloggerSalary,
 		}
