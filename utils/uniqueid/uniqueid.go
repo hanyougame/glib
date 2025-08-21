@@ -26,16 +26,6 @@ func init() {
 	randSource = rand.NewSource(time.Now().UnixNano())
 }
 
-func New(machineID uint16) {
-	flake = sonyflake.NewSonyflake(sonyflake.Settings{
-		MachineID: func() (uint16, error) {
-			return machineID, nil
-		},
-	})
-	// 使用当前时间戳初始化随机源
-	randSource = rand.NewSource(time.Now().UnixNano())
-}
-
 // GenId 生成一个唯一的雪花ID
 func GenId() (id uint64, err error) {
 	id, err = flake.NextID()
@@ -82,6 +72,10 @@ func isRunningInDocker() bool {
 func getContainerID() (string, error) {
 	// 获取容器 ID
 	// 一般情况下，可以通过读取 `/proc/self/cgroup` 获取容器 ID
+	_, err := os.Stat("/proc/self/cgroup")
+	if err != nil {
+		return os.Hostname()
+	}
 	data, err := os.ReadFile("/proc/self/cgroup")
 	if err != nil {
 		return "", fmt.Errorf("failed to read /proc/self/cgroup: %v", err)
