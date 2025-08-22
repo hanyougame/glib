@@ -41,10 +41,12 @@ func GenUserID(ctx context.Context, rdb redis.UniversalClient, key string) (id i
 // 获取机器 ID 基于 Docker 环境
 func getMachineID() (uint16, error) {
 	// 判断是否在 Docker 环境中运行
+	fmt.Println("isRunningInDocker: ", isRunningInDocker())
 	if isRunningInDocker() {
 		// 尝试通过容器 ID 生成机器 ID
 		containerID, err := getContainerID()
 		if err != nil {
+			fmt.Println("getContainerID err: ", err)
 			return 0, fmt.Errorf("failed to get container ID: %v", err)
 		}
 		return uint16(sum([]byte(containerID)) % 1024), nil
