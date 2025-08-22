@@ -22,6 +22,11 @@ func init() {
 	flake = sonyflake.NewSonyflake(sonyflake.Settings{
 		MachineID: getMachineID,
 	})
+	if flake == nil {
+		// 如果初始化失败，使用默认设置
+		flake = sonyflake.NewSonyflake(sonyflake.Settings{})
+		fmt.Println("Warning: Sonyflake initialization failed, using default settings")
+	}
 	// 使用当前时间戳初始化随机源
 	randSource = rand.NewSource(time.Now().UnixNano())
 }
@@ -41,7 +46,6 @@ func GenUserID(ctx context.Context, rdb redis.UniversalClient, key string) (id i
 // 获取机器 ID 基于 Docker 环境
 func getMachineID() (uint16, error) {
 	// 判断是否在 Docker 环境中运行
-	fmt.Println("isRunningInDocker: ", isRunningInDocker())
 	if isRunningInDocker() {
 		// 尝试通过容器 ID 生成机器 ID
 		containerID, err := getContainerID()
@@ -74,10 +78,6 @@ func isRunningInDocker() bool {
 func getContainerID() (string, error) {
 	// 获取容器 ID
 	// 一般情况下，可以通过读取 `/proc/self/cgroup` 获取容器 ID
-	_, err := os.Stat("/proc/self/cgroup")
-	if err != nil {
-		return os.Hostname()
-	}
 	data, err := os.ReadFile("/proc/self/cgroup")
 	if err != nil {
 		return "", fmt.Errorf("failed to read /proc/self/cgroup: %v", err)
