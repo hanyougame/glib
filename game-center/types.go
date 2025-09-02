@@ -110,4 +110,49 @@ type (
 		Languages    []string `json:"languages"`
 		Status       int      `json:"status"` // 状态 1 启用 2 禁用
 	}
+
+	CheckTransferStatusReq struct {
+		OpenID  int64    `json:"openid,string,optional" validate:"required"`
+		TaskIds []string `json:"task_ids,optional" validate:"required,max=100"` // 下游订单号
+	}
+
+	CheckTransferStatusResp struct {
+		Orders []TransferStatus `json:"orders"`
+	}
+
+	TransferStatus struct {
+		TaskID       string `json:"task_id"`       // 商户转入订单号
+		OrderNo      string `json:"order_no"`      // 中台订单号
+		Status       int    `json:"status"`        // 状态 1待处理 2 处理中 3 成功 4 失败
+		TransferType int    `json:"transfer_type"` // 转账类型 1 转入 2 转出
+		Amount       string `json:"amount"`        // 金额
+		CreatedAt    int64  `json:"created_at"`    // 创建时间
+		UpdatedAt    int64  `json:"updated_at"`    // 更新时间
+	}
+
+	TransferOutReq struct {
+		OpenID     int64  `json:"openid,string,optional" validate:"required"`  // 用户id
+		TaskID     string `json:"task_id,optional" validate:"required,max=64"` // 商户转入订单号
+		PlatformID int64  `json:"platform_id,optional" validate:"required"`    // 平台ID
+	}
+
+	TransferOutResp struct {
+		OrderNo        string `json:"order_no"`
+		TaskID         string `json:"task_id"`         // 商户转入订单号
+		Amount         string `json:"amount"`          // 金额
+		TransferStatus int    `json:"transfer_status"` // 转账状态 0 处理中 1 成功 2失败
+	}
+	GetBalanceReq struct {
+		OpenID      int64   `json:"openid,string,optional" validate:"required"`
+		PlatformIds []int64 `json:"platform_ids,optional" validate:"required"`
+	}
+
+	GetBalanceResp struct {
+		List []GetBalanceInfo `json:"list"`
+	}
+
+	GetBalanceInfo struct {
+		PlatformID int64  `json:"platform_id"`
+		Balance    string `json:"balance"`
+	}
 )

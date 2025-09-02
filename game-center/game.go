@@ -149,3 +149,72 @@ func (g *GameCenter) GetBetList(ctx context.Context, req GetBetListReq) (resp Ge
 	resp = getGameBetListResp.Data
 	return
 }
+
+// CheckStatus 检查转入转出状态
+func (g *GameCenter) CheckStatus(ctx context.Context, req CheckTransferStatusReq) (resp CheckTransferStatusResp, err error) {
+	var httpResp *resty.Response
+	httpResp, err = postRequest(ctx, g.Config, CheckStatus, req)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("[game-center] check status request error: %s", err.Error())
+		return
+	}
+	checkTransferStatusResp := &CommonResp[CheckTransferStatusResp]{}
+	err = jsonx.Unmarshal(httpResp.Body(), checkTransferStatusResp)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("[game-center] check status request error: %s", err.Error())
+		return
+	}
+	if checkTransferStatusResp.Code != 0 {
+		logx.WithContext(ctx).Errorf("[game-center] check status request error: %s", checkTransferStatusResp.Message)
+		err = errors.New(checkTransferStatusResp.Message)
+		return
+	}
+	resp = checkTransferStatusResp.Data
+	return
+}
+
+// TransferOut 转出
+func (g *GameCenter) TransferOut(ctx context.Context, req TransferOutReq) (resp TransferOutResp, err error) {
+	var httpResp *resty.Response
+	httpResp, err = postRequest(ctx, g.Config, TransferOut, req)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("[game-center] transfer out request error: %s", err.Error())
+		return
+	}
+	transferOutResp := &CommonResp[TransferOutResp]{}
+	err = jsonx.Unmarshal(httpResp.Body(), transferOutResp)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("[game-center] transfer out request error: %s", err.Error())
+		return
+	}
+	if transferOutResp.Code != 0 {
+		logx.WithContext(ctx).Errorf("[game-center] transfer out request error: %s", transferOutResp.Message)
+		err = errors.New(transferOutResp.Message)
+		return
+	}
+	resp = transferOutResp.Data
+	return
+}
+
+// GetBalance 获取余额
+func (g *GameCenter) GetBalance(ctx context.Context, req GetBalanceReq) (resp GetBalanceResp, err error) {
+	var httpResp *resty.Response
+	httpResp, err = postRequest(ctx, g.Config, GetBalance, req)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("[game-center] get balance request error: %s", err.Error())
+		return
+	}
+	getBalanceResp := &CommonResp[GetBalanceResp]{}
+	err = jsonx.Unmarshal(httpResp.Body(), getBalanceResp)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("[game-center] get balance request error: %s", err.Error())
+		return
+	}
+	if getBalanceResp.Code != 0 {
+		logx.WithContext(ctx).Errorf("[game-center] get balance request error: %s", getBalanceResp.Message)
+		err = errors.New(getBalanceResp.Message)
+		return
+	}
+	resp = getBalanceResp.Data
+	return
+}
