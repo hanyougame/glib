@@ -71,13 +71,14 @@ type UserBetSettlementNotify struct {
 
 // UserPromotionBonusNotify 用户优惠奖励领取通知
 type UserPromotionBonusNotify struct {
-	UserId          int64  `json:"user_id"` //用户ID
-	UserAccount     string `json:"user_account"`
-	CurrencyCode    string `json:"currency_code"`
-	BonusAmount     int64  `json:"bonus_amount"`     //彩金金额
-	ReceiveTime     int64  `json:"receive_time"`     // 领取时间
-	PromotionSource int64  `json:"promotion_source"` // 优惠来源，同后台 constants.PromotionSource
-	OrderNo         string `json:"order_no"`         // 订单号
+	UserId             int64  `json:"user_id"` //用户ID
+	UserAccount        string `json:"user_account"`
+	CurrencyCode       string `json:"currency_code"`
+	BonusAmount        int64  `json:"bonus_amount"`         //彩金金额
+	ReceiveTime        int64  `json:"receive_time"`         // 领取时间
+	PromotionSource    int64  `json:"promotion_source"`     // 优惠来源，同后台 constants.PromotionSource
+	OrderNo            string `json:"order_no"`             // 订单号
+	PromotionSubSource int64  `json:"promotion_sub_source"` // 优惠子来源
 }
 
 type UserRegisterNotify struct {
