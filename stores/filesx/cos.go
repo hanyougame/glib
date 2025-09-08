@@ -21,6 +21,8 @@ type CosStorageConfig struct {
 	BucketURL string `json:"bucket_url"`
 	// 请求地址 用于请求图片
 	RequestURL string `json:"request_url"`
+	// app包请求地址
+	PkgRequestUrl string `json:"pkg_request_url"`
 	// 用户 secret_id
 	SecretID string `json:"secret_id"`
 	// 密钥
