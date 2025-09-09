@@ -22,7 +22,7 @@ type CosStorageConfig struct {
 	// 请求地址 用于请求图片
 	RequestURL string `json:"request_url"`
 	// app包请求地址
-	PkgRequestUrl string `json:"pkg_request_url"`
+	PkgRequestUrl string `json:"pkg_request_url,optional"`
 	// 用户 secret_id
 	SecretID string `json:"secret_id"`
 	// 密钥
