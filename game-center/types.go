@@ -77,7 +77,7 @@ type (
 	}
 
 	BetInfo struct {
-		ID                 int64  `json:"id"`                            // 自增ID
+		SummaryID          int64  `json:"summary_id"`                    // 汇总id
 		CurrencyCode       string `json:"currency_code"`                 // 币种
 		RoundID            string `json:"round_id"`                      // 牌局id
 		OpenID             string `json:"open_id" gorm:"column:user_id"` // open id

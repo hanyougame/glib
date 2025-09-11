@@ -27,6 +27,8 @@ const (
 	TopicUserBetNotify = "user_bet_notify"
 	// TopicUserRedPacketNotify 用户红包活动通知
 	TopicUserRedPacketNotify = "user_red_packet_notify"
+	// TopicUserRedPacketCountdownNotify 用户红包活动倒计时通知
+	TopicUserRedPacketCountdownNotify = "user_red_packet_countdown_notify"
 	// TopicUserRecallNotify 用户召回通知
 	TopicUserRecallNotify = "user_recall_notify"
 	// TopicUserProfileAuthNotify 用户资料认证

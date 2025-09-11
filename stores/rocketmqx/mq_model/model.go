@@ -95,15 +95,16 @@ type UserRegisterNotify struct {
 
 // MqDepWdlTripartiteMsg 游戏转入转出第三方余额通知
 type MqDepWdlTripartiteMsg struct {
-	GamePlatformId   int64  `json:"game_platform_id"`  //游戏平台key  唯一标识
-	GameId           int64  `json:"game_id"`           //游戏标志
-	UserId           int64  `json:"user_id"`           //用户ID
-	CurrencyCode     string `json:"currency_code"`     //货币Code
-	PlatformAmount   int64  `json:"platform_amount"`   // 整数大于0 平台金额格式
-	TripartiteAmount string `json:"tripartite_amount"` // 保留2位小数 三方金额格式
-	GameOrderNo      string `json:"game_order_no"`     // 订单号
-	TransferType     int64  `json:"transfer_type"`     //交易类型 1转入,2转出
-	GameName         string `json:"game_name"`         //游戏名称
+	GamePlatformId      int64  `json:"game_platform_id"`       //游戏平台key  唯一标识
+	GameId              int64  `json:"game_id"`                //游戏标志
+	UserId              int64  `json:"user_id"`                //用户ID
+	CurrencyCode        string `json:"currency_code"`          //货币Code
+	PlatformAmount      int64  `json:"platform_amount"`        // 整数大于0 平台金额格式
+	TripartiteAmount    string `json:"tripartite_amount"`      // 保留2位小数 三方金额格式
+	GameOrderNo         string `json:"game_order_no"`          // 订单号
+	TransferType        int64  `json:"transfer_type"`          //交易类型 1转入,2转出
+	GameName            string `json:"game_name"`              //游戏名称
+	IsNewMiddlePlatform bool   `json:"is_new_middle_platform"` // 是否是新中台
 }
 
 // MqttPublish 发布mqtt消息
