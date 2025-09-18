@@ -67,6 +67,7 @@ type UserBetSettlementNotify struct {
 	SettlementTime       int64  `json:"settlement_time"`        // 领取时间（投注结算时间）
 	BonusAmount          int64  `json:"bonus_amount"`           // 派奖金额
 	UserWinAmount        int64  `json:"user_win_amount"`        // 用户输赢金额 有负数
+	Version              int32  `json:"version"`                // 乐观锁版本号，防止信息流失
 }
 
 // UserPromotionBonusNotify 用户优惠奖励领取通知
