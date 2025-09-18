@@ -92,6 +92,7 @@ type UserRegisterNotify struct {
 	RegisterDevice string `json:"register_device"` // 注册设备号
 	IsGuest        bool   `json:"is_guest"`        // 是否是游客
 	InviteCode     string `json:"invite_code"`     // 上级邀请码
+	ClientOS       string `json:"client_os"`       // 终端OS：PC Android_H5 IOS_H5 Android_APP IOS_APP IOS_PWA等
 }
 
 // MqDepWdlTripartiteMsg 游戏转入转出第三方余额通知
