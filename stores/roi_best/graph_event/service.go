@@ -22,7 +22,7 @@ func New(ctx context.Context, conf RBConfig) *Service {
 }
 
 // SendEvents 发送事件
-func (s *Service) SendEvents(request *RBConfig, linkID string, eventName RBEventName, extra any) error {
+func (s *Service) SendEvents(request *RBConfig, eventName RBEventName, extra any) error {
 	if request == nil {
 		return fmt.Errorf("conf empty")
 	}
@@ -35,7 +35,7 @@ func (s *Service) SendEvents(request *RBConfig, linkID string, eventName RBEvent
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
 			"event_name": eventName,
-			"link_id":    linkID,
+			"link_id":    request.RBLinkID,
 			"extra":      extra,
 		}).
 		Post(s.genUrl())
