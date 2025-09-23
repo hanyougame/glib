@@ -25,7 +25,7 @@ type (
 		TaskID     string `json:"task_id,optional" validate:"required,max=64"` // 转入订单号
 		Language   string `json:"language,optional,default=en"`
 		Extend     Extend `json:"extend,optional"`
-		ActionType int    `json:"action_type,optional" validate:"oneof=0 1 2"`
+		ActionType int64  `json:"action_type,optional" validate:"oneof=0 1 2"`
 	}
 	Extend struct {
 		DeviceOS string `json:"device_os,optional" validate:"max=32"`
