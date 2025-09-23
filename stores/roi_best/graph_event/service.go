@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"github.com/hanyougame/glib/utils/httpc"
+	"github.com/samber/lo"
 	"net/http"
 )
 
 type Service struct {
 	ctx    context.Context
-	config Config
+	config RBConfig
 }
 
-func New(ctx context.Context, conf Config) *Service {
+func New(ctx context.Context, conf RBConfig) *Service {
 	return &Service{
 		ctx:    ctx,
 		config: conf,
@@ -21,7 +22,10 @@ func New(ctx context.Context, conf Config) *Service {
 }
 
 // SendEvents 发送事件
-func (s *Service) SendEvents(request *Config) error {
+func (s *Service) SendEvents(request *RBConfig, eventName RBEventName) error {
+	if request == nil || !lo.Contains(request.RBEventsName, eventName) {
+		return nil
+	}
 	var err error
 	var response *resty.Response
 	response, err = httpc.Do(s.ctx).
