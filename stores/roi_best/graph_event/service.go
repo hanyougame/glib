@@ -9,14 +9,12 @@ import (
 )
 
 type Service struct {
-	ctx    context.Context
-	config RBConfig
+	ctx context.Context
 }
 
-func New(ctx context.Context, conf RBConfig) *Service {
+func New(ctx context.Context) *Service {
 	return &Service{
-		ctx:    ctx,
-		config: conf,
+		ctx: ctx,
 	}
 }
 
