@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm/utils"
 )
 
-func New() logger2.Interface {
+func NewLog() logger2.Interface {
 	return &ormLog{}
 }
 

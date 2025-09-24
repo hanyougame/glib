@@ -17,7 +17,7 @@ func NewEngine(c config.Config, dialector gorm.Dialector, opt ...gorm.Option) (*
 	cfg := &gorm.Config{
 		PrepareStmt:            c.PrepareStmt,
 		SkipDefaultTransaction: c.SkipDefaultTransaction,
-		Logger:                 New(),
+		Logger:                 NewLog(),
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
