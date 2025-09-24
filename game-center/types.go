@@ -19,12 +19,13 @@ type (
 	}
 
 	GetGameLinkReq struct {
-		GameID   int64  `json:"game_id,optional" validate:"required"`
-		OpenID   int64  `json:"openid,string,optional" validate:"required"`
-		Balance  string `json:"balance,optional" validate:"balance"`
-		TaskID   string `json:"task_id,optional" validate:"required,max=64"` // 转入订单号
-		Language string `json:"language,optional,default=en"`
-		Extend   Extend `json:"extend,optional"`
+		GameID     int64  `json:"game_id,optional" validate:"required"`
+		OpenID     int64  `json:"openid,string,optional" validate:"required"`
+		Balance    string `json:"balance,optional" validate:"balance"`
+		TaskID     string `json:"task_id,optional" validate:"required,max=64"` // 转入订单号
+		Language   string `json:"language,optional,default=en"`
+		Extend     Extend `json:"extend,optional"`
+		ActionType int64  `json:"action_type,optional" validate:"oneof=0 1 2"`
 	}
 	Extend struct {
 		DeviceOS string `json:"device_os,optional" validate:"max=32"`
