@@ -62,7 +62,7 @@ func (l *ormLog) fileIndex() int {
 		// second return value is "more", not "ok"
 		frame, _ := frames.Next()
 		if (!strings.Contains(frame.File, "/gorm.io/") ||
-			strings.HasSuffix(frame.File, "_test.go")) && !strings.HasSuffix(frame.File, ".gen.go") {
+			strings.HasSuffix(frame.File, "_test.go")) && !strings.HasSuffix(frame.File, ".gen.go") && !strings.Contains(frame.File, "/dao/") {
 			return i + 1
 		}
 	}
