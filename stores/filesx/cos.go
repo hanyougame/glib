@@ -5,9 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/tencentyun/cos-go-sdk-v5"
+	"github.com/zeromicro/go-zero/core/stringx"
 	"io"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 // CosStorage 实现腾讯云
@@ -19,6 +21,8 @@ type CosStorage struct {
 type CosStorageConfig struct {
 	// bucket地址 用于解析appid bucket_name
 	BucketURL string `json:"bucket_url"`
+	// app包bucket
+	PkgBucketURL string `json:"pkg_bucket_url,optional"`
 	// 请求地址 用于请求图片
 	RequestURL string `json:"request_url"`
 	// app包请求地址
@@ -85,4 +89,41 @@ func (s *CosStorage) Exist(ctx context.Context, fileName string) (bool, error) {
 		return false, err
 	}
 	return true, nil
+}
+
+func GetPkgUploadSignUrl(c CosStorageConfig, key string) (string, error) {
+	// 参数校验
+	if stringx.HasEmpty(c.SecretID) {
+		return "", fmt.Errorf("secret_id is require")
+	}
+	if stringx.HasEmpty(c.SecretKey) {
+		return "", fmt.Errorf("secret_key is require")
+	}
+	if stringx.HasEmpty(c.PkgBucketURL) {
+		return "", fmt.Errorf("bucket url is require")
+	}
+	if stringx.HasEmpty(key) {
+		return "", fmt.Errorf("key is require")
+	}
+	u, err := url.Parse(c.PkgBucketURL)
+	if err != nil {
+		return "", fmt.Errorf("parse bucket url error: %+v", err)
+	}
+
+	// 初始化客户端
+	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  c.SecretID,
+			SecretKey: c.SecretKey,
+		},
+	})
+
+	// 获取预签名 URL
+	presignedURL, err := client.Object.GetPresignedURL(context.Background(), http.MethodPut, key, c.SecretID, c.SecretKey, time.Hour, nil)
+	if err != nil {
+		return "", fmt.Errorf("GetPresignedURL error: %+v", err)
+	}
+
+	return presignedURL.String(), nil
+
 }
