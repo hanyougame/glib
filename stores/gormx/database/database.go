@@ -2,6 +2,8 @@ package database
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/hanyougame/glib/stores/gormx/config"
 	"gorm.io/driver/clickhouse"
 	"gorm.io/driver/mysql"
@@ -9,13 +11,13 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 	"gorm.io/plugin/dbresolver"
-	"time"
 )
 
 func NewEngine(c config.Config, dialector gorm.Dialector, opt ...gorm.Option) (*gorm.DB, error) {
 	cfg := &gorm.Config{
 		PrepareStmt:            c.PrepareStmt,
 		SkipDefaultTransaction: c.SkipDefaultTransaction,
+		Logger:                 NewLog(),
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},

@@ -13,3 +13,18 @@ type Config struct {
 	ClientCert     string `json:"client_x509_cert_url"`
 	UniverseDomain string `json:"universe_domain"`
 }
+
+type WebConfig struct {
+	VAPIDPublicKey string       `json:"vapid_public_key"`
+	SdkConfig      WebSdkConfig `json:"sdk_config"`
+}
+
+type WebSdkConfig struct {
+	ApiKey            string `json:"api_key"`
+	AuthDomain        string `json:"auth_domain"`
+	ProjectID         string `json:"project_id"`
+	StorageBucket     string `json:"storage_bucket"`
+	MessagingSenderId string `json:"messaging_sender_id"`
+	AppID             string `json:"app_id"`
+	MeasurementId     string `json:"measurement_id"`
+}

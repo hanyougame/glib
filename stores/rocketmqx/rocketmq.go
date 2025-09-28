@@ -19,7 +19,7 @@ import (
 )
 
 // NewConsumer 创建消费者实例
-func NewConsumer(config ConsumerConfig, topic string, messageSelector consumer.MessageSelector, handler MessageHandler) (rocketmq.PushConsumer, error) {
+func NewConsumer(config ConsumerConfig, topics []string, messageSelector consumer.MessageSelector, handler MessageHandler) (rocketmq.PushConsumer, error) {
 	cc, err := rocketmq.NewPushConsumer(
 		// 设置消费者组
 		consumer.WithGroupName(config.GroupName),
@@ -43,8 +43,10 @@ func NewConsumer(config ConsumerConfig, topic string, messageSelector consumer.M
 	if err != nil {
 		return nil, fmt.Errorf("创建消费者失败: %w", err)
 	}
-	if err = cc.Subscribe(topic, messageSelector, handler); err != nil {
-		return nil, fmt.Errorf("订阅主题 %s 失败: %w", topic, err)
+	for _, topic := range topics {
+		if err = cc.Subscribe(topic, messageSelector, handler); err != nil {
+			return nil, fmt.Errorf("订阅主题 %s 失败: %w", topic, err)
+		}
 	}
 	if err = cc.Start(); err != nil {
 		return nil, fmt.Errorf("启动消费者失败: %w", err)
@@ -60,9 +62,20 @@ func StartConsumer(commonConfig RocketMQX, consumers []ConsumerConfig, handlers 
 		wg  sync.WaitGroup
 	)
 
-	// 遍历所有消费者配置
+	// 按消费组分组
+	groupTopics := make(map[string][]ConsumerConfig)
 	for _, cc := range consumers {
 		cc = getConfig(commonConfig, cc)
+		if _, exists := groupTopics[cc.GroupName]; !exists {
+			groupTopics[cc.GroupName] = []ConsumerConfig{}
+		}
+		groupTopics[cc.GroupName] = append(groupTopics[cc.GroupName], cc)
+	}
+
+	// 遍历所有消费者配置
+	for _, cs := range groupTopics {
+		cc := getConfig(commonConfig, cs[0])
+		topics := getTopics(cs)
 		// 启动 WorkerNum 数量的消费者实例
 		for i := 0; i < cc.WorkerNum; i++ {
 			wg.Add(1) // 增加计数
@@ -81,7 +94,7 @@ func StartConsumer(commonConfig RocketMQX, consumers []ConsumerConfig, handlers 
 				messageSelector := getMessageSelector(consumerConfig)
 
 				// 创建并启动消费者实例
-				consumerInstance, err := NewConsumer(consumerConfig, consumerConfig.Topic, messageSelector, handler)
+				consumerInstance, err := NewConsumer(consumerConfig, topics, messageSelector, handler)
 				if err != nil {
 					logx.Errorf("创建主题 %s 的消费者失败: %v", consumerConfig.Topic, err)
 					return
@@ -99,6 +112,14 @@ func StartConsumer(commonConfig RocketMQX, consumers []ConsumerConfig, handlers 
 	wg.Wait()
 
 	return ccs
+}
+
+func getTopics(cs []ConsumerConfig) []string {
+	var topics []string
+	for _, v := range cs {
+		topics = append(topics, v.Topic)
+	}
+	return topics
 }
 
 func getConfig(commonConfig RocketMQX, consumers ConsumerConfig) ConsumerConfig {

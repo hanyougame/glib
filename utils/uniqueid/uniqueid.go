@@ -22,6 +22,11 @@ func init() {
 	flake = sonyflake.NewSonyflake(sonyflake.Settings{
 		MachineID: getMachineID,
 	})
+	if flake == nil {
+		// 如果初始化失败，使用默认设置
+		flake = sonyflake.NewSonyflake(sonyflake.Settings{})
+		fmt.Println("Warning: Sonyflake initialization failed, using default settings")
+	}
 	// 使用当前时间戳初始化随机源
 	randSource = rand.NewSource(time.Now().UnixNano())
 }
@@ -45,6 +50,7 @@ func getMachineID() (uint16, error) {
 		// 尝试通过容器 ID 生成机器 ID
 		containerID, err := getContainerID()
 		if err != nil {
+			fmt.Println("getContainerID err: ", err)
 			return 0, fmt.Errorf("failed to get container ID: %v", err)
 		}
 		return uint16(sum([]byte(containerID)) % 1024), nil

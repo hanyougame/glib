@@ -35,3 +35,16 @@ func TestCosDelete(t *testing.T) {
 		fmt.Println(err.Error())
 	}
 }
+
+func TestGetPkgUploadSignUrl(t *testing.T) {
+	url, err := GetPkgUploadSignUrl(CosStorageConfig{
+		PkgBucketURL: "",
+		SecretID:     "",
+		SecretKey:    "",
+	}, "app/k1_0.7.42.apk")
+	if err != nil {
+		fmt.Println("GetPkgUploadSignUrl err: ", err)
+		return
+	}
+	fmt.Println("url: ", url)
+}

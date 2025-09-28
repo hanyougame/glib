@@ -60,6 +60,10 @@ func (dm *DBManager) newEngine(c config.Config) error {
 		dbKey = "Mysql"
 	case config.Postgres:
 		dialector = postgres.Open(c.DSN)
+		//dialector = postgres.New(postgres.Config{
+		//	DSN:                  c.DSN,
+		//	PreferSimpleProtocol: true, // disables implicit prepared statement usage
+		//})
 		dbKey = "Postgres"
 	case config.ClickHouse:
 		dialector = clickhouse.Open(c.DSN)

@@ -28,6 +28,11 @@ type UserRechargeNotify struct {
 	SupplySign         bool   `json:"supply_sign"`          // 补单标志
 	RealAmount         int64  `json:"real_amount"`          // 实际到账的余额
 	UpdateAfterAmount  int64  `json:"update_after_amount"`  // 充值之后的余额
+	RechargeTarget     int    `json:"recharge_target"`      // 充值目标 1 用户钱包 2 周卡 3 月卡
+	TargetId           int64  `json:"target_id"`            // 充值目标ID
+	SubTargetId        int64  `json:"sub_target_id"`        // 子目标ID
+	FirstIncludeSign   bool   `json:"first_include_sign"`   // 标记在内的首次
+	IsInclude          bool   `json:"is_include"`           // 其他活动计算卡项充值 是否计算在内
 }
 
 // UserWithdrawNotify 用户提现推送
@@ -62,17 +67,19 @@ type UserBetSettlementNotify struct {
 	SettlementTime       int64  `json:"settlement_time"`        // 领取时间（投注结算时间）
 	BonusAmount          int64  `json:"bonus_amount"`           // 派奖金额
 	UserWinAmount        int64  `json:"user_win_amount"`        // 用户输赢金额 有负数
+	Version              int32  `json:"version"`                // 乐观锁版本号，防止信息流失
 }
 
 // UserPromotionBonusNotify 用户优惠奖励领取通知
 type UserPromotionBonusNotify struct {
-	UserId          int64  `json:"user_id"` //用户ID
-	UserAccount     string `json:"user_account"`
-	CurrencyCode    string `json:"currency_code"`
-	BonusAmount     int64  `json:"bonus_amount"`     //彩金金额
-	ReceiveTime     int64  `json:"receive_time"`     // 领取时间
-	PromotionSource int64  `json:"promotion_source"` // 优惠来源，同后台 constants.PromotionSource
-	OrderNo         string `json:"order_no"`         // 订单号
+	UserId             int64  `json:"user_id"` //用户ID
+	UserAccount        string `json:"user_account"`
+	CurrencyCode       string `json:"currency_code"`
+	BonusAmount        int64  `json:"bonus_amount"`         //彩金金额
+	ReceiveTime        int64  `json:"receive_time"`         // 领取时间
+	PromotionSource    int64  `json:"promotion_source"`     // 优惠来源，同后台 constants.PromotionSource
+	OrderNo            string `json:"order_no"`             // 订单号
+	PromotionSubSource int64  `json:"promotion_sub_source"` // 优惠子来源
 }
 
 type UserRegisterNotify struct {
@@ -84,19 +91,22 @@ type UserRegisterNotify struct {
 	RegisterIp     string `json:"register_ip"`     // 注册IP
 	RegisterDevice string `json:"register_device"` // 注册设备号
 	IsGuest        bool   `json:"is_guest"`        // 是否是游客
+	InviteCode     string `json:"invite_code"`     // 上级邀请码
+	ClientOS       string `json:"client_os"`       // 终端OS：PC Android_H5 IOS_H5 Android_APP IOS_APP IOS_PWA等
 }
 
 // MqDepWdlTripartiteMsg 游戏转入转出第三方余额通知
 type MqDepWdlTripartiteMsg struct {
-	GamePlatformId   int64  `json:"game_platform_id"`  //游戏平台key  唯一标识
-	GameId           int64  `json:"game_id"`           //游戏标志
-	UserId           int64  `json:"user_id"`           //用户ID
-	CurrencyCode     string `json:"currency_code"`     //货币Code
-	PlatformAmount   int64  `json:"platform_amount"`   // 整数大于0 平台金额格式
-	TripartiteAmount string `json:"tripartite_amount"` // 保留2位小数 三方金额格式
-	GameOrderNo      string `json:"game_order_no"`     // 订单号
-	TransferType     int64  `json:"transfer_type"`     //交易类型 1转入,2转出
-	GameName         string `json:"game_name"`         //游戏名称
+	GamePlatformId      int64  `json:"game_platform_id"`       //游戏平台key  唯一标识
+	GameId              int64  `json:"game_id"`                //游戏标志
+	UserId              int64  `json:"user_id"`                //用户ID
+	CurrencyCode        string `json:"currency_code"`          //货币Code
+	PlatformAmount      int64  `json:"platform_amount"`        // 整数大于0 平台金额格式
+	TripartiteAmount    string `json:"tripartite_amount"`      // 保留2位小数 三方金额格式
+	GameOrderNo         string `json:"game_order_no"`          // 订单号
+	TransferType        int64  `json:"transfer_type"`          //交易类型 1转入,2转出
+	GameName            string `json:"game_name"`              //游戏名称
+	IsNewMiddlePlatform bool   `json:"is_new_middle_platform"` // 是否是新中台
 }
 
 // MqttPublish 发布mqtt消息
@@ -178,4 +188,13 @@ type UserProfileAuthNotify struct {
 	AuthTime    int64  `json:"auth_time"`    // 认证时间
 	AuthProfile string `json:"auth_profile"` // 认证资料 对应认证类型的值
 	CountryCode string `json:"country_code"` // 国别代码  认证类型为手机时为手机区号
+}
+
+type UserProfileUpdateNotify struct {
+	UserId      int64  `json:"user_id"`      // 用户ID
+	UserName    string `json:"user_name"`    // 用户名
+	Currency    string `json:"currency"`     // 币种
+	UpdateAt    int64  `json:"update_at"`    // 更新资料时间
+	ProfileType int    `json:"profile_type"` // 资料类型 1-首次绑定银行卡, 2-添加提现账户, 3-设置生日, 4-设置取款密码, 5-设置密保, 6-设置头像
+	ProfileData string `json:"profile_data"` // 资料内容 JSON格式
 }

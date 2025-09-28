@@ -1,9 +1,10 @@
 package mqtt_model
 
 const (
-	UserRemoteLoginCode  = 1001 + iota // 用户异地登录通知
-	UserPushOffCode                    // 用户被挤下线通知
-	UserStatusChangeCode               // 用户状态变更
+	UserRemoteLoginCode    = 1001 + iota // 用户异地登录通知
+	UserPushOffCode                      // 用户被挤下线通知
+	UserStatusChangeCode                 // 用户状态变更
+	UserRewardStatusChange               // 用户奖励状态变更
 )
 
 const (
@@ -11,9 +12,10 @@ const (
 )
 
 const (
-	ActivityRechargePopWindow   = 3001 + iota // 活动充值弹窗
-	ActivityRechargeRedEnvelope               // 活动抢红包
-	ActivityBargainWinNotice                  // 活动砍一刀中奖（爆奖）通知
+	ActivityRechargePopWindow            = 3001 + iota // 活动充值弹窗
+	ActivityRechargeRedEnvelope                        // 活动抢红包
+	ActivityBargainWinNotice                           // 活动砍一刀中奖（爆奖）通知
+	ActivityRechargeRedEnvelopeCountdown               // 活动抢红包倒计时
 )
 
 const (
