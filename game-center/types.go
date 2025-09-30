@@ -71,6 +71,7 @@ type (
 		OpenID         int64  `form:"openid,string,optional"`
 		Page           int    `form:"page,optional" validate:"required"`
 		PageSize       int    `form:"page_size,default=1000" validate:"max=2000"`
+		LastSummaryID  int64  `form:"last_summary_id,optional"` // 上次请求的最后一条记录id
 	}
 
 	GetBetListResp struct {

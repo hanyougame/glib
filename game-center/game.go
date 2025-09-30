@@ -128,6 +128,7 @@ func (g *GameCenter) GetBetList(ctx context.Context, req GetBetListReq) (resp Ge
 	}
 	values.Add("page", cast.ToString(req.Page))
 	values.Add("page_size", cast.ToString(req.PageSize))
+	values.Add("last_summary_id", cast.ToString(req.LastSummaryID))
 	values.Add("merchant_user_id", req.MerchantUserID)
 	var httpResp *resty.Response
 	httpResp, err = getRequest(ctx, g.Config, GetBetList, values)

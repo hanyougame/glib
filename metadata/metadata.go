@@ -3,8 +3,9 @@ package metadata
 import (
 	"context"
 	"fmt"
-	"github.com/spf13/cast"
 	"net"
+
+	"github.com/spf13/cast"
 )
 
 const (
