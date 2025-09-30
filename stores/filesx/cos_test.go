@@ -48,3 +48,18 @@ func TestGetPkgUploadSignUrl(t *testing.T) {
 	}
 	fmt.Println("url: ", url)
 }
+
+func TestRenamePkgName(t *testing.T) {
+	client, err := NewCosClient("", "", "")
+	if err != nil {
+		t.Fatalf("NewCosClient error: %+v", err)
+	}
+
+	// 移动对象
+	sourceURL := fmt.Sprintf("k1-api-1342263194.cos.ap-hongkong.myqcloud.com/app/k1_0.7.42.apk")
+	dest := "app/games.apk"
+	_, _, err = client.Object.Copy(context.Background(), dest, sourceURL, nil)
+	if err != nil {
+		t.Fatalf("Copy error: %+v", err)
+	}
+}

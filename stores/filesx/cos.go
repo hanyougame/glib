@@ -127,3 +127,27 @@ func GetPkgUploadSignUrl(c CosStorageConfig, key string) (string, error) {
 	return presignedURL.String(), nil
 
 }
+
+func NewCosClient(secretID, secretKey, bucketURL string) (*cos.Client, error) {
+	if secretID == "" {
+		return nil, errors.New("cos secret_id is require")
+	}
+	if secretKey == "" {
+		return nil, errors.New("cos secret_key is require")
+	}
+	if bucketURL == "" {
+		return nil, errors.New("cos bucket_url is require")
+	}
+
+	u, err := url.Parse(bucketURL)
+	if err != nil {
+		return nil, fmt.Errorf("cos parse bucket_url fail:%s", err.Error())
+	}
+
+	return cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  secretID,
+			SecretKey: secretKey,
+		},
+	}), nil
+}
