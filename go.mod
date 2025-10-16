@@ -1,8 +1,6 @@
 module github.com/hanyougame/glib
 
-go 1.23.0
-
-toolchain go1.24.0
+go 1.25.1
 
 require (
 	cloud.google.com/go/translate v1.12.3
@@ -142,6 +140,7 @@ require (
 	github.com/paulmach/orb v0.11.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
+	github.com/piusalfred/whatsapp v0.0.41 // indirect
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.20.5 // indirect
@@ -194,3 +193,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	stathat.com/c/consistent v1.0.0 // indirect
 )
+
+replace github.com/mitchellh/osext v0.0.0-20151018003038-5e2d6d41470f => github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0
+
+exclude github.com/mitchellh/osext v0.0.0-20151018003038-5e2d6d41470f
