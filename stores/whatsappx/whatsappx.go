@@ -45,3 +45,10 @@ func NewWhatsAppX(c *Config) (*WhatsAppX, error) {
 	GlobalSvc = svc
 	return svc, nil
 }
+
+func Must(c *Config) {
+	_, err := NewWhatsAppX(c)
+	if err != nil {
+		logx.Errorf("create whatsapp client failed. err:%v", err)
+	}
+}
