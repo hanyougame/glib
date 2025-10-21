@@ -325,6 +325,7 @@ const (
 	TransactionSubCategoryReturnUserActivity                                                            // return user 用户召回活动
 	TransactionSubCategoryActivityCard                                                                  // 周卡月卡活动
 	TransactionSubCategoryBulletinReward                                                                // 公告奖励
+	TransactionSubCategoryRegisterActivity                                                              // 注册活动
 )
 
 // Gold Return Subcategories
@@ -600,6 +601,8 @@ func (t TransactionSubCategory) String() string {
 		return "CashBack Cards"
 	case TransactionSubCategoryBulletinReward:
 		return "News Reward"
+	case TransactionSubCategoryRegisterActivity:
+		return "Register"
 	default:
 		return ""
 	}
@@ -690,6 +693,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryReturnUserActivity:         "用户召回活动",
 	TransactionSubCategoryActivityCard:               "周月卡奖励",
 	TransactionSubCategoryBulletinReward:             "公告奖励",
+	TransactionSubCategoryRegisterActivity:           "注册活动",
 }
 
 func (t TransactionSubCategory) StringByLanguage(language string) string {
