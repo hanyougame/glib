@@ -21,9 +21,13 @@ func NewGameCenter(config GameCenterConfig) *GameCenter {
 	}
 }
 
+func (g *GameCenter) GetCurrencyConf() []CurrencyItem {
+	return g.Config.CurrencyConf
+}
+
 // Register 注册账号
-func (g *GameCenter) Register(ctx context.Context, req RegisterAccountReq) (openid string, err error) {
-	httpResp, err := postRequest(ctx, g.Config, RegisterURL, req)
+func (g *GameCenter) Register(ctx context.Context, req RegisterAccountReq, currency string) (openid string, err error) {
+	httpResp, err := postRequest(ctx, g.Config, RegisterURL, currency, req)
 	if err != nil {
 		logx.WithContext(ctx).Errorf("[game-center] register request error: %s", err.Error())
 		return
@@ -46,9 +50,9 @@ func (g *GameCenter) Register(ctx context.Context, req RegisterAccountReq) (open
 }
 
 // GetGameLink 获取游戏地址
-func (g *GameCenter) GetGameLink(ctx context.Context, req GetGameLinkReq) (resp GetGameLinkResp, err error) {
+func (g *GameCenter) GetGameLink(ctx context.Context, req GetGameLinkReq, currency string) (resp GetGameLinkResp, err error) {
 	var httpResp *resty.Response
-	httpResp, err = postRequest(ctx, g.Config, GetGameLinkURL, req)
+	httpResp, err = postRequest(ctx, g.Config, GetGameLinkURL, currency, req)
 	if err != nil {
 		logx.WithContext(ctx).Errorf("[game-center] get game link request error: %s", err.Error())
 		return
@@ -72,9 +76,9 @@ func (g *GameCenter) GetGameLink(ctx context.Context, req GetGameLinkReq) (resp 
 }
 
 // GetGameList 获取游戏列表
-func (g *GameCenter) GetGameList(ctx context.Context, req GetGameListReq) (resp GetGameListResp, err error) {
+func (g *GameCenter) GetGameList(ctx context.Context, req GetGameListReq, currency string) (resp GetGameListResp, err error) {
 	var httpResp *resty.Response
-	httpResp, err = getRequest(ctx, g.Config, GetGameListURL, url.Values{"platform_id": {cast.ToString(req.PlatformID)}})
+	httpResp, err = getRequest(ctx, g.Config, GetGameListURL, currency, url.Values{"platform_id": {cast.ToString(req.PlatformID)}})
 	if err != nil {
 		logx.WithContext(ctx).Errorf("[game-center] get game list request error: %s", err.Error())
 		return
@@ -95,9 +99,9 @@ func (g *GameCenter) GetGameList(ctx context.Context, req GetGameListReq) (resp 
 }
 
 // GetPlatformList 获取厂商列表
-func (g *GameCenter) GetPlatformList(ctx context.Context) (resp GetGamePlatformListResp, err error) {
+func (g *GameCenter) GetPlatformList(ctx context.Context, currency string) (resp GetGamePlatformListResp, err error) {
 	var httpResp *resty.Response
-	httpResp, err = getRequest(ctx, g.Config, GetPlatformList, nil)
+	httpResp, err = getRequest(ctx, g.Config, GetPlatformList, currency, nil)
 	if err != nil {
 		logx.WithContext(ctx).Errorf("[game-center] get platform list request error: %s", err.Error())
 		return
@@ -118,7 +122,7 @@ func (g *GameCenter) GetPlatformList(ctx context.Context) (resp GetGamePlatformL
 }
 
 // GetBetList 获取投注记录
-func (g *GameCenter) GetBetList(ctx context.Context, req GetBetListReq) (resp GetBetListResp, err error) {
+func (g *GameCenter) GetBetList(ctx context.Context, req GetBetListReq, currency string) (resp GetBetListResp, err error) {
 	// 结构体转url.Values
 	values := url.Values{}
 	values.Add("start_time", cast.ToString(req.StartTime))
@@ -131,7 +135,7 @@ func (g *GameCenter) GetBetList(ctx context.Context, req GetBetListReq) (resp Ge
 	values.Add("last_summary_id", cast.ToString(req.LastSummaryID))
 	values.Add("merchant_user_id", req.MerchantUserID)
 	var httpResp *resty.Response
-	httpResp, err = getRequest(ctx, g.Config, GetBetList, values)
+	httpResp, err = getRequest(ctx, g.Config, GetBetList, currency, values)
 	if err != nil {
 		logx.WithContext(ctx).Errorf("[game-center] get bet list request error: %s", err.Error())
 		return
@@ -152,9 +156,9 @@ func (g *GameCenter) GetBetList(ctx context.Context, req GetBetListReq) (resp Ge
 }
 
 // CheckStatus 检查转入转出状态
-func (g *GameCenter) CheckStatus(ctx context.Context, req CheckTransferStatusReq) (resp CheckTransferStatusResp, err error) {
+func (g *GameCenter) CheckStatus(ctx context.Context, req CheckTransferStatusReq, currency string) (resp CheckTransferStatusResp, err error) {
 	var httpResp *resty.Response
-	httpResp, err = postRequest(ctx, g.Config, CheckStatus, req)
+	httpResp, err = postRequest(ctx, g.Config, CheckStatus, currency, req)
 	if err != nil {
 		logx.WithContext(ctx).Errorf("[game-center] check status request error: %s", err.Error())
 		return
@@ -175,9 +179,9 @@ func (g *GameCenter) CheckStatus(ctx context.Context, req CheckTransferStatusReq
 }
 
 // TransferOut 转出
-func (g *GameCenter) TransferOut(ctx context.Context, req TransferOutReq) (resp TransferOutResp, err error) {
+func (g *GameCenter) TransferOut(ctx context.Context, req TransferOutReq, currency string) (resp TransferOutResp, err error) {
 	var httpResp *resty.Response
-	httpResp, err = postRequest(ctx, g.Config, TransferOut, req)
+	httpResp, err = postRequest(ctx, g.Config, TransferOut, currency, req)
 	if err != nil {
 		logx.WithContext(ctx).Errorf("[game-center] transfer out request error: %s", err.Error())
 		return
@@ -198,9 +202,9 @@ func (g *GameCenter) TransferOut(ctx context.Context, req TransferOutReq) (resp 
 }
 
 // GetBalance 获取余额
-func (g *GameCenter) GetBalance(ctx context.Context, req GetBalanceReq) (resp GetBalanceResp, err error) {
+func (g *GameCenter) GetBalance(ctx context.Context, req GetBalanceReq, currency string) (resp GetBalanceResp, err error) {
 	var httpResp *resty.Response
-	httpResp, err = postRequest(ctx, g.Config, GetBalance, req)
+	httpResp, err = postRequest(ctx, g.Config, GetBalance, currency, req)
 	if err != nil {
 		logx.WithContext(ctx).Errorf("[game-center] get balance request error: %s", err.Error())
 		return
