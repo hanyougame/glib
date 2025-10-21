@@ -10,9 +10,9 @@ import (
 	"github.com/hanyougame/glib/utils/httpc"
 )
 
-func postRequest(ctx context.Context, config GameCenterConfig, url string, body any) (resp *resty.Response, err error) {
+func postRequest(ctx context.Context, config GameCenterConfig, url, currency string, body any) (resp *resty.Response, err error) {
 	resp, err = httpc.Do(ctx).
-		SetBasicAuth(config.Username, config.Password).
+		SetBasicAuth(config.GetCurrencyConf(currency).Username, config.GetCurrencyConf(currency).Password).
 		SetBody(body).
 		Post(config.RequestURL + url)
 	if err != nil {
@@ -25,9 +25,9 @@ func postRequest(ctx context.Context, config GameCenterConfig, url string, body 
 	return resp, nil
 }
 
-func getRequest(ctx context.Context, config GameCenterConfig, url string, params url.Values) (resp *resty.Response, err error) {
+func getRequest(ctx context.Context, config GameCenterConfig, url, currency string, params url.Values) (resp *resty.Response, err error) {
 	return httpc.Do(ctx).
-		SetBasicAuth(config.Username, config.Password).
+		SetBasicAuth(config.GetCurrencyConf(currency).Username, config.GetCurrencyConf(currency).Password).
 		SetQueryParamsFromValues(params).
 		Get(config.RequestURL + url)
 }
