@@ -68,6 +68,7 @@ type UserBetSettlementNotify struct {
 	BonusAmount          int64  `json:"bonus_amount"`           // 派奖金额
 	UserWinAmount        int64  `json:"user_win_amount"`        // 用户输赢金额 有负数
 	Version              int32  `json:"version"`                // 乐观锁版本号，防止信息流失
+	IsUpdate             bool   `json:"is_update"`              // 是否是更新的结算消息
 }
 
 // UserPromotionBonusNotify 用户优惠奖励领取通知
