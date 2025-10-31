@@ -194,3 +194,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	stathat.com/c/consistent v1.0.0 // indirect
 )
+
+replace github.com/mitchellh/osext v0.0.0-20151018003038-5e2d6d41470f => github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0
+
+exclude github.com/mitchellh/osext v0.0.0-20151018003038-5e2d6d41470f
