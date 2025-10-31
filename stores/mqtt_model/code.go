@@ -32,3 +32,7 @@ const (
 	ExportSuccessCode = 6001 + iota
 	ExportFailCode
 )
+
+const (
+	RiskRechargeChannelNewAlertCode = 7001 + iota // 风控-充值通道新报警
+)
