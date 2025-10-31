@@ -9,4 +9,6 @@ type Config struct {
 	Password   string `json:"password,required"`    // 发送密码
 	SendEmail  string `json:"send_email,optional"`  // 发送地址
 	SendName   string `json:"send_name,optional"`   // 发送人名称
+	ApiKey     string `json:"api_key,optional"`
+	ApiUser    string `json:"api_user,optional"`
 }

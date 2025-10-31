@@ -1,13 +1,17 @@
 package emailx
 
 import (
+	"context"
 	"crypto/tls"
+	"encoding/base64"
 	"errors"
 	"fmt"
-	"github.com/hanyougame/glib/stores/emailx/config"
 	"net"
 	"net/smtp"
 	"strings"
+
+	"github.com/hanyougame/glib/stores/emailx/config"
+	"github.com/hanyougame/glib/utils/httpc"
 )
 
 var Email EmailClient
@@ -16,11 +20,7 @@ var Email EmailClient
 // 负责管理 SMTP 邮件发送
 
 type EmailClient struct {
-	smtpServer string
-	smtpPort   int
-	password   string
-	sendEmail  string
-	sendName   string
+	Config config.Config
 }
 
 // Must 初始化 EmailClient
@@ -30,13 +30,7 @@ func Must(c config.Config) {
 
 // NewEmailClient 创建 EmailClient 实例
 func NewEmailClient(c config.Config) EmailClient {
-	return EmailClient{
-		smtpServer: c.SmtpServer,
-		smtpPort:   c.SmtpPort,
-		password:   c.Password,
-		sendEmail:  c.SendEmail,
-		sendName:   c.SendName,
-	}
+	return EmailClient{Config: c}
 }
 
 // Send 发送邮件(注:测试110个邮件,发送大概50s)
@@ -46,7 +40,7 @@ func (e EmailClient) Send(subject, body string, toEmails ...string) error {
 	}
 
 	headers := map[string]string{
-		"From":         fmt.Sprintf("%s <%s>", e.sendName, e.sendEmail),
+		"From":         fmt.Sprintf("%s <%s>", e.Config.SendName, e.Config.SendEmail),
 		"Subject":      subject,
 		"Content-Type": "text/html; charset=UTF-8",
 	}
@@ -57,14 +51,14 @@ func (e EmailClient) Send(subject, body string, toEmails ...string) error {
 	}
 	msgBuilder.WriteString("\r\n" + body)
 
-	auth := smtp.PlainAuth("", e.sendEmail, e.password, e.smtpServer)
+	auth := smtp.PlainAuth("", e.Config.SendEmail, e.Config.Password, e.Config.SmtpServer)
 
 	return e.sendMailWithTLS(auth, toEmails, msgBuilder.String())
 }
 
 // sendMailWithTLS 通过 TLS 发送邮件
 func (e EmailClient) sendMailWithTLS(auth smtp.Auth, recipients []string, message string) error {
-	addr := fmt.Sprintf("%s:%d", e.smtpServer, e.smtpPort)
+	addr := fmt.Sprintf("%s:%d", e.Config.SmtpServer, e.Config.SmtpPort)
 	conn, err := tls.Dial("tcp", addr, nil)
 	if err != nil {
 		return fmt.Errorf("failed to establish TLS connection: %w", err)
@@ -82,7 +76,7 @@ func (e EmailClient) sendMailWithTLS(auth smtp.Auth, recipients []string, messag
 		return fmt.Errorf("SMTP auth error: %w", err)
 	}
 
-	if err = client.Mail(e.sendEmail); err != nil {
+	if err = client.Mail(e.Config.SendEmail); err != nil {
 		return fmt.Errorf("failed to set sender: %w", err)
 	}
 
@@ -100,6 +94,35 @@ func (e EmailClient) sendMailWithTLS(auth smtp.Auth, recipients []string, messag
 		if err = writer.Close(); err != nil {
 			return fmt.Errorf("failed to finalize message: %w", err)
 		}
+	}
+	return nil
+}
+
+func (e EmailClient) SendByEngageLab(ctx context.Context, subject, body string, toEmails ...string) error {
+	originalBytes := []byte(e.Config.ApiUser + ":" + e.Config.ApiKey)
+	auth := "Basic " + base64.StdEncoding.EncodeToString(originalBytes)
+	url := "https://email.api.engagelab.cc/v1/mail/send"
+
+	resp, err := httpc.Do(ctx).SetBody(map[string]any{
+		"from":    e.Config.SendEmail,
+		"to":      toEmails,
+		"subject": subject,
+		"body": map[string]any{
+			"subject": subject,
+			"content": map[string]string{
+				"html": body,
+			},
+		},
+	}).
+		SetHeaders(map[string]string{
+			"Authorization": auth,
+		}).
+		Post(url)
+	if err != nil {
+		return fmt.Errorf("failed to send email: %w", err)
+	}
+	if resp.StatusCode() != 200 {
+		return fmt.Errorf("failed to send email: %s", resp.String())
 	}
 	return nil
 }
