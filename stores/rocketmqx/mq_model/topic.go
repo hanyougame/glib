@@ -9,6 +9,8 @@ const (
 	TopicUserWithdrawNotify = "user_withdraw_notify"
 	// TopicUserBetSettlementNotify 用户投注结算通知
 	TopicUserBetSettlementNotify = "user_bet_settlement_notify"
+	// TopicUserBetStatNotify 投注统计专用 会接收到一笔投注记录 更新的通知 UserBetSettlementNotify
+	TopicUserBetStatNotify = "user_bet_stat_notify"
 	// TopicUserPromotionBonusNotify 用户优惠活动领取通知
 	TopicUserPromotionBonusNotify = "user_promotion_bonus_notify"
 	// TopicUserRegisterNotify 用户注册通知
