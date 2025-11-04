@@ -4,18 +4,22 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/redis/go-redis/v9"
-	"github.com/sony/sonyflake"
 	"math/rand"
 	"net"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/hanyougame/glib/stores/redisx"
+	"github.com/redis/go-redis/v9"
+	"github.com/sony/sonyflake"
 )
 
 var (
-	flake      *sonyflake.Sonyflake
-	randSource rand.Source
+	flake           *sonyflake.Sonyflake
+	randSource      rand.Source
+	flakeMachineKey = "snowflake_machine_id"
+	isReset         = false
 )
 
 func init() {
@@ -29,6 +33,37 @@ func init() {
 	}
 	// 使用当前时间戳初始化随机源
 	randSource = rand.NewSource(time.Now().UnixNano())
+	go resetInit()
+}
+
+func ResetFlake() {
+	isReset = true
+	flake = NewInit()
+}
+
+func resetInit() {
+	for i := 1; i < 11; i++ {
+		time.Sleep(time.Duration(i) * time.Second)
+		if isReset {
+			return
+		}
+		if redisx.Engine != nil {
+			tmp := NewInit()
+			if tmp != nil {
+				flake = tmp
+				isReset = true
+				fmt.Println("Sonyflake re-initialized successfully")
+				break
+			}
+		}
+	}
+}
+
+func NewInit() *sonyflake.Sonyflake {
+	return sonyflake.NewSonyflake(sonyflake.Settings{
+		MachineID: getNewMachineID,
+		StartTime: time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC),
+	})
 }
 
 // GenId 生成一个唯一的雪花ID
@@ -41,6 +76,53 @@ func GenUserID(ctx context.Context, rdb redis.UniversalClient, key string) (id i
 	// 使用 Redis 自增 ID
 	id, err = rdb.Incr(ctx, key).Result()
 	return
+}
+
+const (
+	MaxMachineID   = 1023
+	LockExpireTime = 120 * time.Second
+)
+
+func getNewMachineID() (uint16, error) {
+	rdb := redisx.Engine
+	ctx := context.Background()
+
+	hostname, _ := os.Hostname()
+	if hostname == "" {
+		hostname = fmt.Sprintf("pod-%d", time.Now().UnixNano())
+	}
+
+	for i := 1; i <= MaxMachineID; i++ {
+		key := fmt.Sprintf("%s:%d", flakeMachineKey, i)
+
+		ok, err := rdb.SetNX(ctx, key, hostname, LockExpireTime).Result()
+		if err != nil {
+			return 0, fmt.Errorf("redis SETNX error: %w", err)
+		}
+
+		if ok {
+			fmt.Println("Redis SetNX OK", key, hostname, i)
+			// 抢占成功，启动续租 goroutine
+			go keepAlive(key, hostname)
+			return uint16(i), nil
+		}
+	}
+
+	return 0, errors.New("no available machineID in 1~1023")
+}
+
+func keepAlive(key, hostname string) {
+	rdb := redisx.Engine
+	ticker := time.NewTicker(30 * time.Second)
+	defer ticker.Stop()
+	ctx := context.Background()
+
+	for range ticker.C {
+		val, err := rdb.Get(ctx, key).Result()
+		if err == nil && val == hostname {
+			rdb.Expire(ctx, key, LockExpireTime)
+		}
+	}
 }
 
 // 获取机器 ID 基于 Docker 环境
