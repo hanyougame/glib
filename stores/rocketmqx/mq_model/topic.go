@@ -37,4 +37,6 @@ const (
 	TopicUserProfileAuthNotify = "user_profile_auth_notify"
 	// TopicUserProfileUpdateNotify 用户资料更新
 	TopicUserProfileUpdateNotify = "user_profile_update_notify"
+	// TopicPvReportNotify pv上报
+	TopicPvReportNotify = "pv_report_notify"
 )
