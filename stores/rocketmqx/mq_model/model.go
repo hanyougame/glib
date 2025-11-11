@@ -202,7 +202,7 @@ type UserProfileUpdateNotify struct {
 
 type PvReportNotify struct {
 	ReportTime   int64  `json:"report_time"`   // 上报时间
-	Type         int64  `json:"type"`          // 类型：1-访问量，2-下载点击量
+	Type         int    `json:"type"`          // 类型：1-访问量，2-下载点击量
 	ChannelID    int64  `json:"channel_id"`    // 渠道ID
 	CurrencyCode string `json:"currency_code"` // 币种code
 	OS           string `json:"os"`            // 应用：PC Android_H5 IOS_H5 Android_APP IOS_APP IOS_PWA Android_PWA
