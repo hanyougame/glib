@@ -199,3 +199,11 @@ type UserProfileUpdateNotify struct {
 	ProfileType int    `json:"profile_type"` // 资料类型 1-首次绑定银行卡, 2-添加提现账户, 3-设置生日, 4-设置取款密码, 5-设置密保, 6-设置头像
 	ProfileData string `json:"profile_data"` // 资料内容 JSON格式
 }
+
+type PvReportNotify struct {
+	ReportTime   int64  `json:"report_time"`   // 上报时间
+	Type         int64  `json:"type"`          // 类型：1-访问量，2-下载点击量
+	ChannelID    int64  `json:"channel_id"`    // 渠道ID
+	CurrencyCode string `json:"currency_code"` // 币种code
+	OS           string `json:"os"`            // 应用：PC Android_H5 IOS_H5 Android_APP IOS_APP IOS_PWA Android_PWA
+}
