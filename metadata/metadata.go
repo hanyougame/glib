@@ -25,8 +25,10 @@ const (
 	CtxDeviceType = "device_type"
 	// CtxBrowserFingerprint 浏览器指纹
 	CtxBrowserFingerprint = "browser_fingerprint"
-	// CtxCurrencyCode 币种code
+	// CtxCurrencyCode Discarded 币种code
 	CtxCurrencyCode = "currency_code"
+	// CtxCurrency 币种
+	CtxCurrency = "currency_code"
 	// CtxChannelID 渠道id
 	CtxChannelID = "channel_id"
 	// CtxRegisterIP    注册ip
@@ -87,7 +89,11 @@ func GetRegisterDeviceFromCtx(ctx context.Context) string {
 
 // GetCurrencyCodeFromCtx 从上下文中获取currency_code
 func GetCurrencyCodeFromCtx(ctx context.Context) string {
-	return cast.ToString(ctx.Value(CtxCurrencyCode))
+	code := cast.ToString(ctx.Value(CtxCurrencyCode))
+	if code == "" {
+		code = cast.ToString(ctx.Value(CtxCurrency))
+	}
+	return code
 }
 
 // GetIpFromCtx 从上下文中获取ip
