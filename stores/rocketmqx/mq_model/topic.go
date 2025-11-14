@@ -43,8 +43,7 @@ var (
 	TopicPvReportNotify = "pv_report_notify"
 )
 
-func UpdateTopicPrefix(prefixes ...string) {
-	var prefix string
+func UpdateTopicPrefix(prefixes ...string) (prefix string) {
 	if len(prefixes) > 0 && prefixes[0] != "" {
 		prefix = prefixes[0]
 	}
@@ -71,4 +70,6 @@ func UpdateTopicPrefix(prefixes ...string) {
 	TopicUserProfileAuthNotify = prefix + TopicUserProfileAuthNotify
 	TopicUserProfileUpdateNotify = prefix + TopicUserProfileUpdateNotify
 	TopicPvReportNotify = prefix + TopicPvReportNotify
+
+	return
 }
