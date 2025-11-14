@@ -1,8 +1,6 @@
 package mq_model
 
-import (
-	"os"
-)
+import "os"
 
 var (
 	// TopicUserLoginNotify 用户登录通知
@@ -45,9 +43,13 @@ var (
 	TopicPvReportNotify = "pv_report_notify"
 )
 
-func UpdateTopicPrefix(prefix string) {
+func UpdateTopicPrefix(prefixes ...string) {
+	var prefix string
+	if len(prefixes) > 0 && prefixes[0] != "" {
+		prefix = prefixes[0]
+	}
 	if prefix == "" {
-		prefix = os.Getenv("TOPIC_PREFIX")
+		prefix = os.Getenv("ROCKETMQ_TOPIC_PREFIX")
 	}
 
 	TopicUserLoginNotify = prefix + TopicUserLoginNotify
@@ -68,4 +70,5 @@ func UpdateTopicPrefix(prefix string) {
 	TopicUserRecallNotify = prefix + TopicUserRecallNotify
 	TopicUserProfileAuthNotify = prefix + TopicUserProfileAuthNotify
 	TopicUserProfileUpdateNotify = prefix + TopicUserProfileUpdateNotify
+	TopicPvReportNotify = prefix + TopicPvReportNotify
 }
