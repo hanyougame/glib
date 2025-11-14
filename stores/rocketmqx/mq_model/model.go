@@ -44,6 +44,7 @@ type UserWithdrawNotify struct {
 	WithdrawTime    int64  `json:"withdraw_time"`     // 提现时间
 	WithdrawEndTime int64  `json:"withdraw_end_time"` // 提现结束时间
 	OrderNo         string `json:"order_no"`          // 订单号
+	IsFirstWithdraw bool   `json:"is_first_withdraw"` // 首次提现标志
 }
 
 // UserBetSettlementNotify 用户投注结算通知
