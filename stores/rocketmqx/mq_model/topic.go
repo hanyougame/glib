@@ -1,6 +1,8 @@
 package mq_model
 
-import "os"
+import (
+	"os"
+)
 
 var (
 	// TopicUserLoginNotify 用户登录通知
@@ -43,6 +45,9 @@ var (
 	TopicPvReportNotify = "pv_report_notify"
 	// TopicUserBalanceChange 用户余额变动
 	TopicUserBalanceChange = "user_balance_change_%d"
+
+	TopicUserDepositTripartiteMQTopic    = "user_dep_wdl_change_topic"
+	TopicUserDepositTripartiteMQTopicTag = "user_dep_wdl"
 )
 
 func UpdateTopicPrefix(prefixes ...string) (prefix string) {
@@ -73,6 +78,8 @@ func UpdateTopicPrefix(prefixes ...string) (prefix string) {
 	TopicUserProfileUpdateNotify = prefix + TopicUserProfileUpdateNotify
 	TopicPvReportNotify = prefix + TopicPvReportNotify
 	TopicUserBalanceChange = prefix + TopicUserBalanceChange
+	TopicUserDepositTripartiteMQTopic = prefix + TopicUserDepositTripartiteMQTopic
+	TopicUserDepositTripartiteMQTopicTag = prefix + TopicUserDepositTripartiteMQTopicTag
 
 	return
 }
