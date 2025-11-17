@@ -41,6 +41,8 @@ var (
 	TopicUserProfileUpdateNotify = "user_profile_update_notify"
 	// TopicPvReportNotify pv上报
 	TopicPvReportNotify = "pv_report_notify"
+	// TopicUserBalanceChange 用户余额变动
+	TopicUserBalanceChange = "user_balance_change_%d"
 )
 
 func UpdateTopicPrefix(prefixes ...string) (prefix string) {
@@ -70,6 +72,7 @@ func UpdateTopicPrefix(prefixes ...string) (prefix string) {
 	TopicUserProfileAuthNotify = prefix + TopicUserProfileAuthNotify
 	TopicUserProfileUpdateNotify = prefix + TopicUserProfileUpdateNotify
 	TopicPvReportNotify = prefix + TopicPvReportNotify
+	TopicUserBalanceChange = prefix + TopicUserBalanceChange
 
 	return
 }
