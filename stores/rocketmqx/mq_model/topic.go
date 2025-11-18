@@ -45,6 +45,8 @@ var (
 	TopicPvReportNotify = "pv_report_notify"
 	// TopicUserBalanceChange 用户余额变动
 	TopicUserBalanceChange = "user_balance_change_%d"
+
+	TopicUserDepositTripartite = "user_dep_wdl_change_topic"
 )
 
 func UpdateTopicPrefix(prefixes ...string) (prefix string) {
@@ -75,6 +77,7 @@ func UpdateTopicPrefix(prefixes ...string) (prefix string) {
 	TopicUserProfileUpdateNotify = prefix + TopicUserProfileUpdateNotify
 	TopicPvReportNotify = prefix + TopicPvReportNotify
 	TopicUserBalanceChange = prefix + TopicUserBalanceChange
+	TopicUserDepositTripartite = prefix + TopicUserDepositTripartite
 
 	return
 }
