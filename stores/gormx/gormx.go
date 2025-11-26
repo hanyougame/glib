@@ -2,13 +2,14 @@ package gormx
 
 import (
 	"fmt"
+	"sync"
+
 	"github.com/hanyougame/glib/stores/gormx/config"
 	"github.com/hanyougame/glib/stores/gormx/database"
 	"gorm.io/driver/clickhouse"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"sync"
 )
 
 var (
@@ -19,9 +20,10 @@ var (
 // DBManager gorm db manager
 type DBManager struct {
 	sync.RWMutex
-	Mysql      *gorm.DB
-	Postgres   *gorm.DB
-	ClickHouse *gorm.DB
+	Mysql        *gorm.DB
+	Postgres     *gorm.DB
+	ClickHouse   *gorm.DB
+	PostgresRead *gorm.DB
 }
 
 func NewDBManager() *DBManager {
@@ -68,6 +70,9 @@ func (dm *DBManager) newEngine(c config.Config) error {
 	case config.ClickHouse:
 		dialector = clickhouse.Open(c.DSN)
 		dbKey = "ClickHouse"
+	case config.PostgresRead:
+		dialector = postgres.Open(c.DSN)
+		dbKey = "Postgres-Read"
 	default:
 		return fmt.Errorf("unsupported database mode: %d", c.Mode)
 	}
