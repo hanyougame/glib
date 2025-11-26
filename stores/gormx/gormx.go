@@ -104,6 +104,12 @@ func (dm *DBManager) newEngine(c config.Config) error {
 		} else {
 			return fmt.Errorf("clickhouse connection already exists")
 		}
+	case config.PostgresRead:
+		if dm.PostgresRead == nil {
+			dm.PostgresRead = engine
+		} else {
+			return fmt.Errorf("postgres connection already exists")
+		}
 	}
 
 	return nil
