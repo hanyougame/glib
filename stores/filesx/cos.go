@@ -12,6 +12,12 @@ import (
 	"time"
 )
 
+type CosSignType int // cos签名类型
+const (
+	_                       CosSignType = iota
+	SignCosTypeAppLogUpload             // app日志上传
+)
+
 // CosStorage 实现腾讯云
 type CosStorage struct {
 	client     *cos.Client
@@ -31,6 +37,8 @@ type CosStorageConfig struct {
 	SecretID string `json:"secret_id"`
 	// 密钥
 	SecretKey string `json:"secret_key"`
+	// 签名url过期时间，单位秒
+	SignedURLExpire int64 `json:"signed_url_expire,optional"`
 }
 
 func NewCosStorage(c CosStorageConfig) (*CosStorage, error) {
@@ -150,4 +158,12 @@ func NewCosClient(secretID, secretKey, bucketURL string) (*cos.Client, error) {
 			SecretKey: secretKey,
 		},
 	}), nil
+}
+
+func (s CosSignType) ToString() string {
+	switch s {
+	case SignCosTypeAppLogUpload:
+		return "app_log_upload"
+	}
+	return ""
 }
