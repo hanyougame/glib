@@ -185,7 +185,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			TransactionSubCategoryAgentActivity, TransactionSubCategorySignInActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity,
 			TransactionSubCategoryNewcomerRewardActivity, TransactionSubCategoryBenefitActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBargainActivity,
 			TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity, TransactionSubCategoryActivityCard, TransactionSubCategoryBulletinReward, TransactionSubCategoryRegisterActivity,
-			TransactionSubCategoryMultiRechargeActivity,
+			TransactionSubCategoryMultiRechargeActivity, TransactionSubCategoryRechargeWheelActivity,
 		}
 	case TransactionCategoryGoldReturn:
 		return []TransactionSubCategory{
@@ -330,6 +330,7 @@ const (
 	TransactionSubCategoryBulletinReward                                                                // 公告奖励
 	TransactionSubCategoryRegisterActivity                                                              // 注册活动
 	TransactionSubCategoryMultiRechargeActivity                                                         // 多充活动
+	TransactionSubCategoryRechargeWheelActivity                                                         // 充值轮盘活动
 )
 
 // Gold Return Subcategories
@@ -609,6 +610,8 @@ func (t TransactionSubCategory) String() string {
 		return "Register"
 	case TransactionSubCategoryMultiRechargeActivity:
 		return "Multi Recharge"
+	case TransactionSubCategoryRechargeWheelActivity:
+		return "Recharge Wheel Event"
 	default:
 		return ""
 	}
@@ -701,6 +704,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryBulletinReward:             "公告奖励",
 	TransactionSubCategoryRegisterActivity:           "注册活动",
 	TransactionSubCategoryMultiRechargeActivity:      "多充活动",
+	TransactionSubCategoryRechargeWheelActivity:      "充值轮盘活动",
 }
 
 func (t TransactionSubCategory) StringByLanguage(language string) string {
