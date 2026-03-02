@@ -184,7 +184,8 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			//TransactionSubCategoryWordCollectionActivity, TransactionSubCategoryQuizActivity, TransactionSubCategoryRechargeActivity,
 			TransactionSubCategoryAgentActivity, TransactionSubCategorySignInActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity,
 			TransactionSubCategoryNewcomerRewardActivity, TransactionSubCategoryBenefitActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBargainActivity,
-			TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity, TransactionSubCategoryBulletinReward, TransactionSubCategoryRegisterActivity,
+			TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity, TransactionSubCategoryActivityCard, TransactionSubCategoryBulletinReward, TransactionSubCategoryRegisterActivity,
+			TransactionSubCategoryMultiRechargeActivity, TransactionSubCategoryRechargeWheelActivity,
 		}
 	case TransactionCategoryGoldReturn:
 		return []TransactionSubCategory{
@@ -328,6 +329,8 @@ const (
 	TransactionSubCategoryActivityCard                                                                  // 周卡月卡活动
 	TransactionSubCategoryBulletinReward                                                                // 公告奖励
 	TransactionSubCategoryRegisterActivity                                                              // 注册活动
+	TransactionSubCategoryMultiRechargeActivity                                                         // 多充活动
+	TransactionSubCategoryRechargeWheelActivity                                                         // 充值轮盘活动
 )
 
 // Gold Return Subcategories
@@ -605,6 +608,10 @@ func (t TransactionSubCategory) String() string {
 		return "News Reward"
 	case TransactionSubCategoryRegisterActivity:
 		return "Register"
+	case TransactionSubCategoryMultiRechargeActivity:
+		return "Multi Recharge"
+	case TransactionSubCategoryRechargeWheelActivity:
+		return "Recharge Wheel Event"
 	default:
 		return ""
 	}
@@ -696,6 +703,8 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryActivityCard:               "周月卡奖励",
 	TransactionSubCategoryBulletinReward:             "公告奖励",
 	TransactionSubCategoryRegisterActivity:           "注册活动",
+	TransactionSubCategoryMultiRechargeActivity:      "多充活动",
+	TransactionSubCategoryRechargeWheelActivity:      "充值轮盘活动",
 }
 
 func (t TransactionSubCategory) StringByLanguage(language string) string {

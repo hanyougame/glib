@@ -44,6 +44,7 @@ type UserWithdrawNotify struct {
 	WithdrawTime    int64  `json:"withdraw_time"`     // 提现时间
 	WithdrawEndTime int64  `json:"withdraw_end_time"` // 提现结束时间
 	OrderNo         string `json:"order_no"`          // 订单号
+	IsFirstWithdraw bool   `json:"is_first_withdraw"` // 首次提现标志
 }
 
 // UserBetSettlementNotify 用户投注结算通知
@@ -204,6 +205,7 @@ type PvReportNotify struct {
 	ReportTime   int64  `json:"report_time"`   // 上报时间
 	Type         int    `json:"type"`          // 类型：1-访问量，2-下载点击量
 	ChannelID    int64  `json:"channel_id"`    // 渠道ID
+	UserID       int64  `json:"user_id"`       // 用户ID
 	CurrencyCode string `json:"currency_code"` // 币种code
 	OS           string `json:"os"`            // 应用：PC Android_H5 IOS_H5 Android_APP IOS_APP IOS_PWA Android_PWA
 }

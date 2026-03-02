@@ -6,6 +6,7 @@ const (
 	Mysql Mode = iota + 1
 	Postgres
 	ClickHouse
+	PostgresRead
 )
 
 type Config struct {
