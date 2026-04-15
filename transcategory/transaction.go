@@ -185,7 +185,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			TransactionSubCategoryAgentActivity, TransactionSubCategorySignInActivity, TransactionSubCategoryRechargeActivity, TransactionSubCategoryBetActivity, TransactionSubCategoryPromoteActivity,
 			TransactionSubCategoryNewcomerRewardActivity, TransactionSubCategoryBenefitActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBargainActivity,
 			TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity, TransactionSubCategoryActivityCard, TransactionSubCategoryBulletinReward, TransactionSubCategoryRegisterActivity,
-			TransactionSubCategoryMultiRechargeActivity, TransactionSubCategoryRechargeWheelActivity,
+			TransactionSubCategoryMultiRechargeActivity, TransactionSubCategoryRechargeWheelActivity, TransactionSubCategoryDownloadActivity,
 		}
 	case TransactionCategoryGoldReturn:
 		return []TransactionSubCategory{
@@ -331,6 +331,7 @@ const (
 	TransactionSubCategoryRegisterActivity                                                              // 注册活动
 	TransactionSubCategoryMultiRechargeActivity                                                         // 多充活动
 	TransactionSubCategoryRechargeWheelActivity                                                         // 充值轮盘活动
+	TransactionSubCategoryDownloadActivity                                                              // 下载活动
 )
 
 // Gold Return Subcategories
@@ -612,6 +613,8 @@ func (t TransactionSubCategory) String() string {
 		return "Multi Recharge"
 	case TransactionSubCategoryRechargeWheelActivity:
 		return "Recharge Wheel Event"
+	case TransactionSubCategoryDownloadActivity:
+		return "Download"
 	default:
 		return ""
 	}
@@ -705,6 +708,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryRegisterActivity:           "注册活动",
 	TransactionSubCategoryMultiRechargeActivity:      "多充活动",
 	TransactionSubCategoryRechargeWheelActivity:      "充值轮盘活动",
+	TransactionSubCategoryDownloadActivity:           "下载活动",
 }
 
 func (t TransactionSubCategory) StringByLanguage(language string) string {
