@@ -238,3 +238,33 @@ func (g *GameCenter) GetBalance(ctx context.Context, req GetBalanceReq, currenci
 	resp = getBalanceResp.Data
 	return
 }
+
+// GetLotteryDrawList 获取彩票开奖结果列表
+func (g *GameCenter) GetLotteryDrawList(ctx context.Context, req GetLotteryDrawListReq, currencies ...string) (resp []GetLotteryDrawListItem, err error) {
+	var httpResp *resty.Response
+	currency := getCurrency(currencies)
+	// 构建查询参数
+	params := url.Values{}
+	// 添加多个游戏ID
+	for _, gameID := range req.GameIDs {
+		params.Add("game_ids", cast.ToString(gameID))
+	}
+	httpResp, err = getRequest(ctx, g.Config, GetLotteryDraw, currency, params)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("[game-center] get lottery draw request error: %s", err.Error())
+		return
+	}
+	getLotteryDrawListResp := &CommonResp[[]GetLotteryDrawListItem]{}
+	err = jsonx.Unmarshal(httpResp.Body(), getLotteryDrawListResp)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("[game-center] unmarshal get lottery draw response error: %s", err.Error())
+		return
+	}
+	if getLotteryDrawListResp.Code != 0 {
+		logx.WithContext(ctx).Errorf("[game-center] get lottery draw request error: %s", getLotteryDrawListResp.Message)
+		err = errors.New(getLotteryDrawListResp.Message)
+		return
+	}
+	resp = getLotteryDrawListResp.Data
+	return
+}

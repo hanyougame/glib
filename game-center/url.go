@@ -9,4 +9,5 @@ const (
 	CheckStatus     = "/api/transfer/checkStatus"
 	TransferOut     = "/api/transfer/out"
 	GetBalance      = "/api/account/balance"
+	GetLotteryDraw  = "/api/games/lottery/draw" //获取彩票开奖结果
 )

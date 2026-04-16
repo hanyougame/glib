@@ -155,3 +155,20 @@ func TestGameCenter_GetBalance(t *testing.T) {
 	}
 	utils.PrettyJSON(resp)
 }
+func TestGameCenter_GetLotteryDrawList(t *testing.T) {
+	g := NewGameCenter(GameCenterConfig{
+		Username:   "90fae8ef04e68c6bc8dfdce7b1b1b3bc",
+		Password:   "84363c525fc8f8b9703065772a918eb8",
+		RequestURL: "https://center-openapi-gateway-dev.ogweb.org",
+	})
+
+	list, err := g.GetLotteryDrawList(context.Background(), GetLotteryDrawListReq{
+		GameIDs: []int64{496075, 496076},
+	})
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	utils.PrettyJSON(list)
+}

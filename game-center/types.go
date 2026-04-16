@@ -158,4 +158,17 @@ type (
 		PlatformID int64  `json:"platform_id"`
 		Balance    string `json:"balance"`
 	}
+
+	GetLotteryDrawListReq struct {
+		GameIDs []int64 `form:"game_ids"`
+	}
+	GetLotteryDrawListItem struct {
+		LotteryId      int64   `json:"lotteryId"`
+		Standby        bool    `json:"standby"`
+		RewardType     int64   `json:"rewardType"`
+		RewardValue    int64   `json:"rewardValue"`
+		LastDrawResult []int64 `json:"lastDrawResult"`
+		WinCount       int64   `json:"winCount"`
+		NextDrawTime   int64   `json:"nextDrawTime"`
+	}
 )
