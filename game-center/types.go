@@ -163,6 +163,7 @@ type (
 		GameIDs []int64 `form:"game_ids"`
 	}
 	GetLotteryDrawListItem struct {
+		GameId         int64   `json:"gameId"`
 		LotteryId      int64   `json:"lotteryId"`
 		Standby        bool    `json:"standby"`
 		RewardType     int64   `json:"rewardType"`
