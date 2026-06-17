@@ -9,17 +9,31 @@ import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
 	"github.com/apache/rocketmq-clients/golang/v5/credentials"
 	v2 "github.com/apache/rocketmq-clients/golang/v5/protocol/v2"
-	"github.com/google/uuid"
 	"github.com/hanyougame/glib/utils"
 	"github.com/zeromicro/go-zero/core/logx"
 	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
 )
 
-// NewConsumer 创建消费者实例
-func NewConsumer(config ConsumerConfig, topics []string, messageSelector consumer.MessageSelector, handler MessageHandler) (rocketmq.PushConsumer, error) {
+// stableInstanceName 生成稳定的消费者实例名：hostname_groupName_workerIndex。
+// 同一个 pod/容器重启时使用相同实例名注册，broker 端直接替换旧实例，
+// 避免反复重启堆积幽灵 client，导致 message queue 被分配给已死实例而无人消费。
+// workerIndex 用于区分同一进程内启动的多个 worker 实例（WorkerNum > 1 场景）。
+func stableInstanceName(groupName string, workerIndex int) string {
+	hostname, err := os.Hostname()
+	if err != nil || hostname == "" {
+		// fallback：拿不到 hostname 时退回 PID，至少保证同 pod 内稳定
+		hostname = strconv.Itoa(os.Getpid())
+	}
+	return fmt.Sprintf("%s_%s_%d", hostname, groupName, workerIndex)
+}
+
+// NewConsumer 创建消费者实例。
+// workerIndex 用于生成稳定的 instance name，区分同一消费组内的多个 worker 实例。
+func NewConsumer(config ConsumerConfig, topics []string, messageSelector consumer.MessageSelector, handler MessageHandler, workerIndex int) (rocketmq.PushConsumer, error) {
 	cc, err := rocketmq.NewPushConsumer(
 		// 设置消费者组
 		consumer.WithGroupName(config.GroupName),
@@ -38,7 +52,8 @@ func NewConsumer(config ConsumerConfig, topics []string, messageSelector consume
 		consumer.WithPullBatchSize(int32(utils.Ternary(config.PullBatchSize > 32, 32, config.PullBatchSize))),
 		// 设置消费模式（默认集群模式）
 		consumer.WithConsumerModel(consumer.Clustering),
-		consumer.WithInstance(config.GroupName+"_"+uuid.New().String()),
+		// 使用稳定的 instance name，避免重启后 broker 端堆积幽灵 client
+		consumer.WithInstance(stableInstanceName(config.GroupName, workerIndex)),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("创建消费者失败: %w", err)
@@ -94,7 +109,7 @@ func StartConsumer(commonConfig RocketMQX, consumers []ConsumerConfig, handlers 
 				messageSelector := getMessageSelector(consumerConfig)
 
 				// 创建并启动消费者实例
-				consumerInstance, err := NewConsumer(consumerConfig, topics, messageSelector, handler)
+				consumerInstance, err := NewConsumer(consumerConfig, topics, messageSelector, handler, index)
 				if err != nil {
 					logx.Errorf("创建主题 %s 的消费者失败: %v", consumerConfig.Topic, err)
 					return
