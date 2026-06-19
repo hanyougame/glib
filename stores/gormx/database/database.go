@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/hanyougame/glib/stores/gormx/config"
+	"github.com/samber/lo"
 	"gorm.io/driver/clickhouse"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -87,13 +88,31 @@ func newRWDBEngine(c config.Config, engine *gorm.DB) (*gorm.DB, error) {
 	for _, v := range c.Sources {
 		sources = append(sources, dialectorFactory(v))
 	}
+	var resolver = new(dbresolver.DBResolver)
+	if len(replicas) > 0 || len(sources) > 0 {
+		resolver = dbresolver.Register(dbresolver.Config{
+			Sources:           sources,
+			Replicas:          replicas,
+			Policy:            dbresolver.RandomPolicy{},
+			TraceResolverMode: c.Trace,
+		})
+	}
 
-	resolver := dbresolver.Register(dbresolver.Config{
-		Sources:           sources,
-		Replicas:          replicas,
-		Policy:            dbresolver.RandomPolicy{},
-		TraceResolverMode: c.Trace,
-	})
+	for _, item := range c.Resolvers {
+		tables := lo.Map(item.Tables, func(item string, _ int) interface{} {
+			return item
+		})
+		resolver.Register(dbresolver.Config{
+			Sources: lo.Map(item.Sources, func(item string, _ int) gorm.Dialector {
+				return dialectorFactory(item)
+			}),
+			Replicas: lo.Map(item.Replicas, func(item string, _ int) gorm.Dialector {
+				return dialectorFactory(item)
+			}),
+			Policy:            dbresolver.RandomPolicy{},
+			TraceResolverMode: item.TraceResolverMode,
+		}, tables...)
+	}
 
 	if c.MaxIdleConn > 0 {
 		resolver.SetMaxIdleConns(c.MaxIdleConn)
