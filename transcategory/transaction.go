@@ -186,6 +186,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			TransactionSubCategoryNewcomerRewardActivity, TransactionSubCategoryBenefitActivity, TransactionSubCategoryRedPacketActivity, TransactionSubCategoryBargainActivity,
 			TransactionSubCategorySpinActivity, TransactionSubCategoryLoginActivity, TransactionSubCategoryReturnUserActivity, TransactionSubCategoryActivityCard, TransactionSubCategoryBulletinReward, TransactionSubCategoryRegisterActivity,
 			TransactionSubCategoryMultiRechargeActivity, TransactionSubCategoryRechargeWheelActivity, TransactionSubCategoryDownloadActivity, TransactionSubCategoryNewUserGrowthActivity,
+			TransactionSubCategoryPiggyBankActivity,
 		}
 	case TransactionCategoryGoldReturn:
 		return []TransactionSubCategory{
@@ -333,6 +334,7 @@ const (
 	TransactionSubCategoryRechargeWheelActivity                                                         // 充值轮盘活动
 	TransactionSubCategoryDownloadActivity                                                              // 下载活动
 	TransactionSubCategoryNewUserGrowthActivity                                                         // 新人7日成长活动
+	TransactionSubCategoryPiggyBankActivity                                                             // 储钱罐活动
 )
 
 // Gold Return Subcategories
@@ -618,6 +620,8 @@ func (t TransactionSubCategory) String() string {
 		return "Download"
 	case TransactionSubCategoryNewUserGrowthActivity:
 		return "New User Growth"
+	case TransactionSubCategoryPiggyBankActivity:
+		return "Piggy Bank"
 	default:
 		return ""
 	}
@@ -713,6 +717,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategoryRechargeWheelActivity:      "充值轮盘活动",
 	TransactionSubCategoryDownloadActivity:           "下载活动",
 	TransactionSubCategoryNewUserGrowthActivity:      "新人7日成长活动",
+	TransactionSubCategoryPiggyBankActivity:          "存钱罐活动",
 }
 
 func (t TransactionSubCategory) StringByLanguage(language string) string {
