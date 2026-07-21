@@ -148,7 +148,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 	switch t {
 	case TransactionCategoryCapitalSwitch:
 		return []TransactionSubCategory{
-			TransactionSubCategoryWithdrawal, TransactionSubCategoryDeposits, TransactionSubCategoryWeeklyMonthCard,
+			TransactionSubCategoryWithdrawal, TransactionSubCategoryDeposits, TransactionSubCategoryWeeklyMonthCard, TransactionSubCategoryPiggyBankActivity,
 		}
 	case TransactionCategoryUserRecharge:
 		return []TransactionSubCategory{
