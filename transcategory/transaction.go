@@ -172,7 +172,7 @@ func (t TransactionCategory) SubCategory() []TransactionSubCategory {
 			//TransactionSubCategorySurDeduct, TransactionSubCategoryManualPullBack, TransactionSubCategoryDeductExcessProfit,
 			TransactionSubCategoryManualAddRewardAmount, TransactionSubCategoryManualAddOrder,
 			TransactionSubCategoryManualSubtractAmount, TransactionSubCategoryDeductAll,
-			TransactionSubCategoryBloggerSalary,
+			TransactionSubCategoryBloggerSalary, TransactionSubCategoryAgentSalary,
 		}
 	case TransactionCategoryActivity:
 		return []TransactionSubCategory{
@@ -301,6 +301,7 @@ const (
 	TransactionSubCategoryManualPullBack                                                                 // Manual Recall
 	TransactionSubCategoryDeductExcessProfit                                                             // Excess Profit Deduction
 	TransactionSubCategoryBloggerSalary                                                                  // Blogger Salary
+	TransactionSubCategoryAgentSalary                                                                    // Agent Salary
 )
 
 // Activity Subcategories
@@ -606,6 +607,8 @@ func (t TransactionSubCategory) String() string {
 		return "Login Event" // 登录活动
 	case TransactionSubCategoryBloggerSalary:
 		return "Blogger Salary" // 博主工资
+	case TransactionSubCategoryAgentSalary:
+		return "Agent Salary" // 代理工资
 	case TransactionSubCategoryReturnUserActivity:
 		return "Returning User Event" // 召回活动
 	case TransactionSubCategoryActivityCard:
@@ -715,6 +718,7 @@ var TransactionSubCategoryMap = map[TransactionSubCategory]string{
 	TransactionSubCategorySignInActivity:             "签到活动", // 签到活动
 	TransactionSubCategoryLoginActivity:              "登录活动", // 登录活动
 	TransactionSubCategoryBloggerSalary:              "博主工资",
+	TransactionSubCategoryAgentSalary:                "代理工资",
 	TransactionSubCategoryReturnUserActivity:         "用户召回活动",
 	TransactionSubCategoryActivityCard:               "周月卡奖励",
 	TransactionSubCategoryBulletinReward:             "公告奖励",
